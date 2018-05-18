@@ -1,9 +1,23 @@
-var express = require("express");
-var app     = express();
+var express = require("express"),
+	app     = express(),
+    passport    = require("passport"),
+    LocalStrategy = require("passport-local");
+
 app.use(express.static(__dirname + '/views'));
 //Store all HTML files in view folder.
-app.use(express.static(__dirname + '/script'));
-//Store all JS and CSS in Scripts folder.
+
+// PASSPORT CONFIGURATION
+app.use(require("express-session")({
+    secret: "Once again Rusty wins cutest dog!",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 app.get('/',function(req,res){
 
@@ -12,9 +26,15 @@ app.get('/',function(req,res){
 });
 
 app.get('/dashboard',function(req,res){
-	// res.sendFile('index.html');
+
 	res.render('dashboard.ejs');
-  //It will find and locate index.html from View or Scripts
+
+});
+
+app.get('/table',function(req,res){
+
+	res.render('table.ejs');
+
 });
 
 var portSettings = process.env.PORT
