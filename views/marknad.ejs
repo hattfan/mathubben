@@ -1,0 +1,107 @@
+<% include ./partials/header.ejs %>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+    <body>
+        <% include ./partials/leftpanel.ejs %>
+            <% include ./partials/rightpanel.ejs %>
+
+                <div class="content">
+                    <div class="container-fluid">
+                        <body>
+                            <div id="nav">
+                                <h2>Försäljningsdata Dashboard
+                                </h2>
+                                <p>
+                                    Undersök Försäljningsdata för foodservice
+                                    <span id="year-val"></span>
+                                </p>
+                                <p>
+                                    Välj varugrupp
+                                    <select name="artikel" id="varugrupp">
+                                        <% for(i=0; i < produktgruppUnique.length; i++) { %>
+                                            <option value="<%= produktgruppUnique[i] %>">
+                                                <%= produktgruppUnique[i] %>
+                                            </option>
+                                            <% } %>
+                                                <!-- <option value="Bröd" selected="selected">Bröd</option> -->
+                                    </select>
+                                    <button class="btn-primary" id="renderGraph">Rendera</button>
+
+                                </p>
+                            </div>
+                            <section class="container">
+                                <div class="chart-container">
+                                    <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="map">
+                                    </svg>
+                                </div>
+                            </section>
+                            <div class="tooltip"></div>
+
+                            <footer class="footer">
+                                <div class="container-fluid">
+                                    <nav class="pull-left">
+                                        <ul>
+                                            <li>
+                                                <a href="http://www.creative-tim.com/license">
+                                                    Licenses
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    <div class="copyright pull-right">
+                                        &copy;
+                                        <script>document.write(new Date().getFullYear())</script>, DOG group</a>
+                                    </div>
+                                </div>
+                            </footer>
+
+                    </div>
+                </div>
+                </body>
+
+                <script src="/src/d3.v4.js"></script>
+                <script src="/src/topojson.js"></script>
+                <script src="js/map.js"></script>
+                <script src="js/app.js"></script>
+
+                <!--   Core JS Files   -->
+                <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+                <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+
+                <!--  Checkbox, Radio & Switch Plugins -->
+                <script src="assets/js/bootstrap-checkbox-radio.js"></script>
+
+                <!--  Charts Plugin -->
+                <script src="assets/js/chartist.min.js"></script>
+
+                <!--  Notifications Plugin    -->
+                <script src="assets/js/bootstrap-notify.js"></script>
+
+                <!--  Google Maps Plugin    -->
+                <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+
+                <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
+                <script src="assets/js/paper-dashboard.js"></script>
+
+                <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+                <script src="assets/js/demo.js"></script>
+
+                <script type="text/javascript">
+                    $(document).ready(function () {
+
+                        demo.initChartist();
+
+                        $.notify({
+                            icon: 'ti-bar-chart',
+                            message: "Välkommen till Mathubben, ditt sätt att få ett försprång mot konkurrenterna."
+
+                        }, {
+                                type: 'success',
+                                timer: 4000
+                            });
+
+                    });
+                </script>
+
+                </html>

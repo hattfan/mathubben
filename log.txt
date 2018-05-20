@@ -1,0 +1,4 @@
+2018-05-20
+Npm installed passport.
+! Behöver få över mongo-datatable till git:en
+* Jobbar med att få över loggningen och d3 till admin-templatet

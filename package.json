@@ -9,8 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
-    "mongo-datatable": "^1.1.0"
+    "mongo-datatable": "^1.1.0",
+    "passport": "^0.4.0"
   }
 }
