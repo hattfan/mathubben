@@ -26,9 +26,14 @@ function drawMap(geoData, kommunData, dataType) {
 
 	});
 
-	var colors = ["#f1c40f", "#e67e22", "#e74c3c", "#c0392b"];
+	// var colors = ["#f1c40f", "#e67e22", "#e74c3c", "#c0392b"];
+	// var colors = ["#f1c40f", "#e67e22", "#e74c3c", "#c0392b"];
+	// var domain = [0, 500, 1000, 1500];
+	
 	//domänen, måste ändras till ett icke-statiskt värde
-	var domain = [0, 500, 1000, 1500];
+	var domain = [0, d3.max(kommunData, d => d.Value)];
+	var colors = ["#7caeff", "#ff0400"];
+
 
 	var mapColorScale = d3.scaleLinear()
 		.domain(domain)
@@ -41,20 +46,20 @@ function drawMap(geoData, kommunData, dataType) {
 
 	var projection = d3.geoMercator()
 		.scale(1300)
-		.translate([width / 12, 600 / 0.27])
+		.translate([width / 100, 600 / 0.27])
 
 	var path = d3.geoPath()
 		.projection(projection);
 
-	d3.select("svg")
-		.attr("width", width)
-		.attr("height", height)
-		.selectAll(".kommun")
-		.data(geoData)
-		.enter()
-		.append("path")
-		.classed("kommun", true)
-		.attr("d", path);
+	// d3.select("svg")
+	// 	.attr("width", width)
+	// 	.attr("height", height)
+	// 	.selectAll(".kommun")
+	// 	.data(geoData)
+	// 	.enter()
+	// 	.append("path")
+	// 	.classed("kommun", true)
+	// 	.attr("d", path);
 
 	var update = map.selectAll(".kommun")
 		.data(geoData);
@@ -64,12 +69,21 @@ function drawMap(geoData, kommunData, dataType) {
 		.append("path")
 		.classed("kommun", true)
 		.attr("d", path)
+		.on("click", function() {
+			var kommun = d3.select(this);
+			var isActive = kommun.classed("active");
+			var kommunName = isActive ? "" : kommun.data()[0].properties['KNNAMN'];
+			console.log(kommun.data()[0].properties['KNKOD'])
+			drawBar(kommunData, kommunName)
+			d3.selectAll(".kommun").classed("active", false);
+			kommun.classed("active", !isActive);
+		})
 		.merge(update)
-		.transition()
-		.duration(750)
-		.attr("fill", d => {
-			var val = d.properties.data;
-			return val ? mapColorScale(val) : "#ccc";
+			.transition()
+			.duration(750)
+			.attr("fill", d => {
+				var val = d.properties.data;
+				return val ? mapColorScale(val) : "#ccc";
 		});
 
 

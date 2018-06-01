@@ -10,7 +10,6 @@ document.getElementById("renderGraph").addEventListener("click", function() { da
 var varugruppValue = "Bär";
 
 createMap(width, height)
-createBar(width/2, height/2)
 dataFetch();
 
 function dataFetch(){
@@ -35,10 +34,7 @@ d3.queue()
   .await(function (error, mapData, data) {
     if (error) throw error;
     var geoData = topojson.feature(mapData, mapData.objects.sverige).features;
-    // console.log(mapData)
-    // console.log(data)
     drawMap(geoData, data, varugruppValue)
-    drawBar(data,"")
   });
 }
 
