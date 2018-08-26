@@ -239,7 +239,7 @@ app.get('/alldbs/:type', function (req, res) {
 })
 
 // var portSettings = process.env.PORT
-var portSettings = 3030;
+var port = process.env.PORT || 3030; 
 
 app.listen(portSettings, process.env.IP, function () {
 	var appConsoleMsg = 'Hemsidan startad: ';
