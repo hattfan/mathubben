@@ -211,6 +211,6 @@ var port = process.env.PORT || 3030;
 
 app.listen(port, process.env.IP, function () {
 	var appConsoleMsg = 'Hemsidan startad: ';
-	appConsoleMsg += process.env.IP + ':' + portSettings;
+	appConsoleMsg += process.env.IP + ':' + port;
 	console.log(appConsoleMsg);
 });
