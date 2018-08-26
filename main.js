@@ -50,147 +50,17 @@ app.get('/', function (req, res) {
 });
 
 
-app.get('/db/:type', function (req, res) {
-	var tot = 0, ulle, counter, kommunObj = {}, kommun = {}, data = [], tempData = [], kommuner = {}, vikt, kostnad;
-	MongoClient.connect('mongodb://localhost:27017', (err, client) => {
-		var db = client.db('mathubben');
-		// console.log('Databas-route till: ' + req.params.type)
-		if (err) throw err;
-		db.collection("combinedDBs").distinct("KommunNummer", function (err, kommunData) {
-			// db.collection("combinedDBs").aggregate({"$match": {"KommunNummer":{},, function (err, kommunData) {
-			if (err) throw err
-			for (let i = 0; i < kommunData.length; i++) {
-				const kommun = kommunData[i];
-
-				kommuner[kommun] = 0;
-				data[i] = { 'Kommunkod': kommun, 'Value': 0, 'Kronor':0 }
-			}
-			kommunObj = data;
-			db.collection("combinedDBs").find({ 'VarugruppMathubben': req.params.type }).toArray(function (err, mathubbenStatistik) {
-				if (err) throw err;
-				for (let i = 0; i < mathubbenStatistik.length; i++) {
-					if (mathubbenStatistik[i]['KommunNummer'] in kommuner) {
-						kronor = mathubbenStatistik[i]['Kronor']
-						vikt = mathubbenStatistik[i]['Mängd'];
-						kommuner[mathubbenStatistik[i]['KommunNummer']] = kommuner[mathubbenStatistik[i]['KommunNummer']] + Math.round((vikt * 100) / 100);
-						vikt = "";
-					}
-				}
-				console.log(kommunObj)
-				for (let i = 0; i < kommunObj.length; i++) {
-					if (kommunObj[i]['Kommunkod'] in kommuner) {
-						kommunObj[i]['Value'] = kommuner[kommunObj[i]['Kommunkod']]
-					}
-				}
-				res.json(kommunObj)
-			})
-		})
-	})
-})
-
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//! Test för år !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-app.get('/dbyear/:type', function (req, res) {
-	var tot = 0, ulle, counter, kommunObj = {}, kommun = {}, data = [], tempData = [], kommunVikt = {};
-	MongoClient.connect('mongodb://localhost:27017', (err, client) => {
-		var db = client.db('mathubben');
-		// console.log('Databas-route till: ' + req.params.type)
-		if (err) throw err;
-		var years = [2015,2016,2017]
-		db.collection("combinedDBs").distinct("KommunNummer", function (err, kommunData) {
-
-			if (err) throw err
-			//Loopar över kommunnumerna
-			for (let i = 0; i < kommunData.length; i++) {
-				const kommun = kommunData[i];
-
-				kommunVikt[kommun] = {
-					2015:0,
-					2016:0,
-					2017:0
-				}
-				data[i] = { 'Kommunkod': kommun, 
-							'År': {
-								2015:0,
-								2016:0,
-								2017:0
-							}
-							
-			}
-
-			}
-			kommunObj = data
-
-			//kommunObj är alla kommunkoder med värde = 0
-			// kommunObj = data;
-			// res.json(kommunObj)
-			//Letar upp valda grupper i databasen
-			db.collection("combinedDBs").find({ 'VarugruppMathubben': req.params.type }).toArray(function (err, mathubbenStatistik) {
-				if (err) throw err;
-
-				for (let i = 0; i < mathubbenStatistik.length; i++) {
-					//Loopear över kommunnummerna och letar om de finns i mathubbenstatistiken
-					if (mathubbenStatistik[i]['KommunNummer'] in kommunVikt) {
-						vikt = mathubbenStatistik[i]['Mängd'];
-						//vikt countar över mängden i varje statistik-rad
-						if(mathubbenStatistik[i]['År'] === 2015){
-							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2015] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2015] + Math.round((vikt * 100) / 100);
-						} 
-						else if (mathubbenStatistik[i]['År'] === 2016){
-							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2016] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2016] + Math.round((vikt * 100) / 100);
-						}
-						else if (mathubbenStatistik[i]['År'] === 2017){
-							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2017] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2017] + Math.round((vikt * 100) / 100);
-						}
-						// vikt = mathubbenStatistik[i]['Mängd'];
-						// kommunVikt[mathubbenStatistik[i]['KommunNummer']] = kommunVikt[mathubbenStatistik[i]['KommunNummer']] + Math.round((vikt * 100) / 100);
-						vikt = "";
-					}
-				}
-				// res.json(kommunObj)
-
-				// for (let i = 0; i < kommunObj.length; i++) {
-				// 	if (kommunObj[i]['Kommunkod'] in kommunVikt) {
-						
-				// 		kommunObj[i]['Value'] = kommunVikt[kommunObj[i]['Kommunkod']]
-				// 	}
-				// }
-				// console.log(years.length)
-				console.log(kommunVikt)
-				for (let i = 0; i < kommunObj.length; i++) {
-					for (let y = 0; y < years.length; y++) {
-						if (kommunObj[i]['Kommunkod'] in kommunVikt) {
-							console.log('jajajaj')
-							kommunObj[i]['År'][years[y]] = kommunVikt[kommunObj[i]['Kommunkod'][years[y]]]
-						} else {
-							console.log('nmej ejnksfdsanknk')
-						}
-					}
-				}
-				res.json(kommunObj)
-
-				// res.json(kommunObj)
-				// const final = 
-				// vill ha ut
-				// {continent: "Asia", country: "Afghanistan", countryCode: "004", emissions: 4217.05, emissionsPerCapita: 0.156001008723042}
-
-			})
-		})
-	})
-})
-
 //????????????????????????????????????????????????????????????????????????????????????
-//??? Test2 för år ???????????????????????????????????????????????????????????????????????
+//??? REST get data ???????????????????????????????????????????????????????????????????????
 //????????????????????????????????????????????????????????????????????????????????????
 app.get('/dbyear2/:type', function (req, res) {
 	var befolkning = require('./views/js/kommundata.js')
 	kommunVikt = {};
 	
-	MongoClient.connect('mongodb://ola:Neroxrox5(@ds125362.mlab.com:25362/statistik', (err, client) => {
-	// MongoClient.connect('mongodb://localhost:27017', (err, client) => {
-		// var db = client.db('mathubben');
-		var db = client.db('statistik');
+	// MongoClient.connect('mongodb://ola:Neroxrox5(@ds125362.mlab.com:25362/statistik', (err, client) => {
+	MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+		var db = client.db('mathubben');
+		// var db = client.db('statistik');
 		
 		// console.log('Databas-route till: ' + req.params.type)
 		if (err) throw err;
@@ -277,6 +147,10 @@ app.get('/db', function (req, res) {
 			res.json(data)
 		})
 	})
+});
+
+app.get('/sortfil', function (req, res) {
+	res.render('sortfil.ejs')
 });
 
 app.get('/marknadskraft', function (req, res) {

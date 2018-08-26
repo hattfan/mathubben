@@ -42,7 +42,9 @@ function drawBar(data, kommunKod, year, visningsVal, produktgrupp) {
   };
   var barPadding = 1;
   var width = +bar.attr("width");
+  // console.log(width)
   var height = +bar.attr("height");
+  // console.log(height)
 
   //!Framfiltrering och sortering av "bars"
   var kommunData = data.filter(d => d.KommunNummer === kommunKod)
@@ -54,8 +56,10 @@ function drawBar(data, kommunKod, year, visningsVal, produktgrupp) {
 
   var xScale = d3.scaleLinear()
     .domain(d3.extent(data, d => +d.Year))
-    .range([padding.left, width - 150]);
+    .range([padding.left, width-padding.left]);
 
+  // console.log(width)
+  // console.log(xScale(2017))
   var yScale = d3.scaleLinear()
     .domain([0, d3.max(kommunData, d => d[visningsVal])])
     .range([height - padding.bottom, padding.top]);

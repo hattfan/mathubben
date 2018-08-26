@@ -1,18 +1,22 @@
 <% include ./partials/header.ejs %>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js'></script> 
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js'></script>
 
     <body>
 
+        <!-- W3 sidenav -->
         <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
             <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
-            <a href="/" class="w3-bar-item w3-button">Hem</a>
-            <a href="#" class="w3-bar-item w3-button">Sortfil</a>
-            <a href="/marknadskraft" class="w3-bar-item w3-button">Marknadskraft</a>
-            <a href="#" class="w3-bar-item w3-button">Konkurrentanalys</a>
+            <a href="/dashboard" class="w3-bar-item w3-button"><i class="ti-home"></i> Hem</a>
+            <a href="/sortfil" class="w3-bar-item w3-button"><i class="ti-view-list-alt"></i> Sortfil</a>
+            <a href="/marknadskraft" class="w3-bar-item w3-button active-nav"><i class="ti-map-alt"></i> Marknadskraft</a>
+            <a href="/konkurrentanalys" class="w3-bar-item w3-button"><i class="ti-pulse"></i> Konkurrentanalys</a>
         </div>
+
+        <!-- DashNav -->
         <div id="navd3">
             <div class="left-align">
                 <button class="w3-button w3-xlarge hamburger" style="background-color: #2c3e50" onclick="w3_open()">☰</button>
@@ -75,6 +79,7 @@
         <section class="container">
             <div class="chart-title">
                 <h2 id="title">Gör dina val för att skapa grafer</h2>
+                <h4 id="underTitle"></h4>
             </div>
             <div class="grid">
                 <div class="chart-container">

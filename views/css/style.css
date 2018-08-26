@@ -1,10 +1,28 @@
 * {
   font-family: 'Source Sans Pro', sans-serif;
+  
+}
+
+.w3-sidebar {
+  -webkit-font-smoothing: antialiased;
+    font-family: 'Muli', "Helvetica", Arial, sans-serif;
+    text-transform: uppercase;
+}
+
+
+#mysidebar {
+  width: 250px;
+  margin: 0;
+  line-height: 30px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 body {
   margin: 0;
   background: #ecf0f1;
+  
 }
 
 select {
