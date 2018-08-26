@@ -8,6 +8,40 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/views'));
 //Store all HTML files in view folder.
 
+// PASSPORT CONFIGURATION
+app.use(require("express-session")({
+	secret: "Once again Rusty wins cutest dog!",
+	resave: false,
+	saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+// passport.use(new LocalStrategy(User.authenticate()));
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
+
+
+// Add headers
+app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+	res.setHeader('Access-Control-Allow-Origin', '*');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+
+
 app.get('/', function (req, res) {
 
 	res.render('login.ejs');
@@ -124,11 +158,8 @@ app.get('/sortfil', function (req, res) {
 });
 
 app.get('/marknadskraft', function (req, res) {
-	// MongoClient.connect('mongodb://localhost:27017', (err, client) => {
-	MongoClient.connect('mongodb://ola:Neroxrox5(@ds125362.mlab.com:25362/statistik', (err, client) => {
-
-
-		var db = client.db('mathubben');
+	MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+		var db = client.db('dabas');
 		// console.log('Databas-route till: ' + req.params.type)
 		if (err) throw err;
 		// db.collection("dashtest2").distinct("Typ", function (err, data) {
