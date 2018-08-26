@@ -57,8 +57,8 @@ app.get('/dbyear2/:type', function (req, res) {
 	var befolkning = require('./views/js/kommundata.js')
 	kommunVikt = {};
 	
-	// MongoClient.connect('mongodb://ola:Neroxrox5(@ds125362.mlab.com:25362/statistik', (err, client) => {
-	MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+	MongoClient.connect('mongodb://ola:Neroxrox5(@ds125362.mlab.com:25362/statistik', (err, client) => {
+	// MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 		var db = client.db('mathubben');
 		// var db = client.db('statistik');
 		
