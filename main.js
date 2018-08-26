@@ -149,6 +149,11 @@ app.get('/db', function (req, res) {
 	})
 });
 
+app.get('/konkurrentanalys', function (req, res) {
+	res.render('konkurrentanalys.ejs');
+});
+
+
 app.get('/sortfil', function (req, res) {
 	res.render('sortfil.ejs')
 });
