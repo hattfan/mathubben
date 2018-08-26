@@ -8,6 +8,30 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/views'));
 //Store all HTML files in view folder.
 
+// Add headers
+app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+	res.setHeader('Access-Control-Allow-Origin', '*');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+MongoClient.connect('mongodb://ola:Neroxrox5(@ds125362.mlab.com:25362/statistik', (err, client) => {
+var db = client.db('statistik');
+// console.log('Databas-route till: ' + req.params.type)
+if (err) throw err;
+
 app.get('/', function (req, res) {
 
 	res.render('login.ejs');
@@ -22,13 +46,7 @@ app.get('/dbyear2/:type', function (req, res) {
 	var befolkning = require('./views/js/kommundata.js')
 	kommunVikt = {};
 	
-	MongoClient.connect('mongodb://ola:Neroxrox5(@ds125362.mlab.com:25362/statistik', (err, client) => {
-	// MongoClient.connect('mongodb://localhost:27017', (err, client) => {
-		var db = client.db('mathubben');
-		// var db = client.db('statistik');
-		
-		// console.log('Databas-route till: ' + req.params.type)
-		if (err) throw err;
+
 		var years = ['2015','2016','2017']
 		db.collection("combinedDBs").distinct("KommunNummer", function (err, kommunData) {
 
@@ -100,7 +118,6 @@ app.get('/dbyear2/:type', function (req, res) {
 			})
 		})
 	})
-})
 
 app.get('/db', function (req, res) {
 	MongoClient.connect('mongodb://localhost:27017', (err, client) => {
@@ -124,22 +141,14 @@ app.get('/sortfil', function (req, res) {
 });
 
 app.get('/marknadskraft', function (req, res) {
-	// MongoClient.connect('mongodb://localhost:27017', (err, client) => {
-	MongoClient.connect('mongodb://ola:Neroxrox5(@ds125362.mlab.com:25362/statistik', (err, client) => {
-
-
-		var db = client.db('mathubben');
-		// console.log('Databas-route till: ' + req.params.type)
+	db.collection("combinedDBs").distinct("VarugruppMathubben", function (err, data) {
 		if (err) throw err;
-		// db.collection("dashtest2").distinct("Typ", function (err, data) {
-		db.collection("combinedDBs").distinct("VarugruppMathubben", function (err, data) {
-			if (err) throw err;
-			// console.log(data)
-			res.render('marknad.ejs', { produktgruppUnique: data });
-			// res.render('marknad.ejs')
-		})
+		// console.log(data)
+		res.render('marknad.ejs', { produktgruppUnique: data });
+		// res.render('marknad.ejs')
 	})
-});
+})
+
 
 
 app.get('/dashboard', function (req, res) {
@@ -206,6 +215,7 @@ app.get('/alldbs/:type', function (req, res) {
 	})
 })
 
+})
 // var portSettings = process.env.PORT
 var port = process.env.PORT || 3030; 
 
