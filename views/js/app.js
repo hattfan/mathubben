@@ -10,17 +10,7 @@ var height = 300;
 // .node().offsetWidth;
 // var height = 300;
 
-// loader settings
-var opts = {
-  lines: 9, // The number of lines to draw
-  length: 9, // The length of each line
-  width: 5, // The line thickness
-  radius: 14, // The radius of the inner circle
-  color: '#EE3124', // #rgb or #rrggbb or array of colors
-  speed: 1.9, // Rounds per second
-  trail: 40, // Afterglow percentage
-  className: 'spinner', // The CSS class to assign to the spinner
-};
+
 
 var target = document.getElementById('#map');
 
@@ -39,14 +29,11 @@ function dataFetch() {
   
   title.textContent = "Hämtar data"
 
-  var spinner = new Spinner(opts).spin(target);
-
   // console.log(spinner)
   varugruppValue = varugruppsBtn.options[varugruppsBtn.selectedIndex].value;
   
-  var routeRequest = ('http://127.0.0.1:3030/dbyear2/' + varugruppValue);
-
-  // var routeRequest = ('http://localhost:3030/db/Chark');
+  // var routeRequest = ('http://127.0.0.1:3030/dbyear2/' + varugruppValue);
+  var routeRequest = ('http://127.0.0.1:3030/varugrupptest/' + varugruppValue);
 
   d3.queue()
     .defer(d3.json, "../src/sverige.topojson")
@@ -54,7 +41,6 @@ function dataFetch() {
 
     .await(function (error, mapData, data) {
       if (error) throw error;
-      spinner.stop();
       //!Definierar inputs
       var extremeYears = d3.extent(data, d => +d.Year);
       // var currentYear = extremeYears[0];

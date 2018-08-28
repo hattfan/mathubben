@@ -27,8 +27,12 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
-MongoClient.connect('mongodb://ola:Neroxrox5(@ds125362.mlab.com:25362/statistik', (err, client) => {
-var db = client.db('statistik');
+
+MongoClient.connect('mongodb://ola:Neroxrox5(@ds235732.mlab.com:35732/mathubben', (err, client) => {
+// MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+
+// var db = client.db('statistik');
+var db = client.db('mathubben');
 // console.log('Databas-route till: ' + req.params.type)
 if (err) throw err;
 
@@ -38,96 +42,10 @@ app.get('/', function (req, res) {
 
 });
 
-
-//????????????????????????????????????????????????????????????????????????????????????
-//??? REST get data ???????????????????????????????????????????????????????????????????????
-//????????????????????????????????????????????????????????????????????????????????????
-app.get('/dbyear2/:type', function (req, res) {
-	var befolkning = require('./views/js/kommundata.js')
-	kommunVikt = {};
-	
-
-		var years = ['2015','2016','2017']
-		db.collection("combinedDBs").distinct("KommunNummer", function (err, kommunData) {
-
-			if (err) throw err
-			//Loopar över kommunnumerna
-			for (let i = 0; i < kommunData.length; i++) {
-				const kommun = kommunData[i];
-
-				kommunVikt[kommun] = {
-					2015: {
-						'Mängd':0,
-						'Kronor':0},
-					2016: {
-						'Mängd':0,
-						'Kronor':0},
-					2017: {
-						'Mängd':0,
-						'Kronor':0},
-				}
-			}
-
-			//Letar upp valda grupper i databasen
-			db.collection("combinedDBs").find({ 'VarugruppMathubben': req.params.type }).toArray(function (err, mathubbenStatistik) {
-				if (err) throw err;
-
-				for (let i = 0; i < mathubbenStatistik.length; i++) {
-					//Loopear över kommunnummerna och letar om de finns i mathubbenstatistiken
-					if (mathubbenStatistik[i]['KommunNummer'] in kommunVikt) {
-						vikt = mathubbenStatistik[i]['Mängd'];
-						kronor = mathubbenStatistik[i]['Kronor'];
-						//vikt countar över mängden i varje statistik-rad
-						if(mathubbenStatistik[i]['År'] === 2015){
-							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2015]['Mängd'] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2015]['Mängd'] + Math.round((vikt * 100) / 100);
-							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2015]['Kronor'] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2015]['Kronor'] + Math.round((kronor * 100) / 100);
-						} 
-						else if (mathubbenStatistik[i]['År'] === 2016){
-							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2016]['Mängd'] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2016]['Mängd'] + Math.round((vikt * 100) / 100);
-							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2016]['Kronor'] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2016]['Kronor'] + Math.round((kronor * 100) / 100);
-						}
-						else if (mathubbenStatistik[i]['År'] === 2017){
-							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2017]['Mängd'] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2017]['Mängd'] + Math.round((vikt * 100) / 100);
-							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2017]['Kronor'] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2017]['Kronor'] + Math.round((kronor * 100) / 100);
-						}
-
-						vikt = "";
-					}
-				}
-				var final = []
-				var temp = {}
-				for (const key in kommunVikt) {
-					years.forEach(year => {
-						// console.log(kommunVikt[key][year])
-						temp = { 
-							'KommunNummer' : key,
-							'Year' : year,
-							'MängdTotal' : kommunVikt[key][year]['Mängd'],
-							'KronorTotal' : kommunVikt[key][year]['Kronor'],
-							'MängdPerCapita': kommunVikt[key][year]['Mängd']/befolkning[key],
-							'KronorPerCapita' : kommunVikt[key][year]['Kronor']/befolkning[key]
-
-						}
-						final.push(temp)
-						temp = {}
-					})
-				}
-				res.json(final)
-				// {continent: "Asia", country: "Afghanistan", countryCode: "004", emissions: 4217.05, emissionsPerCapita: 0.156001008723042}
-
-			})
-		})
-	})
-
-app.get('/db', function (req, res) {
-	MongoClient.connect('mongodb://localhost:27017', (err, client) => {
-		var db = client.db('dabas');
-		// console.log(req.body.artikel)
+app.get('/varugrupptest/:grupp',  function (req, res) {
+	db.collection("varugrupper").find({'Varugrupp':req.params.grupp}).toArray(function (err, data) {
 		if (err) throw err;
-		db.collection("dashtest2").find({}).toArray(function (err, data) {
-			if (err) throw err;
-			res.json(data)
-		})
+		res.json(data)
 	})
 });
 
@@ -141,15 +59,14 @@ app.get('/sortfil', function (req, res) {
 });
 
 app.get('/marknadskraft', function (req, res) {
-	db.collection("combinedDBs").distinct("VarugruppMathubben", function (err, data) {
+	db.collection("varugrupper").distinct("Varugrupp", function (err, data) {
 		if (err) throw err;
 		// console.log(data)
-		res.render('marknad.ejs', { produktgruppUnique: data });
+		sortedData = data.sort()
+		res.render('marknad.ejs', { produktgruppUnique: sortedData });
 		// res.render('marknad.ejs')
 	})
 })
-
-
 
 app.get('/dashboard', function (req, res) {
 
@@ -224,3 +141,100 @@ app.listen(port, process.env.IP, function () {
 	appConsoleMsg += process.env.IP + ':' + port;
 	console.log(appConsoleMsg);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// //????????????????????????????????????????????????????????????????????????????????????
+// //??? REST get data ???????????????????????????????????????????????????????????????????????
+// //????????????????????????????????????????????????????????????????????????????????????
+// app.get('/dbyear2/:type', function (req, res) {
+// 	var befolkning = require('./views/js/kommundata.js')
+// 	kommunVikt = {};
+	
+
+// 		var years = ['2015','2016','2017']
+// 		db.collection("combinedDBs").distinct("KommunNummer", function (err, kommunData) {
+
+// 			if (err) throw err
+// 			//Loopar över kommunnumerna
+// 			for (let i = 0; i < kommunData.length; i++) {
+// 				const kommun = kommunData[i];
+
+// 				kommunVikt[kommun] = {
+// 					2015: {
+// 						'Mängd':0,
+// 						'Kronor':0},
+// 					2016: {
+// 						'Mängd':0,
+// 						'Kronor':0},
+// 					2017: {
+// 						'Mängd':0,
+// 						'Kronor':0},
+// 				}
+// 			}
+
+// 			//Letar upp valda grupper i databasen
+// 			db.collection("combinedDBs").find({ 'VarugruppMathubben': req.params.type }).toArray(function (err, mathubbenStatistik) {
+// 				if (err) throw err;
+
+// 				for (let i = 0; i < mathubbenStatistik.length; i++) {
+// 					//Loopear över kommunnummerna och letar om de finns i mathubbenstatistiken
+// 					if (mathubbenStatistik[i]['KommunNummer'] in kommunVikt) {
+// 						vikt = mathubbenStatistik[i]['Mängd'];
+// 						kronor = mathubbenStatistik[i]['Kronor'];
+// 						//vikt countar över mängden i varje statistik-rad
+// 						if(mathubbenStatistik[i]['År'] === 2015){
+// 							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2015]['Mängd'] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2015]['Mängd'] + Math.round((vikt * 100) / 100);
+// 							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2015]['Kronor'] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2015]['Kronor'] + Math.round((kronor * 100) / 100);
+// 						} 
+// 						else if (mathubbenStatistik[i]['År'] === 2016){
+// 							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2016]['Mängd'] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2016]['Mängd'] + Math.round((vikt * 100) / 100);
+// 							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2016]['Kronor'] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2016]['Kronor'] + Math.round((kronor * 100) / 100);
+// 						}
+// 						else if (mathubbenStatistik[i]['År'] === 2017){
+// 							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2017]['Mängd'] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2017]['Mängd'] + Math.round((vikt * 100) / 100);
+// 							kommunVikt[mathubbenStatistik[i]['KommunNummer']][2017]['Kronor'] = kommunVikt[mathubbenStatistik[i]['KommunNummer']][2017]['Kronor'] + Math.round((kronor * 100) / 100);
+// 						}
+
+// 						vikt = "";
+// 					}
+// 				}
+// 				var final = []
+// 				var temp = {}
+// 				for (const key in kommunVikt) {
+// 					years.forEach(year => {
+// 						// console.log(kommunVikt[key][year])
+// 						temp = { 
+// 							'KommunNummer' : key,
+// 							'Year' : year,
+// 							'MängdTotal' : kommunVikt[key][year]['Mängd'],
+// 							'KronorTotal' : kommunVikt[key][year]['Kronor'],
+// 							'MängdPerCapita': kommunVikt[key][year]['Mängd']/befolkning[key],
+// 							'KronorPerCapita' : kommunVikt[key][year]['Kronor']/befolkning[key]
+
+// 						}
+// 						final.push(temp)
+// 						temp = {}
+// 					})
+// 				}
+// 				res.json(final)
+// 				// {continent: "Asia", country: "Afghanistan", countryCode: "004", emissions: 4217.05, emissionsPerCapita: 0.156001008723042}
+
+// 			})
+// 		})
+// 	})
