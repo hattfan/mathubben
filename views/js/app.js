@@ -33,7 +33,7 @@ function dataFetch() {
   varugruppValue = varugruppsBtn.options[varugruppsBtn.selectedIndex].value;
   
   // var routeRequest = ('http://127.0.0.1:3030/dbyear2/' + varugruppValue);
-  var routeRequest = ('http://127.0.0.1:3030/varugrupptest/' + varugruppValue);
+  var routeRequest = ('/varugrupptest/' + varugruppValue);
 
   d3.queue()
     .defer(d3.json, "../src/sverige.topojson")
