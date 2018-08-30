@@ -2,11 +2,11 @@ function createMap(width, height) {
   d3.select("#map")
     .attr("width", width)
     .attr("height", height)
+    
 }
 
 function drawMap(geoData, kommunData, year, dataType, calculationType, produktgrupp) {
   var visningsVal = dataType + calculationType
-
   var map = d3.select('#map')
   var projection = d3.geoMercator()
     .scale(4800)
@@ -46,7 +46,9 @@ function drawMap(geoData, kommunData, year, dataType, calculationType, produktgr
       var kommunName = isActive ? "" : kommun.data()[0].properties['KNNAMN'];
       var kommunKod = isActive ? "" : kommun.data()[0].properties['KNKOD'];
 
-      drawBar(kommunData, kommunKod, year, visningsVal, produktgrupp)
+      var visningsVal = dataType + calculationType
+      drawBar(kommunData, kommunKod, visningsVal)
+      highlightBars(+d3.select("#year").property("value"));
       d3.selectAll(".kommun").classed("active", false);
       kommun.classed("active", !isActive);
     })

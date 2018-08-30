@@ -17,6 +17,7 @@ var target = document.getElementById('#map');
 var title = document.querySelector('#title');
 var underTitle = document.querySelector('#underTitle')
 var varugruppsBtn = document.getElementById("varugrupp");
+var barText = document.querySelector(".bartext")
 // varugruppsBtn.onclick = dataFetch();
 document.getElementById("renderGraph").addEventListener("click", function () {
   dataFetch()}, false)
@@ -27,6 +28,7 @@ createBar(width, height)
 
 function dataFetch() {
   
+  barText.innerHTML = `<h1 style="margin: 30% 0 0 20%">Klicka på en kommun för att se detaljer</h1>`
   title.textContent = "Hämtar data"
 
   // console.log(spinner)
@@ -55,7 +57,8 @@ function dataFetch() {
 
       //! Function-calls
       drawMap(geoData, data, currentYear, currentDataType, currentCalculationType, varugruppValue);
-      drawBar(data, currentYear, currentDataType, currentCalculationType);
+      var visningsVal = currentDataType + currentCalculationType
+      // drawBar(data, "", visningsVal)
 
       //! Värden på års-togglarn
       d3.select("#year")
@@ -64,39 +67,36 @@ function dataFetch() {
         .property("value", extremeYears[1])
         .on("input", () => {
           currentYear = +d3.event.target.value;
-          // console.log(currentYear)
-          // console.log(data, currentYear, currentDataType, currentCalculationType, varugruppValue)
+
           drawMap(geoData, data, currentYear, currentDataType, currentCalculationType, varugruppValue);
+          highlightBars(currentYear)
           updateTitle(currentDataType, currentCalculationType, varugruppValue, currentYear)
 
         })
-      // .on("input", () => {
-      //   currentYear = +d3.event.target.value;
-      //   drawMap(geoData, data, currentYear, currentDataType);
-      //   drawPie(data, currentYear);
-      //   highlightBars(currentYear);
-      // });
+
 
       //!När data-type ändras renderas kartor om
       d3.selectAll('input[name="data-type"]')
         .on("change", () => {
-          //?Osäker på dessa
-          var active = d3.select(".active").data()[0];
-          var kommun = active ? active.properties.kommun : "";
+          var kommun = d3.select(".active").data()[0].properties.KNKOD;
           currentDataType = d3.event.target.value;
+          visningsVal = currentDataType + currentCalculationType
           updateTitle(currentDataType, currentCalculationType, varugruppValue, currentYear)
           drawMap(geoData, data, currentYear, currentDataType, currentCalculationType, varugruppValue);
+          drawBar(data, kommun, visningsVal)
+
         });
 
       //!När calculation-type ändras renderas kartor om
       d3.selectAll('input[name="calculation-type"]')
         .on("change", () => {
           //?Osäker på dessa
-          var active = d3.select(".active").data()[0];
-          var kommun = active ? active.properties.kommun : "";
+          var kommun = d3.select(".active").data()[0].properties.KNKOD;
           currentCalculationType = d3.event.target.value;
+          visningsVal = currentDataType + currentCalculationType
           updateTitle(currentDataType, currentCalculationType, varugruppValue, currentYear)
           drawMap(geoData, data, currentYear, currentDataType, currentCalculationType, varugruppValue);
+          drawBar(data, kommun, visningsVal)
         });
 
       //!Vid ändring av musen på kartan uppdateras tooltip
@@ -108,30 +108,38 @@ function dataFetch() {
         var tooltip = d3.select(".tooltip");
         var tgt = d3.select(d3.event.target);
         var isKommun = tgt.classed("kommun");
-        // console.log(isKommun)
+        var isBar = tgt.classed("bar");
+
         var units = currentDataType === "Mängd" ? "kg" : "kronor";
         var calculation = currentCalculationType === "Total" ? "totalt" : "per capita"
 
         var tooltipData;
 
         // console.log(tgt.data()[0].properties.data)
+        if (isBar) {
+          tooltipData = tgt.data()[0]
+          var tooltipAmount = tooltipData[visningsVal] === undefined ? 0 : tooltipData[visningsVal].toLocaleString().replace(/,/g , "'")
+          // tooltipKommun
+          // console.log(data)
+        };
 
         if (isKommun) tooltipData = tgt.data()[0].properties.data, tooltipKommun = tgt.data()[0].properties;
-        // console.log(tooltipData)
         tooltip
-          .style("opacity", +(isKommun))
+          .style("opacity", +(isKommun || isBar))
           .style("left", (d3.event.pageX - tooltip.node().offsetWidth / 2) + "px")
           .style("top", (d3.event.pageY - tooltip.node().offsetHeight - 10) + "px");
           
           // if (isKommun) var tooltipAmount = tooltipData[visningsVal] === undefined ? 0 : tooltipData[visningsVal]
-          if (isKommun) var tooltipAmount = tooltipData[visningsVal] === undefined ? 0 : tooltipData[visningsVal].toLocaleString().replace(/,/g , "'");
-
+          if (isKommun) tooltipAmount = tooltipData[visningsVal] === undefined ? 0 : tooltipData[visningsVal].toLocaleString().replace(/,/g , "'");
+          // if (isKommun && tooltipData.kommun) tooltipData.KommunNamn = 
+          if (isKommun) tooltipData.kommun === "" ? tooltipData.KommunNamn = tooltipKommun.KNNAMN :null
 
         if (tooltipData) {
           tooltip
             .html(`
-        <p>Kommun: ${tooltipKommun.KNNAMN}</p>
+        <p>Kommun: ${tooltipData.KommunNamn}</p>
         <p>Mängd: ${tooltipAmount} ${units} - ${calculation}</p>
+        <p>År: ${tooltipData.Year}</p>
       `)
         }
       };
