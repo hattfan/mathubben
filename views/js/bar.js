@@ -2,7 +2,7 @@ function createBar(width, height) {
   var bar = d3.select("#bar")
     .attr("width", width)
     .attr("height", height);
-
+  
   bar.append("g")
     .classed("x-axis", true);
 
@@ -33,17 +33,20 @@ function highlightBars(year) {
 }
 
 function drawBar(data, kommunKod, visningsVal) {
+  barchartExists = true
   barText.innerHTML = ``
   var bar = d3.select("#bar");
-  var padding = {
-    top: 30,
-    right: 150,
-    bottom: 30,
-    left: 300
-  };
-  var barPadding = 1;
+
   var width = +bar.attr("width");
   var height = +bar.attr("height");
+
+  var padding = {
+    top: 30,
+    right: width/5,
+    bottom: 30,
+    left: width/3.5
+  };
+  var barPadding = 1;
 
   //!Framfiltrering och sortering av "bars"
   var kommunData = data.filter(d => d.KommunNummer === kommunKod)
@@ -74,9 +77,9 @@ function drawBar(data, kommunKod, visningsVal) {
     .duration(1000)
     .call(yAxis);
 
-  var axisLabel = visningsVal;
-  d3.select(".y-axis-label")
-    .text(axisLabel);
+  // var axisLabel = visningsVal;
+  // d3.select(".y-axis-label")
+  //   .text(axisLabel);
 
   var t = d3.transition()
     .duration(1000)

@@ -1,16 +1,10 @@
-// 4. make bar chart
-// 5. tooltip!
-// var width = 500;
-// var height = 500;
-var width = +d3.select(".chart-container")
-              .node().offsetWidth;
 var height = 300;
-//Från d3-kurs
-// var width = +d3.select(".chart-container")
-// .node().offsetWidth;
-// var height = 300;
 
+window.onresize = function(event) {
+  screenResize()
+};
 
+screenResize()
 
 var target = document.getElementById('#map');
 
@@ -18,17 +12,15 @@ var title = document.querySelector('#title');
 var underTitle = document.querySelector('#underTitle')
 var varugruppsBtn = document.getElementById("varugrupp");
 var barText = document.querySelector(".bartext")
+var barchartExists = document.querySelector("bar")
+
 // varugruppsBtn.onclick = dataFetch();
 document.getElementById("renderGraph").addEventListener("click", function () {
   dataFetch()}, false)
 
-createMap(width, width * 4 /5)
-createBar(width, height)
-// dataFetch();
-
 function dataFetch() {
+  barchartExists ? barText.innerHTML = '' : barText.innerHTML = `<h3 style="margin: 10% 0 0 10%">Klicka på en kommun för att se detaljer</h3>`
   
-  barText.innerHTML = `<h1 style="margin: 30% 0 0 20%">Klicka på en kommun för att se detaljer</h1>`
   title.textContent = "Hämtar data"
 
   // console.log(spinner)
@@ -153,4 +145,18 @@ function formatDataType(key) {
 function updateTitle(currentDataType, currentCalculationType, varugruppValue, currentYear){
   title.textContent = varugruppValue 
   underTitle.textContent = currentDataType + ' - ' + currentCalculationType + ' - ' + currentYear;
+}
+
+function screenResize(){
+  var mapChartWidth = +d3.select(".map-container")
+    .node().offsetWidth;
+
+  var barChartWidth = +d3.select(".bar-container")
+    .node().offsetWidth;
+
+    // console.log(mapChartWidth, barChartWidth)
+
+    createMap(mapChartWidth, height)
+    createBar(barChartWidth, height)    
+
 }

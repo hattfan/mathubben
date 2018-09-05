@@ -13,16 +13,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/themify-icons.css" rel="stylesheet">
-
-
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-
-    <body>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="css/konkurrentanalys.css">
-
+    <body>
         <!-- W3 sidenav -->
         <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
             <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
@@ -45,30 +39,19 @@
                 <h1>Konkurrentanalys</h1>
             </div>
 
-
             <div class="nav-container">
-
                 <div class="grid-even">
                     <div class="search-box">
                         <h4>Produktval</h4>
                         <input class="produkt-search" type="text" name="produkt-search" id="produkt-search" placeholder="Sök efter artikelnamn">
+                        <ul class="suggestions">
+                            <!-- <li>Filter for a city</li>
+                            <li>or a state</li> -->
+                        </ul>
                     </div>
                     <div>
                         <i class="fa fa-plus-circle addition" aria-hidden="true"></i>
                     </div>
-                </div>
-
-            </div>
-        </div>
-
-
-        <div class="container-search">
-            <div class="produkt-box">
-                <div class="box-title">
-                    <h4>Produktval</h4>
-                </div>
-                <div class="box-body">
-                    <input class="produkt-search" type="text" name="produkt-search" id="produkt-search1" placeholder="Sök efter artikelnamn">
                 </div>
             </div>
         </div>
@@ -78,15 +61,6 @@
         <div class="tooltip"></div>
         <footer class="footer">
             <div class="container-fluid">
-                <nav class="pull-left">
-                    <ul>
-                        <li>
-                            <a href="http://www.creative-tim.com/license">
-                                Licenses
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
                 <div class="copyright pull-right">
                     &copy;
                     <script>
@@ -108,18 +82,6 @@
             document.getElementById("mySidebar").style.display = "none";
         }
     </script>
-
-    <!--   Core JS Files   -->
-    <!-- <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script> -->
-    <!-- <script src="assets/js/bootstrap.min.js" type="text/javascript"></script> -->
-
-    <!--  Checkbox, Radio & Switch Plugins -->
-    <!-- <script src="assets/js/bootstrap-checkbox-radio.js"></script> -->
-
-    <!--  Notifications Plugin    -->
-    <script src="assets/js/bootstrap-notify.js"></script>
-
-    <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
-    <!-- <script src="assets/js/paper-dashboard.js"></script> -->
-
+    <script src="js/artikelnamnTEST.js"></script>
+    <script src="js/konkurrentanalys.js"></script>
     </html>

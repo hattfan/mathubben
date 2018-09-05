@@ -30,6 +30,7 @@ select {
 }
 
 #navd3 {
+  /* position: fixed; */
   background-color: #2c3e50;
   color: white;
   padding: 15px;
@@ -43,6 +44,7 @@ select {
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: row;
+  margin-left: 60px;
 }
 
 #navd3 p {
@@ -68,10 +70,16 @@ select {
 
 .container {
   min-width: 80%;
-  background-color: white;
+  /* background-color: white; */
   margin: 1% 10%;
-  border-radius: 5px;
-  box-shadow: 2px 2px #ccc;
+  /* border-radius: 5px; */
+  /* box-shadow: 2px 2px #ccc; */
+}
+
+@media (max-width:799px) {
+  .container {
+    margin: 1% 2%;
+  }
 }
 
 .text-container{
@@ -89,28 +97,49 @@ select {
   flex-direction: row;
 }
 
-.right {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.map-container {
+  height: 650px;
+  width: 55%;
+}
+
+.bar-container {
+  height: 300px;
+  width: 35%;
 }
 
 .chart-container {
-  display: inline-block;
-  width: 45%;
-  min-height: 400px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 2px 2px #ccc;
+  /* display: inline-block; */
+  /* width: 45%; */
+  /* height: 300px; */
   margin: 1% 2%;
   vertical-align: top;
 }
 
+@media (max-width:799px) {
+  .chart-container {
+    width: 95%;
+  }
+}
+
 .chart-title {
-  text-align: center
+  text-align: center;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 2px 2px #ccc;
+  padding: 5px;
+  width: 94%;
+  margin: 1% 2%;
+  /* display: flex; */
 }
 
-svg {
-  margin: 20px;
+@media (max-width:799px) {
+  svg {
+    margin: 0px;
+  }
 }
-
 /* Tooltip styling */
 
 .tooltip {

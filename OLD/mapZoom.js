@@ -1,21 +1,20 @@
 function createMap(width, height) {
   d3.select("#map")
     .attr("width", width)
-    .attr("height", height*2+50)
+    .attr("height", height)
+    .append("g")
 }
 
 function drawMap(geoData, kommunData, year, dataType, calculationType, produktgrupp) {
   var visningsVal = dataType + calculationType
   var map = d3.select('#map')
-
   var projection = d3.geoMercator()
-    .scale(1100)
-    .translate([0, 1900])
-    // .scale(4300)
-    // .translate([-700, 6300])
+    .scale(4800)
+    .translate([-700, 6300])
     //If mobile
     // .scale(4200)
     // .translate([-1000, 5400])
+
 
   var path = d3.geoPath()
     .projection(projection);
@@ -37,16 +36,22 @@ function drawMap(geoData, kommunData, year, dataType, calculationType, produktgr
     .domain(domain)
     .range(colors);
 
-  var addG = map.append("g")
-
-  var zoom_handler = d3.zoom()
-    .on("zoom", zoom_actions);
-
-  //specify what to do when zoom event listener is triggered 
-  zoom_handler(addG);
-
-  var update = addG.selectAll(".kommun")
+  var update = map.selectAll(".kommun")
     .data(geoData);
+
+    console.log(update)
+
+    
+  var zoom = d3.behavior.zoom()
+    .scaleExtent([1, 8])
+    .on("zoom", zoomed);
+
+  // var svg = d3.select("#map").selectAll("g")
+
+  // svg
+  //   .call(zoom)
+  //   .call(zoom.event);
+
 
   update
     .enter()
@@ -72,11 +77,8 @@ function drawMap(geoData, kommunData, year, dataType, calculationType, produktgr
         var val = d.properties.data[visningsVal];
         return val ? mapColorScale(val) : "#ccc";
       });
-
-  function zoom_actions(){
-    addG.attr("transform", d3.event.transform);
-  }
-  
 };
 
-
+function zoomed() {
+  g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
