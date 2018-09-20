@@ -36,6 +36,24 @@ select {
   /* text-align: center; */
 }
 
+.selection-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  /* margin-left: 60px; */
+}
+
+.show-bar {
+  transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+  display: flex;
+}
+
+.no-show {
+  display: none;
+}
+
 .container {
   /* margin: 0% 30%; */
   display: flex;
@@ -261,7 +279,7 @@ input[type="range"]::-webkit-slider-thumb:active {
   background-image: url('../assets/img/searchicon.png');
   background-repeat: no-repeat;
   background-position: 7px 10px; 
-  background-size: 7%;
+  background-size: 25px;
   min-width: 400px;
 }
 
@@ -280,6 +298,10 @@ input[type="range"]::-webkit-slider-thumb:active {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   text-align: left;
+
+}
+
+.suggestions.active {
   border-bottom: 1px solid #ccc;
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
