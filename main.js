@@ -28,12 +28,12 @@ app.use(function (req, res, next) {
     next();
 });
 
-MongoClient.connect('mongodb://ola:Neroxrox5(@ds235732.mlab.com:35732/mathubben', (err, client) => {
-// MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+// MongoClient.connect('mongodb://ola:Neroxrox5(@ds235732.mlab.com:35732/mathubben', (err, client) => {
+MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 
 // var db = client.db('statistik');
 var db = client.db('mathubben');
-// console.log('Databas-route till: ' + req.params.type)
+
 if (err) throw err;
 
 app.get('/', function (req, res) {
