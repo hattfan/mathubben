@@ -46,22 +46,25 @@
             <i class="ti-pulse"></i> Konkurrentanalys</a>
     </div>
 
-    <div id="navd3">
+    <div id="produkt-search-toolbar">
         <div class="nav-container">
-            <div class="grid-even">
-                <div class="search-box">
-                    <!-- <h4>Produktval</h4> -->
-                    <input class="produkt-search" type="text" name="produkt-search" id="produkt-search" placeholder="Sök efter artikelnamn">
-                    <ul class="suggestions">
-                    </ul>
+            <div class="grid-produkt">
+                <div class="search-box-container">
+                    <div class="search-box" style="border-left: #eaeaea 1px solid; border-right: #eaeaea 1px solid">
+                        <p class="search-color-blob" style="background-color: blue"></p>
+                        <input class="produkt-search" type="text" name="produkt-search" placeholder="Sök efter artikelnamn">
+                        <ul class="suggestions"></ul>
+                    </div>
                 </div>
-                <div class="plus-icon">
-                    <p><i class="fa fa-plus-circle addition" aria-hidden="true"></i> Lägg till fler artiklar</p>
+                <div class="add-another-searchbar">
+                    <div class="plus-icon">
+                        <p><i class="fa fa-plus-circle addition" aria-hidden="true"></i> Lägg till fler artiklar</p>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="selection-container">
-            <div class="grid-even">
+            <div class="grid-choice-bar">
                 <p>
                     <input type="radio" name="data-type" value="Mängd" checked>
                     <label>Kilon</label>
@@ -71,7 +74,7 @@
                 </p>
             </div>
 
-            <div class="grid-even">
+            <div class="grid-choice-bar">
 
                 <p>
                     <input type="radio" name="calculation-type" value="Total" checked>
@@ -82,13 +85,13 @@
                 </p>
             </div>
 
-            <div class="grid-even">
+            <div class="grid-choice-bar">
                 <p id="year-val">Välj år
                     <br>
                     <input id="year" type="range" step="1">
                 </p>
             </div>
-            <div class="grid-even" id="renderGraph">
+            <div class="grid-choice-bar" id="renderGraph">
                 <p> Rita
                     <br> grafer! </p>
             </div>
@@ -127,6 +130,7 @@
 <script src="/src/d3.v4.js"></script>
 <script src="/src/topojson.js"></script>
 <script src="js/konkurrentanalys/artikelnamnTEST.js"></script>
+<script src="js/konkurrentanalys/search_box_handler.js"></script>
 <script src="js/konkurrentanalys/konkurrentanalys.js"></script>
 <script src="js/konkurrentanalys/konkurrentanalys_datahandler.js"></script>
 <script src="js/konkurrentanalys/map_konkurrentanalys.js"></script>

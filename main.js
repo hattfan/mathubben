@@ -107,7 +107,7 @@ app.get('/getmongodata/:type', function (req, res) {
 
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//! Till att rendera databaserna direkt, utan att behöva mecka med mongoexport////////
+//! För att rendera databaserna direkt, utan att behöva mecka med mongoexport.  !!!!!!!
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 app.get('/alldbs/:type', function (req, res) {

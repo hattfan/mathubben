@@ -2,7 +2,11 @@
 const artiklar = artikelNamn
 const graphOptionsBar = document.querySelector('.selection-container')
 const suggestions = document.querySelector('.suggestions');
+const searchBox = document.querySelector('.search-box')
+let searchBoxCounter = document.querySelectorAll('.search-box')
 const searchInput = document.querySelector('[name=produkt-search]')
+const searchAdd = document.querySelector('.add-another-searchbar')
+const searchBoxContainer = document.querySelector('.search-box-container')
 
 //Lägger till no-show i JS utifall något skumt
 graphOptionsBar.classList.add('no-show')
@@ -18,20 +22,20 @@ function findMatches(wordToMatch) {
 //displayMatches lägger till förslagen som en ul-lista
 function displayMatches() {
     if (this.value.length === 0) {
-        suggestions.innerHTML = "";
+        suggestions.innerHTML = '';
         suggestions.classList.contains('active') ? suggestions.classList.remove('active') : null
         return
     }
 
-    suggestions.classList.contains('active')&&suggestions.innerHTML === '' ? null : suggestions.classList.add('active')
+    suggestions.classList.contains('active') && suggestions.innerHTML === '' ? null : suggestions.classList.add('active')
     matchArray = findMatches(this.value, artiklar)
     const html = matchArray.map(artikel => {
         const regex = new RegExp(this.value, 'gi');
-        const artikelNamnReplaced = artikel.replace(regex, `<span class="hl">${this.value}</span>`);
+        const artikelNamnReplaced = artikel.replace(regex, `<span class='hl'>${this.value}</span>`);
         //! Kan ändras till att matcha leverantör 
-        // const stateName = .replace(regex, `<span class="hl">${this.value}</span>`);
+        // const stateName = .replace(regex, `<span class='hl'>${this.value}</span>`);
         return `
-        <li class="suggestionListItem">
+        <li class='suggestionListItem'>
             ${artikel}
         </li>
         `;
@@ -41,19 +45,25 @@ function displayMatches() {
 
 //showGraphOptions fäller ner bar:en för graf-val efter att användaren har sökt
 function showGraphOptions() {
-    graphOptionsBar.classList.contains('no-show') ? graphOptionsBar.classList.removeClass('no-show'):null
+    graphOptionsBar.classList.contains('no-show') ? graphOptionsBar.classList.removeClass('no-show') : null
 }
 
-//Eventlisteners
-searchInput.addEventListener("keyup", displayMatches)
-searchInput.addEventListener("change", displayMatches)
+//
 
-suggestions.addEventListener("click", function (e) {
-    searchInput.value = e.target.innerHTML.replace(/  /g,'');
+
+
+
+//Eventlisteners
+searchInput.addEventListener('keyup', displayMatches)
+searchInput.addEventListener('change', displayMatches)
+searchAdd.addEventListener('click', addAnotherSearchBar)
+
+suggestions.addEventListener('click', function (e) {
+    searchInput.value = e.target.innerHTML.replace(/  /g, '');
     suggestions.innerHTML = '';
     suggestions.classList.contains('active') ? suggestions.classList.remove('active') : null
 
-    if(graphOptionsBar.classList.contains('no-show')){
+    if (graphOptionsBar.classList.contains('no-show')) {
         graphOptionsBar.classList.remove('no-show')
         graphOptionsBar.classList.add('show-bar')
     }

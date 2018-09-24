@@ -1,4 +1,7 @@
-/* General settings */
+
+/*=============================================
+=            General            =
+=============================================*/
 * {
   font-family: 'Source Sans Pro', sans-serif;  
 }
@@ -8,11 +11,19 @@ body {
   background: #ecf0f1;
 }
 
-/* NAV */
+/*=====  End of General  ======*/
+
+
+
+/*=============================================
+=            Navbar            =
+=============================================*/
+
 .topbar {
   width: 100%;
   position: fixed;
   background-color: #2c3e50;
+  opacity: 80%;
   min-height: 52px;
   top: 0;
   box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.75);
@@ -22,6 +33,15 @@ body {
   flex-wrap: nowrap;
 }
 
+
+.left-align {
+  text-align: left;
+  position: fixed;
+}
+.center-align {
+  text-align: center;
+}
+
 .module-type {
   margin-left: 60px;
 }
@@ -29,26 +49,6 @@ body {
 .user-logged-in {
   right: 10px;
 }
-
-#navd3 {
-  background-color: white;
-  color: white;
-  /* border-bottom: 1px solid #aaa; */
-  box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.3);
-  /* padding: 5px; */
-  width: 100%;
-  margin-top: 52px;
-}
-
-#navd3 p {
-  margin: 4px;
-}
-
-#navd3 h2 {
-  margin: 0;
-  font-size: 1.5em;
-}
-
 
 /* SideNAV */
 .w3-sidebar {
@@ -71,8 +71,135 @@ body {
 }
 
 
+/*=====  End of Navbar  ======*/
+
+
+
+/*=============================================
+=            Produkt search            =
+=============================================*/
+
+.grid-produkt {
+  min-height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.3);
+}
+
+
+.search-box-container {
+  display: flex;
+}
+
+.search-box:hover > .produkt-search {
+  transition: background-color 0.5s ease;
+  background-color: rgb(247, 247, 247);
+}
+
+.search-box:hover{
+  transition: background-color 0.5s ease;
+  background-color: rgb(247, 247, 247);
+}
+
+/* .search-box-container {
+  flex-basis: 70%;
+} */
+
+.add-another-searchbar{
+  width: 50%;
+}
+
+.search-box-container {
+  width: 50%;
+}
+
+.search-box {
+  width: 100%;
+  margin-left: 10%;
+  /* display: flex; */
+  /* align-items: center; */
+}
+
+.search-color-blob {
+  margin-left: 5px;
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+}
+
+.produkt-search {
+  padding: 0px 0px 0px 10px;
+  border: none;
+  height: 100px;
+  width: 100%;
+}
+
+.produkt-search:focus {
+  outline: none;
+}
+
+#produkt-search-toolbar {
+  background-color: white;
+  color: white;
+  /* box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.3); */
+  width: 100%;
+  margin-top: 52px;
+}
+
+#produkt-search-toolbar p {
+  margin: 4px;
+}
+
+#produkt-search-toolbar h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+
+
 select {
   color: black;
+}
+
+
+
+
+/*----------  Subsection comment block  ----------*/
+
+
+.suggestions {
+  position: absolute;
+  background-color: white;
+  opacity: 90%;
+  color: rgb(116, 116, 116);
+  list-style: none;
+  /* width: 202px; */
+  margin: 0 0 0 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  text-align: left;
+}
+
+.suggestions.active {
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.suggestionListItem {
+  cursor: pointer;
+  padding: 10px 0;
+  margin: 0;
+
+}
+
+.suggestionListItem:hover {
+  color: black;
+  border-radius: 20px;
 }
 
 /* Selection dropdown */
@@ -83,16 +210,38 @@ select {
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: row;
+  box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.3);
+
+}
+
+.grid-choice-bar {
+  min-height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .show-bar {
   transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+  /* background-color: #eee; */
   display: flex;
 }
 
 .no-show {
   display: none;
 }
+
+/*=====  End of Produkt search  ======*/
+
+
+
+/*=============================================
+=            Graph container            =
+=============================================*/
+
+
 
 /* Container */
 .container {
@@ -105,19 +254,6 @@ select {
 }
 
 /* Styling för grafområdet */
-.grid-even {
-  /* background-color: #4c6279; */
-  /* margin: 10px; */
-  /* padding: 10px; */
-  /* border-radius: 5px; */
-  /* box-shadow: 2px 2px #1f3244; */
-  min-height: 80px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
 
 .addition {
   margin-left: 10px;
@@ -138,23 +274,6 @@ select {
   justify-content: space-between;
 }
 
-.chart-container {
-  display: inline-block;
-  width: 45%;
-  min-height: 400px;
-  margin: 1% 2%;
-  vertical-align: top;
-}
-
-.chart-title {
-  text-align: center
-}
-
-
-#varugrupp {
-  border-radius: 3px;
-  padding: 3px;
-}
 
 /* Input styling */
 input[type="range"] {
@@ -164,8 +283,6 @@ input[type="range"] {
   width: 200px;
   height: 5px;
   border-radius: 5px;
-  /* margin: 0 auto; */
-  /* outline: 0; */
 }
 
 input[type="range"]::-webkit-slider-thumb {
@@ -188,37 +305,24 @@ input[type="range"]::-webkit-slider-thumb:active {
   transform: scale(1.1);
 }
 
+
 #renderGraph {
   cursor: pointer;
 }
 
-.hamburger:hover {
-  background-color: #4c6279;
-}
+/*=====  End of Graph container  ======*/
 
 
-.left-align {
-  text-align: left;
-  position: fixed;
-}
-.center-align {
-  text-align: center;
-}
 
-.excel-icon:hover {
-  color: green
-}
 
-/* Styles för konkurrentanalys */
-.search-box {
-  text-align: center;
-  /* border-left: 1px solid #4c6279; */
-  /* border-right: 1px solid #4c6279; */
-}
+
+
 
 .plus-icon {
   color: #aaa;
   padding: 10px;
+  cursor: pointer;
+  flex-grow: 1;
 }
 
 .plus-icon:hover {
@@ -226,68 +330,9 @@ input[type="range"]::-webkit-slider-thumb:active {
   padding: 10px;
 }
 
-.container-search {
-  background-color: #ccc;
-  width: 100%;
-  height: 100px;
-  padding: 10px;
-  /* border-radius: 10px; */
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
-
-}
 
 .produkt-box {
   min-height: 100%;
   background-color: white;
   padding: 5px;
-}
-
-#produkt-search {
-  border-radius: 20px;
-  padding: 10px 10px 10px 45px;
-  border: 1px solid #aaa;
-  background-image: url('../assets/img/searchicon.png');
-  background-repeat: no-repeat;
-  background-position: 7px 10px; 
-  background-size: 25px;
-  min-width: 400px;
-}
-
-#produkt-search:focus {
-  outline: none;
-}
-
-.suggestions {
-  position: absolute;
-  background-color: white;
-  opacity: 90%;
-  color: rgb(116, 116, 116);
-  list-style: none;
-  width: 360px;
-  margin: 0 0 0 20px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  text-align: left;
-}
-
-.suggestions.active {
-  border-bottom: 1px solid #ccc;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-}
-
-.suggestionListItem {
-  cursor: pointer;
-  padding: 10px 0;
-  margin: 0;
-
-}
-
-.suggestionListItem:hover {
-  color: black;
-  /* background-color: rgb(245, 245, 245); */
-  border-radius: 20px;
 }
