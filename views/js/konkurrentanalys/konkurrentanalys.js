@@ -5,7 +5,7 @@ const suggestions = document.querySelector('.suggestions');
 const searchBox = document.querySelector('.search-box')
 let searchBoxCounter = document.querySelectorAll('.search-box')
 const searchInput = document.querySelector('[name=produkt-search]')
-const searchAdd = document.querySelector('.add-another-searchbar')
+const searchAdd = document.querySelector('.addition-box')
 const searchBoxContainer = document.querySelector('.search-box-container')
 
 //Lägger till no-show i JS utifall något skumt

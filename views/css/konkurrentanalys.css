@@ -109,18 +109,24 @@ body {
 } */
 
 .add-another-searchbar{
-  width: 50%;
+  width: 100%;
 }
 
 .search-box-container {
-  width: 50%;
+  width: 80%;
+}
+
+.addition-box{
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .search-box {
   width: 100%;
-  margin-left: 10%;
-  /* display: flex; */
-  /* align-items: center; */
+   /*display: flex; */
+   /*align-items: center;*/
+
 }
 
 .search-color-blob {
@@ -128,7 +134,7 @@ body {
   display: inline-block;
   height: 10px;
   width: 10px;
-  border-radius: 50%;
+  border-radius: 100%;
 }
 
 .produkt-search {
@@ -182,6 +188,7 @@ select {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   text-align: left;
+  width: 100%;
 }
 
 .suggestions.active {

@@ -30,23 +30,30 @@ function addAnotherSearchBar() {
                                 <ul class="suggestions"></ul>
                             </div>`
 
+    const additionBox = `<div class="addition-box">
+                            <div class="plus-icon">
+                            <p><i class="fa fa-plus-circle addition" aria-hidden="true"></i> Lägg till fler artiklar</p>
+                            </div>
+                        </div>`
 
     switch (searchBoxCounter.length) {
         case 1:
-            searchBoxContainer.innerHTML = `${addSearchBox1} ${addSearchBox2}`
+            searchBoxContainer.innerHTML = `${addSearchBox1} ${addSearchBox2} ${additionBox}`
+            document.querySelector('.addition-box').addEventListener('click', addAnotherSearchBar)
             break;
 
         case 2:
-            searchBoxContainer.innerHTML = `${addSearchBox1} ${addSearchBox2} ${addSearchBox3}`
+            searchBoxContainer.innerHTML = `${addSearchBox1} ${addSearchBox2} ${addSearchBox3}  ${additionBox}`
+            document.querySelector('.addition-box').addEventListener('click', addAnotherSearchBar)
             break;
 
         case 3:
-            searchBoxContainer.innerHTML = `${addSearchBox1} ${addSearchBox2} ${addSearchBox3} ${addSearchBox4}`
+            searchBoxContainer.innerHTML = `${addSearchBox1} ${addSearchBox2} ${addSearchBox3} ${addSearchBox4}  ${additionBox}`
+            document.querySelector('.addition-box').addEventListener('click', addAnotherSearchBar)
             break
 
         case 4:
             searchBoxContainer.innerHTML = `${addSearchBox1} ${addSearchBox2} ${addSearchBox3} ${addSearchBox4} ${addSearchBox5}`
-            document.querySelector('.add-another-searchbar').innerHTML = '';
             break;
 
         default:
