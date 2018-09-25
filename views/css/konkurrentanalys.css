@@ -22,6 +22,7 @@ body {
 .topbar {
   width: 100%;
   position: fixed;
+  z-index: 999;
   background-color: #2c3e50;
   opacity: 80%;
   min-height: 52px;
@@ -104,14 +105,6 @@ body {
   background-color: rgb(247, 247, 247);
 }
 
-/* .search-box-container {
-  flex-basis: 70%;
-} */
-
-.add-another-searchbar{
-  width: 100%;
-}
-
 .search-box-container {
   width: 80%;
 }
@@ -130,10 +123,10 @@ body {
 }
 
 .search-color-blob {
-  margin-left: 5px;
+  margin: 1px;
   display: inline-block;
-  height: 10px;
-  width: 10px;
+  height: 15px;
+  width: 15px;
   border-radius: 100%;
 }
 
@@ -141,7 +134,8 @@ body {
   padding: 0px 0px 0px 10px;
   border: none;
   height: 100px;
-  width: 100%;
+  cursor: text;
+  /* width: 100%; */
 }
 
 .produkt-search:focus {
@@ -151,21 +145,14 @@ body {
 #produkt-search-toolbar {
   background-color: white;
   color: white;
-  /* box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.3); */
   width: 100%;
   margin-top: 52px;
-}
-
-#produkt-search-toolbar p {
-  margin: 4px;
 }
 
 #produkt-search-toolbar h2 {
   margin: 0;
   font-size: 1.5em;
 }
-
-
 
 select {
   color: black;
@@ -180,13 +167,8 @@ select {
 .suggestions {
   position: absolute;
   background-color: white;
-  opacity: 90%;
   color: rgb(116, 116, 116);
-  list-style: none;
-  /* width: 202px; */
   margin: 0 0 0 0;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
   text-align: left;
   width: 100%;
 }
@@ -197,16 +179,16 @@ select {
   border-right: 1px solid #ccc;
 }
 
-.suggestionListItem {
+.suggestion-list-item {
   cursor: pointer;
   padding: 10px 0;
   margin: 0;
-
 }
 
-.suggestionListItem:hover {
+
+.suggestion-list-item:hover {
   color: black;
-  border-radius: 20px;
+  background-color: rgb(247, 247, 247);
 }
 
 /* Selection dropdown */
@@ -232,7 +214,6 @@ select {
 
 .show-bar {
   transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
-  /* background-color: #eee; */
   display: flex;
 }
 
@@ -261,7 +242,6 @@ select {
 }
 
 /* Styling för grafområdet */
-
 .addition {
   margin-left: 10px;
   cursor: pointer;

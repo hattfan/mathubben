@@ -52,16 +52,15 @@
                 <div class="search-box-container">
                     <div class="search-box" style="border-left: #eaeaea 1px solid; border-right: #eaeaea 1px solid">
                         <p class="search-color-blob" style="background-color: blue"></p>
-                        <input class="produkt-search" type="text" name="produkt-search" placeholder="Sök efter artikelnamn">
-                        <ul class="suggestions"></ul>
+                        <input class="produkt-search" data-id="1" type="text" name="produkt-search" placeholder="Sök efter artikelnamn">
+                        <div class="suggestions" id="search-box1"></div>
                     </div>
                     <div class="addition-box">
                         <div class="plus-icon">
                             <p><i class="fa fa-plus-circle addition" aria-hidden="true"></i> Lägg till fler artiklar</p>
                         </div>
                     </div>
-                </div>
-                
+                </div>  
             </div>
         </div>
         <div class="selection-container">
@@ -74,9 +73,7 @@
                     <label>Kronor</label>
                 </p>
             </div>
-
             <div class="grid-choice-bar">
-
                 <p>
                     <input type="radio" name="calculation-type" value="Total" checked>
                     <label>Totalt</label>

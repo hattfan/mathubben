@@ -8,40 +8,15 @@ const searchInput = document.querySelector('[name=produkt-search]')
 const searchAdd = document.querySelector('.addition-box')
 const searchBoxContainer = document.querySelector('.search-box-container')
 
-
 function addListenersToSuggestions() {
+    console.log('här')
     const searchInputs = document.querySelectorAll('[name=produkt-search]')
-    
     searchInputs.forEach(searchInput => {
         // searchInput.addEventListener('keyup', displayMatches)
         // searchInput.addEventListener('change', displayMatches)
         searchInput.addEventListener('keyup', function(){
-            
-            const inputId = this.getAttribute('data-id')
-            
-            const suggestionWithId = document.querySelector(`[data-suggestion-id="${inputId}"]`)
-            
-            displayMatches(suggestionWithId, this)
-
-            suggestionWithId.addEventListener('click', function (e) {
-                searchInput.value = e.target.innerHTML.replace(/  /g, '');
-                suggestionWithId.innerHTML = '';
-                suggestionWithId.classList.contains('active') ? suggestionWithId.classList.remove('active') : null
-            
-                if (graphOptionsBar.classList.contains('no-show')) {
-                    graphOptionsBar.classList.remove('no-show')
-                    graphOptionsBar.classList.add('show-bar')
-                }
-            
-                var routeRequest = ('/produkter/' + 'Menigo - 739746')
-                fetch(routeRequest)
-                    .then(function (response) {
-                        return response.json();
-                    })
-                    .then(function (myJson) {
-                        
-                    });
-            })
+            console.log(this.parentNode.getElementsByClassName('suggestions'))
+            debugger;
         })
 
     })
@@ -70,21 +45,20 @@ function findMatches(wordToMatch) {
 }
 
 //displayMatches lägger till förslagen som en ul-lista
-function displayMatches(currentSuggestion, inputValue) {
-    const width = document.querySelector('.search-box').offsetWidth
-    currentSuggestion.style.width = `${width}px`
-
-    if (inputValue.value.length === 0) {
-        currentSuggestion.innerHTML = '';
-        currentSuggestion.classList.contains('active') ? currentSuggestion.classList.remove('active') : null
+function displayMatches() {
+    suggestions.style.width = `${searchBox.offsetWidth}px`
+    
+    if (this.value.length === 0) {
+        suggestions.innerHTML = '';
+        suggestions.classList.contains('active') ? suggestions.classList.remove('active') : null
         return
     }
 
-    currentSuggestion.classList.contains('active') && currentSuggestion.innerHTML === '' ? null : currentSuggestion.classList.add('active')
-    matchArray = findMatches(inputValue.value, artiklar)
+    suggestions.classList.contains('active') && suggestions.innerHTML === '' ? null : suggestions.classList.add('active')
+    matchArray = findMatches(this.value, artiklar)
     const html = matchArray.map(artikel => {
-        const regex = new RegExp(inputValue.value, 'gi');
-        const artikelNamnReplaced = artikel.replace(regex, `<span class='hl'>${inputValue.value}</span>`);
+        const regex = new RegExp(this.value, 'gi');
+        const artikelNamnReplaced = artikel.replace(regex, `<span class='hl'>${this.value}</span>`);
         //! Kan ändras till att matcha leverantör 
         // const stateName = .replace(regex, `<span class='hl'>${this.value}</span>`);
         return `
@@ -95,13 +69,33 @@ function displayMatches(currentSuggestion, inputValue) {
         </div>
         `;
     }).join('');
-    currentSuggestion.innerHTML = html;
+    suggestions.innerHTML = html;
 }
 
 //showGraphOptions fäller ner bar:en för graf-val efter att användaren har sökt
 function showGraphOptions() {
     graphOptionsBar.classList.contains('no-show') ? graphOptionsBar.classList.removeClass('no-show') : null
 }
+
+suggestions.addEventListener('click', function (e) {
+    searchInput.value = e.target.innerHTML.replace(/  /g, '');
+    suggestions.innerHTML = '';
+    suggestions.classList.contains('active') ? suggestions.classList.remove('active') : null
+
+    if (graphOptionsBar.classList.contains('no-show')) {
+        graphOptionsBar.classList.remove('no-show')
+        graphOptionsBar.classList.add('show-bar')
+    }
+
+    var routeRequest = ('/produkter/' + 'Menigo - 739746')
+    fetch(routeRequest)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (myJson) {
+            
+        });
+})
 
 window.addEventListener("resize", function() {
     suggestions.style.width = `${searchBox.offsetWidth}px`
