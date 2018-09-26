@@ -1,29 +1,23 @@
 function addAnotherSearchBar() {
 
-    
     searchBoxCounter = document.querySelectorAll('.search-box')
 
-    const addSearchBox1 = `  <div class="search-box" style="border-left: #f7f7f7 1px solid; border-right: #f7f7f7 1px solid">
-                                <div class="search-color-blob" style="background-color: blue"></div>
-                                    <input class="produkt-search" data-id="1" type="text" name="produkt-search" id="produkt-search" placeholder="Sök efter artikelnamn">
-                                    <ul class="suggestions" data-suggestion-id="1" id="search-box1"></ul>
-                            </div>`
-    const addSearchBox2 = `  <div class="search-box" style="border-right: #f7f7f7 1px solid">
+    const addSearchBox2 = `  <div class="search-box" id="search-box-2" style="border-right: #f7f7f7 1px solid">
                                 <div class="search-color-blob" style="background-color: red"></div>
                                     <input class="produkt-search" data-id="2" type="text" name="produkt-search" id="produkt-search" placeholder="Sök efter artikelnamn">
                                     <ul class="suggestions" data-suggestion-id="2" id="search-box2"></ul>
                             </div>`
-    const addSearchBox3 = `  <div class="search-box" style="border-right: #f7f7f7 1px solid">
+    const addSearchBox3 = `  <div class="search-box" id="search-box-3" style="border-right: #f7f7f7 1px solid">
                             <div class="search-color-blob" style="background-color: DarkOrange"></div>
                                 <input class="produkt-search" data-id="3" type="text" name="produkt-search" id="produkt-search" placeholder="Sök efter artikelnamn">
                                 <ul class="suggestions" data-suggestion-id="3" id="search-box3"></ul>
                             </div>`
-    const addSearchBox4 = `  <div class="search-box" style="border-right: #f7f7f7 1px solid">
+    const addSearchBox4 = `  <div class="search-box" id="search-box-4" style="border-right: #f7f7f7 1px solid">
                                 <div class="search-color-blob" style="background-color: purple"></div>
                                 <input class="produkt-search" data-id="4" type="text" name="produkt-search" id="produkt-search" placeholder="Sök efter artikelnamn">
                                 <ul class="suggestions" data-suggestion-id="4" id="search-box4"></ul>
                             </div>`
-    const addSearchBox5 = `  <div class="search-box" style="border-right: #f7f7f7 1px solid; border-right: #f7f7f7 1px solid">
+    const addSearchBox5 = `  <div class="search-box" id="search-box-5" style="border-right: #f7f7f7 1px solid; border-right: #f7f7f7 1px solid">
                                 <div class="search-color-blob" style="background-color: green"></div>
                                 <input class="produkt-search" data-id="5" type="text" name="produkt-search" id="produkt-search" placeholder="Sök efter artikelnamn">
                                 <ul class="suggestions" data-suggestion-id="5" id="search-box5"></ul>
@@ -37,26 +31,27 @@ function addAnotherSearchBar() {
 
     switch (searchBoxCounter.length) {
         case 1:
-            searchBoxContainer.innerHTML = `${addSearchBox1} ${addSearchBox2} ${additionBox}`
-            document.querySelector('.addition-box').addEventListener('click', addAnotherSearchBar)
+            var searchBox = document.getElementById('search-box-1');
+            searchBox.insertAdjacentHTML('afterend', addSearchBox2);
             addListenersToSuggestions()
-            
             break;
 
         case 2:
-            searchBoxContainer.innerHTML = `${addSearchBox1} ${addSearchBox2} ${addSearchBox3}  ${additionBox}`
-            document.querySelector('.addition-box').addEventListener('click', addAnotherSearchBar)
+            var searchBox = document.getElementById('search-box-2');
+            searchBox.insertAdjacentHTML('afterend', addSearchBox3);
             addListenersToSuggestions()
             break;
 
         case 3:
-            searchBoxContainer.innerHTML = `${addSearchBox1} ${addSearchBox2} ${addSearchBox3} ${addSearchBox4}  ${additionBox}`
-            document.querySelector('.addition-box').addEventListener('click', addAnotherSearchBar)
+            var searchBox = document.getElementById('search-box-3');
+            searchBox.insertAdjacentHTML('afterend', addSearchBox4);
             addListenersToSuggestions()
-            break
+            break;
 
         case 4:
-            searchBoxContainer.innerHTML = `${addSearchBox1} ${addSearchBox2} ${addSearchBox3} ${addSearchBox4} ${addSearchBox5}`
+            var searchBox = document.getElementById('search-box-4');
+            searchBox.insertAdjacentHTML('afterend', addSearchBox5);
+            document.querySelector('.search-box-container').removeChild(document.querySelector('.addition-box'));
             addListenersToSuggestions()
             break;
 

@@ -117,7 +117,8 @@ body {
 
 .search-box {
   width: 100%;
-   /*display: flex; */
+  min-width: 225px;
+  /*display: flex; */
    /*align-items: center;*/
 
 }

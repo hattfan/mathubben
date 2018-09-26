@@ -13,14 +13,17 @@ function addListenersToSuggestions() {
     const searchInputs = document.querySelectorAll('[name=produkt-search]')
     
     searchInputs.forEach(searchInput => {
+        // console.log(searchInput)
         // searchInput.addEventListener('keyup', displayMatches)
         // searchInput.addEventListener('change', displayMatches)
         searchInput.addEventListener('keyup', function(){
             
             const inputId = this.getAttribute('data-id')
-            
+            console.log(inputId)
             const suggestionWithId = document.querySelector(`[data-suggestion-id="${inputId}"]`)
             
+            console.log(suggestionWithId, this)
+
             displayMatches(suggestionWithId, this)
 
             suggestionWithId.addEventListener('click', function (e) {
