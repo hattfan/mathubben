@@ -93,7 +93,16 @@ body {
 
 .search-box-container {
   display: flex;
+  width: 80%;
 }
+
+@media (max-width: 500px){
+  .search-box-container {
+    display: inline;
+    width: 100%;
+  }
+}
+
 
 .search-box:hover > .produkt-search {
   transition: background-color 0.5s ease;
@@ -105,10 +114,6 @@ body {
   background-color: rgb(247, 247, 247);
 }
 
-.search-box-container {
-  width: 80%;
-}
-
 .addition-box{
   width: 100%;
   display: flex;
@@ -118,8 +123,6 @@ body {
 .search-box {
   width: 100%;
   min-width: 225px;
-  /*display: flex; */
-   /*align-items: center;*/
 
 }
 
@@ -137,6 +140,13 @@ body {
   height: 100px;
   cursor: text;
   /* width: 100%; */
+}
+
+@media (max-width: 500px){
+  .produkt-search {
+    height: 50px;
+    width: 90%;
+  }
 }
 
 .produkt-search:focus {
