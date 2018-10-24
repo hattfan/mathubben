@@ -33,6 +33,7 @@ function highlightBars(year) {
 }
 
 function drawBar(data, kommunKod, visningsVal) {
+  console.log(data ,kommunKod, visningsVal)
   barchartExists = true
   barText.innerHTML = ``
   var bar = d3.select("#bar");

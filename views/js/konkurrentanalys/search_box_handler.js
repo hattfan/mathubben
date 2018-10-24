@@ -1,58 +1,50 @@
+document.querySelector('.addition-box').addEventListener('click', addAnotherSearchBar)
+
 function addAnotherSearchBar() {
 
-    searchBoxCounter = document.querySelectorAll('.search-box')
+    searchBoxCounter = document.querySelectorAll('.product-search-container')
 
-    const addSearchBox2 = `  <div class="search-box" id="search-box-2" style="border-right: #f7f7f7 1px solid">
-                                <div class="search-color-blob" style="background-color: red"></div>
-                                    <input class="produkt-search" data-id="2" type="text" name="produkt-search" id="produkt-search" placeholder="Sök efter artikelnamn">
-                                    <ul class="suggestions" data-suggestion-id="2" id="search-box2"></ul>
+    const addSearchBox2 = `<div class="product-search-container" id="searchBox-2">
+                                <p class="search-color-blob" style="background-color: red"></p>
+                                <input class="typeahead" type="text" placeholder="Sök efter artikel">
                             </div>`
-    const addSearchBox3 = `  <div class="search-box" id="search-box-3" style="border-right: #f7f7f7 1px solid">
-                            <div class="search-color-blob" style="background-color: DarkOrange"></div>
-                                <input class="produkt-search" data-id="3" type="text" name="produkt-search" id="produkt-search" placeholder="Sök efter artikelnamn">
-                                <ul class="suggestions" data-suggestion-id="3" id="search-box3"></ul>
-                            </div>`
-    const addSearchBox4 = `  <div class="search-box" id="search-box-4" style="border-right: #f7f7f7 1px solid">
-                                <div class="search-color-blob" style="background-color: purple"></div>
-                                <input class="produkt-search" data-id="4" type="text" name="produkt-search" id="produkt-search" placeholder="Sök efter artikelnamn">
-                                <ul class="suggestions" data-suggestion-id="4" id="search-box4"></ul>
-                            </div>`
-    const addSearchBox5 = `  <div class="search-box" id="search-box-5" style="border-right: #f7f7f7 1px solid; border-right: #f7f7f7 1px solid">
-                                <div class="search-color-blob" style="background-color: green"></div>
-                                <input class="produkt-search" data-id="5" type="text" name="produkt-search" id="produkt-search" placeholder="Sök efter artikelnamn">
-                                <ul class="suggestions" data-suggestion-id="5" id="search-box5"></ul>
-                            </div>`
-
-    const additionBox = `<div class="addition-box">
-                            <div class="plus-icon">
-                            <p><i class="fa fa-plus-circle addition" aria-hidden="true"></i> Lägg till fler artiklar</p>
-                            </div>
+    const addSearchBox3 = `<div class="product-search-container" id="searchBox-3">
+                            <p class="search-color-blob" style="background-color: DarkOrange"></p>
+                            <input class="typeahead" type="text" placeholder="Sök efter artikel">
+                        </div>`
+    const addSearchBox4 = `<div class="product-search-container" id="searchBox-4">
+                            <p class="search-color-blob" style="background-color: purple"></p>
+                            <input class="typeahead" type="text" placeholder="Sök efter artikel">
+                        </div>`
+    const addSearchBox5 = `<div class="product-search-container" id="searchBox-5">
+                            <p class="search-color-blob" style="background-color: green"></p>
+                            <input class="typeahead" type="text" placeholder="Sök efter artikel">
                         </div>`
 
     switch (searchBoxCounter.length) {
         case 1:
-            var searchBox = document.getElementById('search-box-1');
-            searchBox.insertAdjacentHTML('afterend', addSearchBox2);
-            addListenersToSuggestions()
+            var addBox = document.querySelector('.addition-box');
+            addBox.insertAdjacentHTML('beforebegin', addSearchBox2);
+            typeaheadInit($('#searchBox-2 .typeahead'))
             break;
 
         case 2:
-            var searchBox = document.getElementById('search-box-2');
-            searchBox.insertAdjacentHTML('afterend', addSearchBox3);
-            addListenersToSuggestions()
+        var addBox = document.querySelector('.addition-box');
+            addBox.insertAdjacentHTML('beforebegin', addSearchBox3);
+            typeaheadInit($('#searchBox-3 .typeahead'))
             break;
 
         case 3:
-            var searchBox = document.getElementById('search-box-3');
-            searchBox.insertAdjacentHTML('afterend', addSearchBox4);
-            addListenersToSuggestions()
+        var addBox = document.querySelector('.addition-box');
+            addBox.insertAdjacentHTML('beforebegin', addSearchBox4);
+            typeaheadInit($('#searchBox-4 .typeahead'))
             break;
 
         case 4:
-            var searchBox = document.getElementById('search-box-4');
-            searchBox.insertAdjacentHTML('afterend', addSearchBox5);
+        var addBox = document.querySelector('.addition-box');
+            addBox.insertAdjacentHTML('beforebegin', addSearchBox5);
+            typeaheadInit($('#searchBox-5 .typeahead'))
             document.querySelector('.search-box-container').removeChild(document.querySelector('.addition-box'));
-            addListenersToSuggestions()
             break;
 
         default:

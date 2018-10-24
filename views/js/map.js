@@ -26,9 +26,9 @@ function drawMap(geoData, kommunData, year, dataType, calculationType, produktgr
     //Koppla ihop geoData med kommunData mha kommunkod
     if (kommuner.length > 0) name = kommuner[0].kommun;
     d.properties.data = kommuner.find(kommun => +kommun.Year === year) || { kommun: name };
-
   });
 
+  
   var colors = ["#7caeff", "#ff0400"];
 
   var domain = [0, d3.max(kommunData, d => d[visningsVal])];

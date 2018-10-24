@@ -1,0 +1,133 @@
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Mathubben</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+    <!--  Fonts and icons     -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+    <link href="assets/css/themify-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+    <link rel="stylesheet" href="css/w3.css">
+    <link rel="stylesheet" href="css/konkurrentanalys.css">
+
+<body>
+    <!-- W3 sidenav -->
+    <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
+        <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
+        <a href="/dashboard" class="w3-bar-item w3-button">
+            <i class="ti-home"></i> Hem</a>
+        <a href="/sortfil" class="w3-bar-item w3-button">
+            <i class="ti-view-list-alt"></i> Sortfil</a>
+        <a href="/marknadskraft" class="w3-bar-item w3-button">
+            <i class="ti-map-alt"></i> Marknadskraft</a>
+        <a href="/konkurrentanalys" class="w3-bar-item w3-button active-nav">
+            <i class="ti-pulse"></i> Konkurrentanalys</a>
+    </div>
+
+    <!-- DashNav -->
+    <div id="navd3">
+        <div class="left-align">
+            <button class="w3-button w3-xlarge hamburger" style="background-color: #2c3e50" onclick="w3_open()">☰</button>
+        </div>
+        <div class="center-align">
+            <h1>Konkurrentanalys</h1>
+        </div>
+
+        <div class="nav-container">
+            <div class="grid-even">
+                <div class="search-box">
+                    <h4>Produktval</h4>
+                    <input class="produkt-search" type="text" name="produkt-search" id="produkt-search" placeholder="Sök efter artikelnamn">
+                    <ul class="suggestions">
+                    </ul>
+                </div>
+                <div>
+                    <i class="fa fa-plus-circle addition" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+        <div class="selection-container">
+            <div class="grid-even">
+                <i class="ti-pulse fa-2x"></i>
+            </div>
+            <div class="grid-even">
+                <p>
+                    Välj vad du vill analysera
+                    <br>
+                    <input type="radio" name="data-type" value="Mängd" checked>
+                    <label>Kilon</label>
+                    <input type="radio" name="data-type" value="Kronor">
+                    <label>Kronor</label>
+                </p>
+            </div>
+
+            <div class="grid-even">
+                <p>
+                    Välj hur du vill se datan
+                    <br>
+                    <input type="radio" name="calculation-type" value="Total" checked>
+                    <label>Totalt</label>
+                    <input type="radio" name="calculation-type" value="PerCapita">
+                    <label>Per Capita</label>
+                </p>
+            </div>
+
+            <div class="grid-even">
+                <p id="year-val">Välj år
+                    <br>
+                    <input id="year" type="range" step="1">
+                </p>
+            </div>
+            <div class="grid-even" id="renderGraph">
+                <p> Rita
+                    <br> grafer! </p>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="container">
+        <div class="chart-container map-container">
+            <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="map">
+            </svg>
+        </div>
+    </section>
+    <div class="tooltip"></div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="copyright pull-right">
+                &copy;
+                <script>
+                    document.write(new Date().getFullYear())
+                </script>, DOG group</a>
+            </div>
+        </div>
+    </footer>
+    </div>
+    </div>
+</body>
+
+<script>
+    function w3_open() {
+        document.getElementById("mySidebar").style.display = "block";
+    }
+
+    function w3_close() {
+        document.getElementById("mySidebar").style.display = "none";
+    }
+</script>
+<script src="/src/d3.v4.js"></script>
+<script src="/src/topojson.js"></script>
+<script src="js/konkurrentanalys/artikelnamnTEST.js"></script>
+<script src="js/konkurrentanalys/konkurrentanalys.js"></script>
+<script src="js/konkurrentanalys/konkurrentanalys_datahandler.js"></script>
+<script src="js/konkurrentanalys/map_konkurrentanalys.js"></script>
+
+</html>

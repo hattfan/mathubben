@@ -1,0 +1,347 @@
+
+/*=============================================
+=            General            =
+=============================================*/
+* {
+  font-family: 'Source Sans Pro', sans-serif;  
+}
+
+body {
+  margin: 0;
+  background: #ecf0f1;
+}
+
+
+
+/*=====  End of General  ======*/
+
+
+
+/*=============================================
+=            Navbar            =
+=============================================*/
+
+.topbar {
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+  background-color: #2c3e50;
+  opacity: 80%;
+  min-height: 52px;
+  top: 0;
+  box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.75);
+  color: white;
+  display: flex;
+  align-content: space-between;
+  flex-wrap: nowrap;
+}
+
+
+.left-align {
+  text-align: left;
+  position: fixed;
+}
+.center-align {
+  text-align: center;
+}
+
+.module-type {
+  margin-left: 60px;
+}
+
+.user-logged-in {
+  right: 10px;
+}
+
+/* SideNAV */
+.w3-sidebar {
+  -webkit-font-smoothing: antialiased;
+    font-family: 'Muli', "Helvetica", Arial, sans-serif;
+    text-transform: uppercase;
+}
+
+#mysidebar {
+  width: 250px;
+  margin: 0;
+  line-height: 30px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.w3-button:hover {
+  background-color: #394c5f
+}
+
+
+/*=====  End of Navbar  ======*/
+
+
+
+/*=============================================
+=            Produkt search            =
+=============================================*/
+
+.product-search-container {
+  display: flex;
+  align-items: center;
+}
+
+.grid-produkt {
+  min-height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.3);
+}
+
+
+.search-box-container {
+  display: flex;
+}
+
+/* @media (max-width: 1500px){
+  .search-box-container {
+    display: flex;
+    width: 100%;
+  }
+} */
+
+@media (max-width: 500px){
+  .search-box-container {
+    display: inline;
+    /* width: 100%; */
+  }
+}
+
+
+.search-box:hover > .produkt-search {
+  transition: background-color 0.5s ease;
+  background-color: rgb(247, 247, 247);
+}
+
+.search-box:hover{
+  transition: background-color 0.5s ease;
+  background-color: rgb(247, 247, 247);
+}
+
+.addition-box{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.search-box {
+  width: 100%;
+  min-width: 225px;
+
+}
+
+.search-color-blob {
+  margin: 1px;
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  border-radius: 100%;
+}
+
+.produkt-search {
+  padding: 0px 0px 0px 10px;
+  border: none;
+  height: 100px;
+  cursor: text;
+  /* width: 100%; */
+}
+
+@media (max-width: 500px){
+  .produkt-search {
+    height: 50px;
+    width: 90%;
+  }
+}
+
+.produkt-search:focus {
+  outline: none;
+}
+
+#produkt-search-toolbar {
+  background-color: white;
+  /* color: white; */
+  width: 100%;
+  margin-top: 52px;
+}
+
+#produkt-search-toolbar h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+select {
+  color: black;
+}
+
+
+
+
+/*----------  Subsection comment block  ----------*/
+
+
+.suggestions {
+  position: absolute;
+  background-color: white;
+  color: rgb(116, 116, 116);
+  margin: 0 0 0 0;
+  text-align: left;
+  width: 100%;
+}
+
+.suggestions.active {
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.suggestion-list-item {
+  cursor: pointer;
+  padding: 10px 0;
+  margin: 0;
+}
+
+
+.suggestion-list-item:hover {
+  color: black;
+  background-color: rgb(247, 247, 247);
+}
+
+/* Selection dropdown */
+.selection-container {
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.3);
+
+}
+
+.grid-choice-bar {
+  min-height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.show-bar {
+  transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+  display: flex;
+}
+
+.no-show {
+  display: none;
+}
+
+/*=====  End of Produkt search  ======*/
+
+
+
+/*=============================================
+=            Graph container            =
+=============================================*/
+
+.hl {
+  font-weight: bold
+}
+
+/* Container */
+.container {
+  min-height: 600px;
+  min-width: 90%;
+  background-color: white;
+  margin: 1% 5%;
+  border-radius: 5px;
+  border: 2px rgb(223, 221, 221);
+  box-shadow: 2px 2px #ccc, -2px 2px #ccc;
+}
+
+.charts-container{
+  display: flex;
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* flex-wrap: wrap; */
+  /* flex-direction: row;  */
+}
+.container h4{
+  font-size:1em;
+}
+
+.toprow-title{
+  padding: 3px 10px;
+  width: 100%;
+  border-bottom: 1px #ccc solid;
+}
+/* Styling för grafområdet */
+.addition {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+
+
+/*----------  Slider  ----------*/
+
+
+#slider label {
+  position: absolute;
+  width: 20px;
+  margin-left: -20px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* below is not necessary, just for style */
+#slider {
+  width: 25%;
+  margin: 2em auto;
+}
+
+#renderGraph {
+  cursor: pointer;
+}
+
+.bar-container {
+  height: 300px;
+  width: 35%;
+}
+
+/*=====  End of Graph container  ======*/
+
+.plus-icon {
+  color: #aaa;
+  padding: 10px;
+  cursor: pointer;
+  flex-grow: 1;
+}
+
+.plus-icon:hover {
+  color: black;
+  padding: 10px;
+}
+
+
+.produkt-box {
+  min-height: 100%;
+  background-color: white;
+  padding: 5px;
+}

@@ -290,5 +290,3 @@ var kommunnamn = {
     '2513': 'Överkalix',
     '2518': 'Övertorneå',
 }
-
-module.exports = kommunnamn;

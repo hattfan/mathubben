@@ -16,7 +16,10 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="css/svg-styling.css">
-    <link rel="stylesheet" href="css/konkurrentanalys.css">
+    <link rel="stylesheet" href="css/konkurrentanalys/konkurrentanalys.css">
+    <link rel="stylesheet" href="css/konkurrentanalys/line.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/assets/typeahead.css">
 
 <body>
 
@@ -49,27 +52,30 @@
     <div id="produkt-search-toolbar">
         <div class="nav-container">
             <div class="grid-produkt">
-                <div class="search-box-container">
-                    <div class="search-box" id="search-box-1" style="border-left: #eaeaea 1px solid; border-right: #eaeaea 1px solid">
+                <div class="search-box-container"> 
+                    <div class="product-search-container" id="searchBox-1">
                         <p class="search-color-blob" style="background-color: blue"></p>
-                        <input class="produkt-search" data-id="1" type="text" name="produkt-search" placeholder="Sök efter artikelnamn">
-                        <ul class="suggestions" data-suggestion-id="1" id="search-box1"></ul>
+                        <input class="typeahead" type="text" placeholder="Sök efter artikel">
+                    </div>
+                    <div class="product-search-container" id="searchBox-2">
+                        <p class="search-color-blob" style="background-color: red"></p>
+                        <input class="typeahead" type="text" placeholder="Sök efter artikel">
                     </div>
                     <div class="addition-box">
                         <div class="plus-icon">
                             <p><i class="fa fa-plus-circle addition" aria-hidden="true"></i> Lägg till fler artiklar</p>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
         <div class="selection-container">
             <div class="grid-choice-bar">
                 <p>
-                    <input type="radio" name="data-type" value="Mängd" checked>
+                    <input type="radio" name="data-type" value="Mängd">
                     <label>Kilon</label>
                     <br>
-                    <input type="radio" name="data-type" value="Kronor">
+                    <input type="radio" name="data-type" value="Kronor" checked>
                     <label>Kronor</label>
                 </p>
             </div>
@@ -82,26 +88,39 @@
                     <label>Per Capita</label>
                 </p>
             </div>
-
-            <div class="grid-choice-bar">
-                <p id="year-val">Välj år
-                    <br>
-                    <input id="year" type="range" step="1">
-                </p>
-            </div>
             <div class="grid-choice-bar" id="renderGraph">
                 <p> Rita
                     <br> grafer! </p>
             </div>
         </div>
-    </div>
-
-
-    <section class="container">
-        <div class="chart-container map-container">
-            <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="map">
-            </svg>
+        <div class="grid-choice-bar">
+                <input id="year" type="range" step="1">
         </div>
+    </div>
+    
+    
+    <section class="container">
+        <div class="toprow">
+            <div class="toprow-title">
+                <h4>Geografisk jämförelse över artiklar</h4>
+            </div>
+        </div>
+        <div class="charts-container">
+
+            <div class="chart-container map-container">
+                <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="map">
+                </svg>
+            </div>            
+            <div class="chart-container line-container">
+                    <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="line">
+                    </svg> 
+                </div>
+        </div>
+        <!-- <div class="chart-container bar-container">
+            <div class="barText"></div>
+            <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="bar">
+            </svg>
+        </div> -->
     </section>
     <div class="tooltip"></div>
     <footer class="footer">
@@ -116,6 +135,21 @@
     </footer>
 </body>
 
+<script src="/src/d3.v4.js"></script>
+<script src="/src/topojson.js"></script>
+<script src="js/assets/jquery-3.3.1.min.js"></script>
+<script src="js/assets/jquery-ui.min.js"></script>
+<script src="js/kommunnamn.js"></script>
+<script src="js/konkurrentanalys/map_konkurrentanalys.js"></script>
+<script src="js/linedata.js"></script>
+<script src="js/konkurrentanalys/line_konkurrentanalys.js"></script>
+<script src="js/assets/typeahead.js/bloodhound.min.js"></script>
+<script src="js/assets/typeahead.js/typeahead.bundle.min.js"></script>
+<script src="js/assets/typeahead.js/typeahead.jquery.min.js"></script>
+<script src="js/konkurrentanalys/app_konkurrentanalys.js"></script>
+<script src="js/konkurrentanalys/konkurrentanalys.js"></script>
+<script src="js/typeahead.js"></script>
+<script src="js/konkurrentanalys/search_box_handler.js"></script>
 <script>
     function w3_open() {
         document.getElementById("mySidebar").style.display = "block";
@@ -125,12 +159,4 @@
         document.getElementById("mySidebar").style.display = "none";
     }
 </script>
-<script src="/src/d3.v4.js"></script>
-<script src="/src/topojson.js"></script>
-<script src="js/konkurrentanalys/artikelnamnTEST.js"></script>
-<script src="js/konkurrentanalys/search_box_handler.js"></script>
-<script src="js/konkurrentanalys/konkurrentanalys.js"></script>
-<script src="js/konkurrentanalys/konkurrentanalys_datahandler.js"></script>
-<script src="js/konkurrentanalys/map_konkurrentanalys.js"></script>
-
 </html>
