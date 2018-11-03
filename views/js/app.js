@@ -35,6 +35,7 @@ function dataFetch() {
 
     .await(function (error, mapData, data) {
       if (error) throw error;
+      console.log(mapData)
       //!Definierar inputs
       var extremeYears = d3.extent(data, d => +d.Year);
       // var currentYear = extremeYears[0];
@@ -44,7 +45,7 @@ function dataFetch() {
       var currentCalculationType = d3.select('input[name="calculation-type"]:checked')
         .attr("value");
       var geoData = topojson.feature(mapData, mapData.objects.sverige).features;
-      
+      console.log(geoData)
       updateTitle(currentDataType, currentCalculationType, varugruppValue, currentYear)
 
       //! Function-calls

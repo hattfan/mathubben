@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+  body {
+    display: flex
+  }
+
+  path {
+    fill: #ccc;
+    stroke: #fff;
+    stroke-width: .5px;
+  }
+
+  path:hover {
+    fill: red;
+  }
+
+  .noshow {
+    display: none;
+  }
+
+  .show {
+    display: auto;
+  }
+</style>
+<html>
+
+<body>
+  <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="kommun"></svg>
+</body>
+<button id="kommunDraw">Rita kommun</button>
+<button id="laenDraw">Rita laen</button>
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="//d3js.org/topojson.v1.min.js"></script>
+<script>
+  var width = 500,
+    height = 700;
+
+  // var path = d3.geo.path();
+
+  var projection = d3.geoMercator()
+    .scale(1100)
+    .translate([0, 1900])
+
+  var path = d3.geoPath()
+    .projection(projection);
+
+  var svg = d3.select("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  var urlSwedenKommuner = "js/maptest/sweden-municipalities.json"
+  var urlSwedenLaen = "js/maptest/sweden-counties.json"
+
+  d3.queue()
+    .defer(d3.json, urlSwedenKommuner)
+    .defer(d3.json, urlSwedenLaen)
+
+    .await(function (error, kommunMapData, laenMapData) {
+      if (error) throw error;
+      console.log('laenMapData', laenMapData)
+      console.log('kommunMapData', kommunMapData)
+      var laenGeoJson = topojson.feature(laenMapData, laenMapData.objects.SWE_adm1);
+      var kommunGeoJson = topojson.feature(kommunMapData, kommunMapData.objects.SWE_adm2);
+
+      document.querySelector("#kommunDraw").addEventListener("click", function(){
+        clickListenersDrawSelection(kommunGeoJson)
+      })
+      document.querySelector("#laenDraw").addEventListener("click", function(){
+        clickListenersDrawSelection(laenGeoJson)
+      })
+
+
+      
+    })
+</script>
+
+<script>
+  function clickListenersDrawSelection(geojson){
+      console.log('YES')
+      d3.selectAll("path").remove();
+      svg.selectAll("path")
+        .data(geojson.features)
+        .enter().append("path")
+        .attr("d", path);
+  }
+  function selectSVGs() {
+    var paths = document.querySelectorAll("path")
+    paths.forEach(path => {
+      path.addEventListener("click", function(){
+        this.classList.add("noshow")
+        console.log(this)
+      })
+    })
+  }
+  // .addEventListener("click", function() {
+  //   console.log(this)
+  // })
+</script>
+
+</body>
+
+</html>

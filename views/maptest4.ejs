@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+  /* .background {
+    fill: none;
+    pointer-events: all;
+  }
+
+  .feature {
+    fill: #ccc;
+    cursor: pointer;
+  }
+
+  .feature.active {
+    fill: orange;
+  }
+
+  .mesh {
+    fill: none;
+    stroke: #fff;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  } */
+  .background {
+      fill: none;
+      pointer-events: all;
+    }
+
+    #states {
+      fill: #aaa;
+    }
+
+    #states .active {
+      display: none;
+    }
+
+    #state-borders {
+      fill: none;
+      stroke: #fff;
+      stroke-width: 1.5px;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      pointer-events: none;
+    }
+
+    .county-boundary {
+      fill: #aaa;
+      stroke: #fff;
+      stroke-width: .5px;
+    }
+
+    .county-boundary:hover,
+    .state:hover {
+      fill: orange;
+    }
+</style>
+
+<body>
+  <script src="//d3js.org/d3.v4.min.js"></script>
+  <script src="//d3js.org/topojson.v1.min.js"></script>
+  <script>
+    var width = 960,
+      height = 700,
+      active = d3.select(null);
+
+    // var projection = d3.geoAlbersUsa()
+    //   .scale(1000)
+    //   .translate([width / 2, height / 2]);
+
+    // var path = d3.geoPath()
+    //   .projection(projection);
+
+    var projection = d3.geoMercator()
+      .scale(1100)
+      .translate([0, 1900])
+
+    var path = d3.geoPath()
+      .projection(projection);
+
+    var svg = d3.select("body").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    svg.append("rect")
+      .attr("class", "background")
+      .attr("width", width)
+      .attr("height", height)
+      .on("click", reset);
+
+    var g = svg.append("g")
+      .style("stroke-width", "1.5px");
+
+    var urlSwedenKommuner = "js/maptest/sweden-municipalities.json"
+    var urlSwedenLaen = "js/maptest/sweden-counties.json"
+
+    d3.queue()
+      .defer(d3.json, urlSwedenKommuner)
+      .defer(d3.json, urlSwedenLaen)
+
+      .await(function (error, kommunMapData, laenMapData) {
+        if (error) throw error;
+        console.log('laenMapData', laenMapData)
+        console.log('kommunMapData', kommunMapData)
+        var laenGeoJson = topojson.feature(laenMapData, laenMapData.objects.SWE_adm1);
+        var kommunGeoJson = topojson.feature(kommunMapData, kommunMapData.objects.SWE_adm2);
+
+        // d3.json("js/maptest/us.json", function (error, us) {
+        //   if (error) throw error;
+        //   d3.json("js/maptest/sweden-counties.json", function (error, se) {
+        //     if (error) throw error;
+        //     console.log(se)
+        //     console.log(us)
+
+        // g.selectAll("path")
+        //   .data(topojson.feature(se, se.objects.SWE_adm1).features)
+        //   .enter().append("path")
+        //   .attr("d", path)
+        //   .attr("class", "feature")
+        //   .on("click", clicked);
+
+        g.append("g")
+          .attr("id", "counties")
+          .selectAll("path")
+          .data(topojson.feature(kommunMapData, kommunMapData.objects.SWE_adm2).features)
+          .enter().append("path")
+          .attr("d", path)
+          .attr("class", "county-boundary")
+
+        g.append("g")
+          .attr("id", "states")
+          .selectAll("path")
+          .data(topojson.feature(laenMapData, laenMapData.objects.SWE_adm1).features)
+          .enter().append("path")
+          .attr("d", path)
+          .attr("class", "states")
+          .on("click", clicked);
+
+
+        g.append("path")
+          .datum(topojson.mesh(laenMapData, laenMapData.objects.SWE_adm1, function (a, b) {
+            return a !== b;
+          }))
+          .attr("class", "state-borders")
+          .attr("d", path);
+      });
+
+    function clicked(d) {
+      if (active.node() === this) return reset();
+      active.classed("active", false);
+      active = d3.select(this).classed("active", true);
+
+      var bounds = path.bounds(d),
+        dx = bounds[1][0] - bounds[0][0],
+        dy = bounds[1][1] - bounds[0][1],
+        x = (bounds[0][0] + bounds[1][0]) / 2,
+        y = (bounds[0][1] + bounds[1][1]) / 2,
+        scale = .9 / Math.max(dx / width, dy / height),
+        translate = [width / 2 - scale * x, height / 2 - scale * y];
+
+      g.transition()
+        .duration(750)
+        .style("stroke-width", 1 / scale + "px")
+        .attr("transform", "translate(" + translate + ")scale(" + scale + ")");
+    }
+
+    function reset() {
+      active.classed("active", false);
+      active = d3.select(null);
+
+      g.transition()
+        .duration(750)
+        .style("stroke-width", "1.5px")
+        .attr("transform", "");
+    }
+  </script>

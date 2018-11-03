@@ -16,13 +16,11 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="css/svg-styling.css">
+    <link rel="stylesheet" href="css/konkurrentanalys/konkurrentanalys.css">
     <link rel="stylesheet" href="css/konkurrentanalys/line.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/assets/typeahead.css">
     <link rel="stylesheet" href="css/assets/jquery-ui.min.css">
-    <link rel="stylesheet" href="css/konkurrentanalys/tingle/tingle.css">
-    <link rel="stylesheet" href="css/konkurrentanalys/konkurrentanalys.css">
-
 
 <body>
 
@@ -55,9 +53,7 @@
     <div id="produkt-search-toolbar">
         <div class="nav-container">
             <div class="grid-produkt">
-                <!-- <button class="trigger-button">run modal</button> -->
-
-                <div class="search-box-container">
+                <div class="search-box-container"> 
                     <div class="product-search-container" id="searchBox-1">
                         <p class="search-color-blob" style="background-color: blue"></p>
                         <input class="typeahead" type="text" placeholder="Sök efter artikel">
@@ -74,23 +70,49 @@
                 </div>
             </div>
         </div>
-        <div class="grid-choice-bar">
-            <div id="slider"></div>
-            <div class="data-type radio-box">
-                    <div class="headline" style="text-align:center">Data-typ</div>
+        <div class="selection-container">
+            <div class="choice-container">
+                <div class="radio-button-container">
                     <input type="radio" name="data-type" value="Mängd" id="radio-one" class="form-radio"><label for="radio-one">Kilon</label>
+                    <br>
                     <input type="radio" name="data-type" value="Kronor" class="form-radio" checked><label for="radio-one">Kronor</label>
                 </div>
-            <div class="calculation-type radio-box">
-                    <div class="headline"  style="text-align:center">Räknesätt</div>              
-                <input type="radio" name="calculation-type" value="Total" id="radio-two" class="form-radio" checked><label for="radio-two">Totalt</label>
-                <input type="radio" name="calculation-type" value="PerCapita" class="form-radio"><label for="radio-two">PerCapita</label>
+                <div class="radio-button-container">
+                    <input type="radio" name="calculation-type" value="Total" id="radio-two" class="form-radio" checked><label for="radio-two">Totalt</label>
+                    <br>
+                    <input type="radio" name="calculation-type" value="PerCapita" class="form-radio" ><label for="radio-two">Per Capita</label>
+                </div>
             </div>
 
-        </div> 
+            <!-- <div class="grid-choice-bar">
+                <p>
+                    <input type="radio" name="data-type" value="Mängd">
+                    <label>Kilon</label>
+                    <br>
+                    <input type="radio" name="data-type" value="Kronor" checked>
+                    <label>Kronor</label>
+                </p>
+            </div>
+            <div class="grid-choice-bar">
+                <p>
+                    <input type="radio" name="calculation-type" value="Total" checked>
+                    <label>Totalt</label>
+                    <br>
+                    <input type="radio" name="calculation-type" value="PerCapita">
+                    <label>Per Capita</label>
+                </p>
+            </div> -->
+            <!-- <div class="grid-choice-bar" id="renderGraph">
+                <p> Rita
+                    <br> grafer! </p>
+            </div> -->
+        </div>
+        <div class="grid-choice-bar">
+                <div id="slider"></div>
+        </div>
     </div>
-
-
+    
+    
     <section class="main-container">
         <div class="toprow">
             <div class="toprow-title">
@@ -102,11 +124,11 @@
             <div class="chart-container map-container">
                 <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="map">
                 </svg>
-            </div>
+            </div>            
             <div class="chart-container line-container">
-                <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="line">
-                </svg>
-            </div>
+                    <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="line">
+                    </svg> 
+                </div>
         </div>
         <!-- <div class="chart-container bar-container">
             <div class="barText"></div>
@@ -120,34 +142,29 @@
             <div class="copyright pull-right">
                 &copy;
                 <script>
-                    // document.write(new Date().getFullYear())
+                    document.write(new Date().getFullYear())
                 </script>, DOG group</a>
             </div>
         </div>
     </footer>
 </body>
 
-<!-- ASSETS -->
 <script src="/src/d3.v4.js"></script>
 <script src="/src/topojson.js"></script>
 <script src="js/assets/jquery-3.3.1.min.js"></script>
 <script src="js/assets/jquery-ui.min.js"></script>
+<script src="js/konkurrentanalys/slider.js"></script>
+<script src="js/kommunnamn.js"></script>
+<script src="js/konkurrentanalys/map_konkurrentanalys.js"></script>
+<!-- <script src="js/linedata.js"></script> -->
+<script src="js/konkurrentanalys/line_konkurrentanalys.js"></script>
 <script src="js/assets/typeahead.js/bloodhound.min.js"></script>
 <script src="js/assets/typeahead.js/typeahead.bundle.min.js"></script>
 <script src="js/assets/typeahead.js/typeahead.jquery.min.js"></script>
-<!-- <script src="js/konkurrentanalys/tingle/tingle.js"></script> -->
-<script src="js/konkurrentanalys/slider.js"></script>
-<!-- <script src="js/linedata.js"></script> -->
-<script src="js/kommunnamn.js"></script>
-<script src="js/konkurrentanalys/map_konkurrentanalys.js"></script>
-<script src="js/konkurrentanalys/line_konkurrentanalys.js"></script>
 <script src="js/konkurrentanalys/app_konkurrentanalys.js"></script>
 <script src="js/konkurrentanalys/konkurrentanalys.js"></script>
-<!-- <script src="js/konkurrentanalys/tingle/tingleInit.js"></script> -->
 <script src="js/typeahead.js"></script>
 <script src="js/konkurrentanalys/search_box_handler.js"></script>
-
-
 <script>
     function w3_open() {
         document.getElementById("mySidebar").style.display = "block";
@@ -157,5 +174,4 @@
         document.getElementById("mySidebar").style.display = "none";
     }
 </script>
-
 </html>

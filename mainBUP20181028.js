@@ -287,13 +287,6 @@ app.get('/maptest3', function (req, res) {
 
 });
 
-//TEST för modal
-app.get('/tingle', function (req, res) {
-
-	res.render('tingle.ejs');
-
-});
-
 var port = process.env.PORT || 3030;
 
 app.listen(port, process.env.IP, function () {

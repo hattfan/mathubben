@@ -29,9 +29,9 @@ svg {
   margin-left: -4px;
 }
 
-.kommun {
+/* .kommun {
   stroke: none;
-}
+} */
 
 .kommun:hover {
   cursor: pointer;

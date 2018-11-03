@@ -1,6 +1,5 @@
 typeaheadInit($('#searchBox-1 .typeahead'))
 typeaheadInit($('#searchBox-2 .typeahead'))
-typeaheadInit($("#modal-input"))
 
 function typeaheadInit(searchHandler){
   var bestPictures = new Bloodhound({

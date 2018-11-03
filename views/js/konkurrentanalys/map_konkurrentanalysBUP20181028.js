@@ -8,7 +8,7 @@ function createMap(width, height) {
 
 }
 
-function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, calculationType) {
+function drawMap(geoData, laenMapData, kommunData, year, dataType, calculationType) {
   var width = 500,
     height = 700,
     centered;
@@ -29,7 +29,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
     .attr("height", height)
     .on("click", clicked);
 
-  var laenGeoData = topojson.feature(laenMapData, laenMapData.objects.SWE_adm1).features;
+  var kommunGeoData = topojson.feature(laenMapData, laenMapData.objects.SWE_adm1).features;
 
   var projection = d3.geoMercator()
     .scale(1100)
@@ -41,17 +41,17 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
   var path = d3.geoPath()
     .projection(projection);
 
-  //geoData för att matcha kommunData till varje kommun
   geoData.forEach(d => {
     var kommun = kommunData.filter(row => row.KommunNummer === d.properties.KNKOD);
-    // Om kommun har värde
+
     if (kommun.length !== 0) {
       var compare = createTempObject()
-      // Jämför värdena för att bestämma vilken som är störst
       kommun.forEach(kommunAlt => {
+        //
         if (+kommunAlt.Year === year) {
           if (kommunAlt[visningsVal] > compare[visningsVal]) {
-            compare = { ...kommunAlt}
+            compare = { ...kommunAlt
+            }
           }
           kommun = { ...compare
           }
@@ -60,35 +60,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
         }
       })
     }
-    // Lägg in properties i geoData datan
     d.properties.data = kommun;
-    // console.log(d.properties.data)
-
-  });
-
-  laenGeoData.forEach(d => {
-    var laen = laenData.filter(row => row.LaenKod === d.properties.laenskod);
-      // row.LaenKod === d.properties.laenskod?console.log('ja'):console.log(row.LaenKod,d.properties.laenskod)});
-    // Om laen har värde
-    if (laen.length !== 0) {
-      var compare = createTempObject()
-      // Jämför värdena för att bestämma vilken som är störst
-      laen.forEach(laenAlt => {
-        console.log(laenAlt.KronorTotal)
-        if (+laenAlt.Year === year) {
-          if (laenAlt[visningsVal] > compare[visningsVal]) {
-            compare = { ...laenAlt}
-          }
-          laen = { ...compare
-          }
-        } else {
-          laen = []
-        }
-      })
-    }
-    // Lägg in properties i geoData datan
-    d.properties.data = laen;
-    console.log(laen)
   });
 
   var colorDomainAndRange = createColorScale()
@@ -102,7 +74,6 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
   var update = g.selectAll(".kommun")
     .data(geoData);
 
-  //Update för kommunnivå
   update
     .enter()
     .append("path")
@@ -128,32 +99,14 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
       return val ? mapColorScale(val) : "#ccc";
     });
 
-    //Update för laen - 
-    // TODO ändra från state
-    var update = g.selectAll(".state")
-      .data(laenGeoData);
-    update
-      .enter()
-      .append("path")
-      .classed("states", true)
-      .attr("d", path)
-      .on("click", clicked)
-      .merge(update)
-      .transition()
-      .duration(750)
-      .attr("fill", d => {
-        var val = d.properties.data[visningsVal];
-        return val ? mapColorScale(val) : "#ccc";
-      });
-
-  // g.append("g")
-  //   .attr("id", "states")
-  //   .selectAll("path")
-  //   .data(laenGeoData)
-  //   .enter().append("path")
-  //   .attr("d", path)
-  //   .attr("class", "state")
-  //   .on("click", clicked);
+  g.append("g")
+    .attr("id", "states")
+    .selectAll("path")
+    .data(kommunGeoData)
+    .enter().append("path")
+    .attr("d", path)
+    .attr("class", "state")
+    .on("click", clicked);
 
   g.append("path")
     .datum(topojson.mesh(laenMapData, laenMapData.objects.SWE_adm1, function (a, b) {
@@ -165,28 +118,26 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
 
   function clicked(d) {
     var x, y, k;
-    d3.selectAll(".states").style("display", "inline");
+    console.log(d)
     if (d && centered !== d) {
       var centroid = path.centroid(d);
       x = centroid[0];
       y = centroid[1];
       k = 3;
       centered = d;
-      this.style.display = "none"
       d3.selectAll(".kommun").style("display", "inline");
     } else {
       x = width / 2;
       y = height / 2;
       k = 1;
       centered = null;
-      d3.selectAll(".states").style("display", "inline");
       d3.selectAll(".kommun").style("display", "none");
     }
 
     g.selectAll("path")
-      .classed("vald", centered && function (d) {
+      .classed("active", centered && function (d) {
         return d === centered;
-      })
+      });
 
     g.transition()
       .duration(1000)

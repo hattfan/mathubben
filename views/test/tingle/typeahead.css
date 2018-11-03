@@ -52,8 +52,7 @@ p + p {
 .typeahead,
 .tt-query,
 .tt-hint {
-  min-width: 350px;
-  max-width: 400px;
+  width: 350px;
   /* height: 30px; */
   padding: 8px 12px;
   font-size: 14px;
@@ -85,8 +84,7 @@ p + p {
 }
 
 .tt-menu {
-  min-width: 350px;
-  max-width: 400px;
+  width: 350px;
   margin: 12px 0;
   padding: 8px 0;
   background-color: #fff;
