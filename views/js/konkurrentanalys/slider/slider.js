@@ -1,5 +1,5 @@
 $( "#slider" ).slider({
-  value: 2016,
+  value: 2017,
   min: 2015,
   max: 2017,
   step: 1

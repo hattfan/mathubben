@@ -1,6 +1,6 @@
-function createMap(width, height) {
-  var width = 500,
-    height = 700;
+function createMap() {
+  var width = document.querySelector('.map-container').offsetWidth-60;
+  var height = document.querySelector('.map-container').offsetHeight;
 
   d3.select("#map")
     .attr("width", width)
@@ -9,9 +9,14 @@ function createMap(width, height) {
 }
 
 function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, calculationType) {
-  var width = 500,
-    height = 700,
-    centered;
+  d3.select("#map").selectAll("*").remove();
+
+  width = document.querySelector('.map-container').offsetWidth-60;
+  height = document.querySelector('.map-container').offsetHeight;
+  // var width = 500,
+  //   height = 700,
+    var centered,
+    laenClicked = false;
   active = d3.select(null);
 
   const searchboxesWithValues = document.querySelectorAll('[data-id]');
@@ -21,7 +26,6 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
   })
   var visningsVal = dataType + calculationType
   var map = d3.select('#map')
-
   
   map.append("rect")
     .attr("class", "background")
@@ -32,8 +36,8 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
   var laenGeoData = topojson.feature(laenMapData, laenMapData.objects.SWE_adm1).features;
 
   var projection = d3.geoMercator()
-    .scale(1100)
-    .translate([-100, 1900])
+    .scale(1050)
+    .translate([0, 1800])
   //If mobile
   // .scale(4200)
   // .translate([-1000, 5400])
@@ -60,24 +64,27 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
         }
       })
     }
-    // Lägg in properties i geoData datan
+    // Lägg in properties i geoData datan - här skall läggas in den som är störst
+    //TODO funkar ej ordentligt
+    // console.log(kommun)
     d.properties.data = kommun;
-    // console.log(d.properties.data)
 
   });
 
   laenGeoData.forEach(d => {
     var laen = laenData.filter(row => row.LaenKod === d.properties.laenskod);
-      // row.LaenKod === d.properties.laenskod?console.log('ja'):console.log(row.LaenKod,d.properties.laenskod)});
+      
+    // row.LaenKod === d.properties.laenskod?console.log('ja'):console.log(row.LaenKod,d.properties.laenskod)});
+    
     // Om laen har värde
     if (laen.length !== 0) {
       var compare = createTempObject()
       // Jämför värdena för att bestämma vilken som är störst
       laen.forEach(laenAlt => {
-        console.log(laenAlt.KronorTotal)
         if (+laenAlt.Year === year) {
           if (laenAlt[visningsVal] > compare[visningsVal]) {
             compare = { ...laenAlt}
+            
           }
           laen = { ...compare
           }
@@ -88,7 +95,6 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
     }
     // Lägg in properties i geoData datan
     d.properties.data = laen;
-    console.log(laen)
   });
 
   var colorDomainAndRange = createColorScale()
@@ -108,23 +114,23 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
     .append("path")
     .classed("kommun", true)
     .attr("d", path)
-    .on("click", function () {
-      var kommun = d3.select(this);
-      var isActive = kommun.classed("active");
-      var kommunName = isActive ? "" : kommun.data()[0].properties['KNNAMN'];
-      var kommunKod = isActive ? "" : kommun.data()[0].properties['KNKOD'];
+    .on("click", kommunClick)
+    //   // debugger
+    //   // var isActive = kommun.classed("active");
+    //   // var kommunName = isActive ? "" : kommun.data()[0].properties['KNNAMN'];
+    //   // var kommunKod = isActive ? "" : kommun.data()[0].properties['KNKOD'];
 
-      var visningsVal = dataType + calculationType
-      drawBar(kommunData, kommunKod, visningsVal)
-      // highlightBars(+d3.select("#year").property("value"));
-      d3.selectAll(".kommun").classed("active", false);
-      kommun.classed("active", !isActive);
-    })
+    //   // var visningsVal = dataType + calculationType
+    //   // drawBar(kommunData, kommunKod, visningsVal)
+    //   // highlightBars(+d3.select("#year").property("value"));
+    //   // d3.selectAll(".kommun").classed("active", false);
+    //   // kommun.classed("active", !isActive);
+    // })
     .merge(update)
     .transition()
     .duration(750)
     .attr("fill", d => {
-      var val = d.properties.data[visningsVal];
+      var val = d.properties.data.LevArtNr;
       return val ? mapColorScale(val) : "#ccc";
     });
 
@@ -142,18 +148,9 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
       .transition()
       .duration(750)
       .attr("fill", d => {
-        var val = d.properties.data[visningsVal];
+        var val = d.properties.data.LevArtNr;
         return val ? mapColorScale(val) : "#ccc";
       });
-
-  // g.append("g")
-  //   .attr("id", "states")
-  //   .selectAll("path")
-  //   .data(laenGeoData)
-  //   .enter().append("path")
-  //   .attr("d", path)
-  //   .attr("class", "state")
-  //   .on("click", clicked);
 
   g.append("path")
     .datum(topojson.mesh(laenMapData, laenMapData.objects.SWE_adm1, function (a, b) {
@@ -167,6 +164,8 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
     var x, y, k;
     d3.selectAll(".states").style("display", "inline");
     if (d && centered !== d) {
+      // Ändrar namn till Länets namn för line-charten
+      document.querySelector("#line-chart-name").innerText = d.properties.NAME_1
       var centroid = path.centroid(d);
       x = centroid[0];
       y = centroid[1];
@@ -174,6 +173,9 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
       centered = d;
       this.style.display = "none"
       d3.selectAll(".kommun").style("display", "inline");
+      // d.properties.laenskod
+      lineGraph(laenData, visningsVal, 'laen', d.properties.laenskod)
+
     } else {
       x = width / 2;
       y = height / 2;
@@ -181,6 +183,8 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
       centered = null;
       d3.selectAll(".states").style("display", "inline");
       d3.selectAll(".kommun").style("display", "none");
+      d3.select("#line").selectAll("*").remove();
+      document.querySelector("#line-chart-name").innerText = 'Sverige'
     }
 
     g.selectAll("path")
@@ -193,6 +197,11 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y +
         ")")
       .style("stroke-width", 1.5 / k + "px");
+  }
+
+  function kommunClick(d) {
+    document.querySelector("#line-chart-name").innerText = d.properties.KNNAMN
+    lineGraph(kommunData, visningsVal, 'kommun', d.properties.KNKOD)  
   }
 
   function createTempObject() {
@@ -228,6 +237,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
       default:
         break;
     }
+    console.log(domainValues)
     return domainValues;
   }
 };

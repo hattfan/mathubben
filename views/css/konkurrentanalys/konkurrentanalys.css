@@ -1,9 +1,8 @@
-
 /*=============================================
 =            General            =
 =============================================*/
 * {
-  font-family: 'Source Sans Pro', sans-serif;  
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 body {
@@ -29,7 +28,7 @@ body {
   opacity: 80%;
   min-height: 52px;
   top: 0;
-  box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.75);
   color: white;
   display: flex;
   align-content: space-between;
@@ -41,6 +40,7 @@ body {
   text-align: left;
   position: fixed;
 }
+
 .center-align {
   text-align: center;
 }
@@ -56,8 +56,8 @@ body {
 /* SideNAV */
 .w3-sidebar {
   -webkit-font-smoothing: antialiased;
-    font-family: 'Muli', "Helvetica", Arial, sans-serif;
-    text-transform: uppercase;
+  font-family: 'Muli', "Helvetica", Arial, sans-serif;
+  text-transform: uppercase;
 }
 
 #mysidebar {
@@ -94,7 +94,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.3);
+  box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -109,7 +109,7 @@ body {
   }
 } */
 
-@media (max-width: 500px){
+@media (max-width: 500px) {
   .search-box-container {
     display: inline;
     /* width: 100%; */
@@ -117,17 +117,17 @@ body {
 }
 
 
-.search-box:hover > .produkt-search {
+.search-box:hover>.produkt-search {
   transition: background-color 0.5s ease;
   background-color: rgb(247, 247, 247);
 }
 
-.search-box:hover{
+.search-box:hover {
   transition: background-color 0.5s ease;
   background-color: rgb(247, 247, 247);
 }
 
-.addition-box{
+.addition-box {
   width: 100%;
   display: flex;
   align-items: center;
@@ -155,7 +155,7 @@ body {
   /* width: 100%; */
 }
 
-@media (max-width: 500px){
+@media (max-width: 500px) {
   .produkt-search {
     height: 50px;
     width: 90%;
@@ -223,7 +223,7 @@ select {
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: row;
-  box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.3);
+  box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.3);
 
 }
 
@@ -258,32 +258,59 @@ select {
 }
 
 /* Container */
-.main-container {
-  min-height: 600px;
-  min-width: 90%;
+.chart-container {
   background-color: white;
-  margin: 1% 5%;
+  margin: 1% 2.5%;
   border-radius: 5px;
   border: 2px rgb(223, 221, 221);
   box-shadow: 2px 2px #ccc, -2px 2px #ccc;
 }
 
-.charts-container{
-  display: flex;
-  /* align-items: center; */
-  /* justify-content: center; */
-  /* flex-wrap: wrap; */
-  /* flex-direction: row;  */
-}
-.main-container h4{
-  font-size:1em;
+/*  */
+.map-container {
+  width: 50%;
+  min-height: 600px;
+  margin-left: 2.5%;
+  margin-right: 1.25%;
 }
 
-.toprow-title{
+.line-container{
+  width: 45%;
+  height: 450px;
+  margin-left: 1.25%;  
+  margin-right: 2.5%;
+}
+
+.charts-container {
+  display: flex;
+}
+
+@media(max-width: 1050px) {
+  .charts-container {
+    display: inline;
+  }
+  .map-container {
+    width: 90%;
+    min-height: 600px;
+    margin: 2.5%;
+  }
+  .line-container {
+    width: 90%;
+    height: 450px;
+    margin: 2.5%;
+  }
+}
+
+.main-container h4 {
+  font-size: 1em;
+}
+
+.toprow-title {
   padding: 3px 10px;
   width: 100%;
   border-bottom: 1px #ccc solid;
 }
+
 /* Styling för grafområdet */
 .addition {
   margin-left: 10px;
@@ -301,47 +328,46 @@ select {
 =            Radio button            =
 =============================================*/
 
-.form-radio
-{
-     -webkit-appearance: none;
-     -moz-appearance: none;
-     appearance: none;
-     display: inline-block;
-     position: relative;
-     background-color: #f1f1f1;
-     color: #666;
-     top: 10px;
-     height: 30px;
-     width: 30px;
-     border: 0;
-     border-radius: 50px;
-     cursor: pointer;     
-     margin-right: 7px;
-     outline: none;
+.form-radio {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  position: relative;
+  background-color: #f1f1f1;
+  color: #666;
+  top: 10px;
+  height: 30px;
+  width: 30px;
+  border: 0;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-right: 7px;
+  outline: none;
 }
-.form-radio:checked::before
-{
-     position: absolute;
-     font: 13px/1 'Open Sans', sans-serif;
-     left: 11px;
-     top: 7px;
-     content: '\02143';
-     transform: rotate(40deg);
+
+.form-radio:checked::before {
+  position: absolute;
+  font: 13px/1 'Open Sans', sans-serif;
+  left: 11px;
+  top: 7px;
+  content: '\02143';
+  transform: rotate(40deg);
 }
-.form-radio:hover
-{
-     background-color: #f7f7f7;
+
+.form-radio:hover {
+  background-color: #f7f7f7;
 }
-.form-radio:checked
-{
-     background-color: #f1f1f1;
+
+.form-radio:checked {
+  background-color: #f1f1f1;
 }
-label
-{
-     font: 300 12px/1.7 'Open Sans', sans-serif;
-     color: #666;
-     cursor: pointer;
-} 
+
+label {
+  font: 300 12px/1.7 'Open Sans', sans-serif;
+  color: #666;
+  cursor: pointer;
+}
 
 
 .radio-box {
@@ -373,7 +399,7 @@ label
 }
 
 .ui-state-hover {
-cursor: pointer
+  cursor: pointer
 }
 
 #renderGraph {
@@ -452,7 +478,3 @@ cursor: pointer
 }
 
 /*=====  End of Maptest  ======*/
-
-
-
-

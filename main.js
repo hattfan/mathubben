@@ -46,6 +46,31 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 		res.render('login.ejs');
 
 	});
+
+	app.get('/konkurrentanalysartiklarPerKommun/:id1/', function (req, res) {
+		var data = {
+			"artiklar": {
+				"artikelOne": req.params.id1,
+			}
+		};
+		db.collection('artikeldata').find({$or: [{'LevArtNr':data.artiklar.artikelOne}]}).toArray(function(err, result){
+			if(err) throw err
+			res.json(result);
+		})
+	});
+
+	app.get('/konkurrentanalysartiklarPerLaen/:id1/', function (req, res) {
+		var data = {
+			"artiklar": {
+				"artikelOne": req.params.id1,
+			}
+		};
+		db.collection('artikeldataperlaen').find({$or: [{'LevArtNr':data.artiklar.artikelOne}]}).toArray(function(err, result){
+			if(err) throw err
+			res.json(result);
+		})
+	});
+
 	app.get('/konkurrentanalysartiklarPerKommun/:id1/:id2/', function (req, res) {
 		var data = {
 			"artiklar": {
@@ -99,7 +124,9 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 			res.json(result);
 		})
 	});
-
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//! Fyra artiklar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	app.get('/konkurrentanalysartiklar/:id1/:id2/:id3/:id4', function (req, res) {
 		var data = {
 			"artiklar": {
@@ -114,6 +141,27 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 			res.json(result);
 		})
 	});
+
+	app.get('/konkurrentanalysartiklarPerLaen/:id1/:id2/:id3/:id4', function (req, res) {
+		var data = {
+			"artiklar": {
+				"artikelOne": req.params.id1,
+				"artikelTwo": req.params.id2,
+				"artikelThree": req.params.id3,
+				"artikelFour": req.params.id4
+
+			}
+		};
+		db.collection('artikeldataperlaen').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo},{'LevArtNr':data.artiklar.artikelThree},{'LevArtNr':data.artiklar.artikelFour}]}).toArray(function(err, result){
+			if(err) throw err
+			res.json(result);
+		})
+	});
+//! END FYRA ARTIKLAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//! Fem artiklar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	app.get('/konkurrentanalysartiklar/:id1/:id2/:id3/:id4/:id5', function (req, res) {
 		var data = {
@@ -130,6 +178,23 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 			res.json(result);
 		})
 	});
+
+	app.get('/konkurrentanalysartiklarPerLaen/:id1/:id2/:id3/:id4', function (req, res) {
+		var data = {
+			"artiklar": {
+				"artikelOne": req.params.id1,
+				"artikelTwo": req.params.id2,
+				"artikelThree": req.params.id3,
+				"artikelFour": req.params.id4,
+				"artikelFive": req.params.id5
+			}
+		};
+		db.collection('artikeldataperlaen').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo},{'LevArtNr':data.artiklar.artikelThree},{'LevArtNr':data.artiklar.artikelFour},{'LevArtNr':data.artiklar.artikelFive}]}).toArray(function(err, result){
+			if(err) throw err
+			res.json(result);
+		})
+	});
+//! END FEM ARTIKLAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	app.get('/varugrupptest/:grupp', function (req, res) {
 		db.collection("varugrupper").find({
@@ -151,6 +216,10 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 
 	app.get('/konkurrentanalys', function (req, res) {
 		res.render('konkurrentanalys.ejs');
+	});
+
+	app.get('/prodanalys', function (req, res) {
+		res.render('prodanalys.ejs');
 	});
 
 	app.get('/konkurrentanalysdata/:id', function (req, res) {

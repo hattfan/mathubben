@@ -8,6 +8,16 @@ function handleInputs() {
 
     if (searchboxes.length === searchboxesWithValues.length) {
         switch (searchboxesWithValues.length) {
+            case 1:
+                var apiRequest1 = fetch(`/konkurrentanalysartiklarPerKommun/${searchboxValues['searchBox-1']}`).then(function (response) {
+                    return response.json()
+                });
+                var apiRequest2 = fetch(`/konkurrentanalysartiklarPerLaen/${searchboxValues['searchBox-1']}`).then(function (response) {
+                    return response.json()
+                });
+                Promise.all([apiRequest1, apiRequest2]).then(function (values) {
+                    drawGraphs(values[0], values[1])
+                });
             case 2:
                 var apiRequest1 = fetch(`/konkurrentanalysartiklarPerKommun/${searchboxValues['searchBox-1']}/${searchboxValues['searchBox-2']}`).then(function (response) {
                     return response.json()
