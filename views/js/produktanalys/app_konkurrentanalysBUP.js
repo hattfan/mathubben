@@ -12,78 +12,71 @@ var varugruppsBtn = document.getElementById("varugrupp");
 var barText = document.querySelector(".bartext")
 var barchartExists = document.querySelector("bar")
 
-function drawGraphs(data, laenData) {
+function testFetch(data) {
 
   d3.queue()
     .defer(d3.json, "../src/sverige.topojson")
-    .defer(d3.json, "../src/sweden-counties.json")
     // .defer(d3.json, `konkurrentanalysdata/${artNr}`)
 
-    .await(function (error, kommunMapData, laenMapData) {
+    .await(function (error, mapData) {
       if (error) throw error;
       //!Definierar inputs
-      // console.log(data, kommunMapData)
+      // console.log(data, mapData)
 
       var extremeYears = d3.extent(data, d => +d.Year);
-      var currentYear = extremeYears[1]
-      $("#slider").slider("value", extremeYears[1])
+      var currentYear = extremeYears[1];
       var currentDataType = d3.select('input[name="data-type"]:checked')
         .attr("value");
       var currentCalculationType = d3.select('input[name="calculation-type"]:checked')
         .attr("value");
-      var geoData = topojson.feature(kommunMapData, kommunMapData.objects.sverige).features;
+      var geoData = topojson.feature(mapData, mapData.objects.sverige).features;
 
       // updateTitle(currentDataType, currentCalculationType, currentYear)
 
       //! Function-calls
-      drawMap(geoData, laenMapData, data, laenData, currentYear, currentDataType, currentCalculationType);
+      drawMap(geoData, data, currentYear, currentDataType, currentCalculationType);
       
       var visningsVal = currentDataType + currentCalculationType
-      
-      // lineGraph(data, visningsVal, 'Sverige')
+      lineGraph(data, visningsVal)
       // drawBar(data, "", visningsVal)
 
-      var startPos = $("#slider").slider("value")
-      
-      //!Värden på års-slidern
-      $("#slider").on("slidestop", function(event, ui) { 
-        console.log(startPos)  
-        var endPos = ui.value;
-          if (startPos != endPos) {
-            d3.select("#map").selectAll("*").remove();
-            d3.select("#line").selectAll("*").remove();
-            document.querySelector("#line-chart-name").innerText = 'Sverige'
-            currentYear = endPos;
-            drawMap(geoData, laenMapData, data, laenData, currentYear, currentDataType, currentCalculationType);
-            // lineGraph(data, visningsVal)
+      //! Värden på års-togglarn
+      d3.select("#year")
+        .property("min", extremeYears[0])
+        .property("max", extremeYears[1])
+        .property("value", extremeYears[1])
+        .on("input", () => {
+          currentYear = +d3.event.target.value;
 
-          }
-          startPos = endPos;
-      });
+          drawMap(geoData, data, currentYear, currentDataType, currentCalculationType);
+          // highlightBars(currentYear)
+          // updateTitle(currentDataType, currentCalculationType, currentYear)
+
+        })
+
 
       //!När data-type ändras renderas kartor om
       d3.selectAll('input[name="data-type"]')
         .on("change", () => {
+          var kommun = d3.select(".active").data()[0].properties.KNKOD;
           currentDataType = d3.event.target.value;
           visningsVal = currentDataType + currentCalculationType
-          d3.select("#map").selectAll("*").remove();
-          d3.select("#line").selectAll("*").remove();
-          document.querySelector("#line-chart-name").innerText = 'Sverige'
-          drawMap(geoData, laenMapData, data, laenData, currentYear, currentDataType, currentCalculationType);
-          // drawBar(data, kommun, visningsVal)
+          updateTitle(currentDataType, currentCalculationType, currentYear)
+          drawMap(geoData, data, currentYear, currentDataType, currentCalculationType);
+          drawBar(data, kommun, visningsVal)
 
         });
 
       //!När calculation-type ändras renderas kartor om
       d3.selectAll('input[name="calculation-type"]')
         .on("change", () => {
+          //?Osäker på dessa
+          var kommun = d3.select(".active").data()[0].properties.KNKOD;
           currentCalculationType = d3.event.target.value;
           visningsVal = currentDataType + currentCalculationType
-          d3.select("#map").selectAll("*").remove();
-          d3.select("#line").selectAll("*").remove();
-          document.querySelector("#line-chart-name").innerText = 'Sverige'
-          drawMap(geoData, laenMapData, data, laenData, currentYear, currentDataType, currentCalculationType);
-          // drawBar(data, kommun, visningsVal)
+          updateTitle(currentDataType, currentCalculationType, currentYear)
+          drawMap(geoData, data, currentYear, currentDataType, currentCalculationType);
+          drawBar(data, kommun, visningsVal)
         });
 
       //!Vid ändring av musen på kartan uppdateras tooltip
@@ -95,7 +88,6 @@ function drawGraphs(data, laenData) {
         var tooltip = d3.select(".tooltip");
         var tgt = d3.select(d3.event.target);
         var isKommun = tgt.classed("kommun");
-        var isLaen = tgt.classed("states");
         var isBar = tgt.classed("bar");
 
         var units = currentDataType === "Mängd" ? "kg" : "kronor";
@@ -111,33 +103,25 @@ function drawGraphs(data, laenData) {
           // console.log(data)
         };
 
-        var tooltipSort = '';
-        if (isKommun) tooltipData = tgt.data()[0].properties.data, tooltipNamn = tgt.data()[0].properties.KNNAMN, tooltipSort = "Kommun";
-        if (isLaen) tooltipData = tgt.data()[0].properties.data, tooltipNamn = tgt.data()[0].properties.NAME_1, tooltipSort = "Län";
-        
+        if (isKommun) tooltipData = tgt.data()[0].properties.data, tooltipKommun = tgt.data()[0].properties;
         tooltip
-          .style("opacity", +(isKommun || isBar || isLaen))
+          .style("opacity", +(isKommun || isBar))
           .style("left", (d3.event.pageX - tooltip.node().offsetWidth / 2) + "px")
           .style("top", (d3.event.pageY - tooltip.node().offsetHeight - 10) + "px");
 
-        if (isKommun) {
-          tooltipAmount = tooltipData[visningsVal] === undefined ? 0 : tooltipData[visningsVal].toLocaleString().replace(/,/g, "'");
-          tooltipProdukt = tooltipData['Benämning'] === undefined ? "" : tooltipData['Benämning'];          
-          tooltipData.kommun === "" ? tooltipData.KommunNamn = tooltipKommun.KNNAMN : null;
-        }
+        // if (isKommun) var tooltipAmount = tooltipData[visningsVal] === undefined ? 0 : tooltipData[visningsVal]
+        if (isKommun) tooltipAmount = tooltipData[visningsVal] === undefined ? 0 : tooltipData[visningsVal].toLocaleString().replace(/,/g, "'");
+        // if (isKommun && tooltipData.kommun) tooltipData.KommunNamn = 
+        if (isKommun) tooltipData.kommun === "" ? tooltipData.KommunNamn = tooltipKommun.KNNAMN : null
 
-        if (isLaen) {
-          tooltipProdukt = tooltipData['Benämning'] === undefined ? "" : tooltipData['Benämning'];
-          tooltipAmount = tooltipData[visningsVal] === undefined ? 0 : tooltipData[visningsVal].toLocaleString().replace(/,/g, "'");
-        }
+        // <p>Kommun: ${kommunnamn[tooltipData.KommunNummer]}</p>
 
         if (tooltipData) {
           tooltip
             .html(`
-        <p>${tooltipSort}: ${tooltipNamn}</p>
+        <p>Kommun: ${kommunnamn[tooltipData.KommunNummer]}</p>
         <p>Mängd: ${tooltipAmount} ${units} - ${calculation}</p>
-        <p>År: ${currentYear}</p>
-        <p>Produkt: ${tooltipProdukt}</p>
+        <p>År: ${tooltipData.Year}</p>
       `)
         }
       };
@@ -158,13 +142,14 @@ function screenResize() {
     .node().offsetWidth;
 
   var mapWidth = mapChartWidth/3;
+    console.log(mapChartWidth)
 
-  // debugger
-  // document.querySelector("#line")?d3.select(".line-container").append("svg").attr("id", "line"):null
+  // var barChartWidth = +d3.select(".bar-container")
+  //   .node().offsetWidth;
 
-    
-  createMap()
-  // createLine()
+  // console.log(mapChartWidth, barChartWidth)
+
+  createMap(380, height)
   // createBar(barChartWidth, height)    
 
 }

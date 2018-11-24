@@ -1,0 +1,64 @@
+/* .line { 
+  fill: none;
+  stroke: #ffab00;
+  stroke-width: 3;
+}
+/*  */
+
+.tick text {
+  font-size: 1.2 em;
+}
+.dotred {
+  fill: red;
+  stroke: #fff;
+}
+
+.dotblue {
+  fill: blue;
+  stroke: #fff;
+}
+.dotDarkOrange {
+  fill: DarkOrange;
+  stroke: #fff;
+}
+.dotpurple {
+  fill: purple ;
+  stroke: #fff;
+}
+.dotgreen{
+  fill: green;
+  stroke: #fff;
+}
+
+
+.line {
+  fill: none;
+  stroke-width: 2px;
+}
+
+.red {
+  stroke: red;
+}
+.blue {
+  stroke: blue;
+}
+.DarkOrange {
+  stroke: DarkOrange;
+}
+.purple{
+  stroke: purple;
+}
+.green{
+  stroke: green;
+}
+
+
+.grid line {
+  stroke: lightgrey;
+  stroke-opacity: 0.7;
+  shape-rendering: crispEdges;
+}
+
+.grid path {
+  stroke-width: 0;
+}

@@ -5,7 +5,7 @@ var modal = new tingle.modal({
     closeMethods: ['overlay', 'button', 'escape'],
     closeLabel: "Close",
     cssClass: ['custom-class-1', 'custom-class-2'],
-    onOpen: function (textBox) {
+    onOpen: function () {
         console.log('modal open');
     },
     onClose: function () {
@@ -28,12 +28,12 @@ modal.setContent(
         <div class="sök-box">
             <label for="produkt">Filtrera efter leverantör</label>
             <br>
-            <input id="leverantör" class="typeahead" type="text" placeholder="Leverantör">
+            <input id="modal-input" id="produkt" class="typeahead" type="text" placeholder="Leverantör">
         </div>
         <div class="sök-box">
             <label for="produkt">Sök efter artikel</label>
             <br>
-            <input id="artikel" class="typeahead" type="text" placeholder="Sök efter artikel">
+            <input id="modal-input" id="produkt" class="typeahead" type="text" placeholder="Sök efter artikel">
         </div>
     </div>
     `
@@ -41,8 +41,6 @@ modal.setContent(
 
 // add a button
 modal.addFooterBtn('Ok', 'tingle-btn tingle-btn--primary', function () {
-    
-    document.querySelector(".trigger-button").innerText = document.querySelector("#artikel").value
     // here goes some logic
     modal.close();
 });
@@ -54,8 +52,6 @@ modal.addFooterBtn('Avbryt', 'tingle-btn tingle-btn--danger', function () {
 });
 
 var btn = document.querySelector('.trigger-button');
-btn.addEventListener('click', function (e) {
-    console.log(this)
-    document.querySelector("#artikel").dataset.key = this.dataset.key;
-    modal.open(this);
+btn.addEventListener('click', function () {
+    modal.open();
 })

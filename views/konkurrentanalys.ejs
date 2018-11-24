@@ -39,23 +39,12 @@
         </div> -->
     </nav>
 
-    <!-- W3 sidenav -->
-    <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
-        <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
-        <a href="/dashboard" class="w3-bar-item w3-button">
-            <i class="ti-home"></i> Hem</a>
-        <a href="/sortfil" class="w3-bar-item w3-button">
-            <i class="ti-view-list-alt"></i> Sortfil</a>
-        <a href="/marknadskraft" class="w3-bar-item w3-button">
-            <i class="ti-map-alt"></i> Marknadskraft</a>
-        <a href="/konkurrentanalys" class="w3-bar-item w3-button active-nav">
-            <i class="ti-pulse"></i> Konkurrentanalys</a>
-    </div>
+    <%- include partials/sidebar.ejs %>
 
     <div id="produkt-search-toolbar">
         <div class="nav-container">
             <div class="grid-produkt">
-                <!-- <button class="trigger-button">run modal</button> -->
+                <div data-key="id42315" class="trigger-button" style="border: 2px solid #ccc; padding: 10px;border-radius: 7px; cursor: pointer;color: dimgray">Lägg till Produkt</div>
 
                 <div class="search-box-container">
                     <div class="product-search-container" id="searchBox-1">
@@ -139,7 +128,7 @@
 <script src="js/assets/typeahead.js/bloodhound.min.js"></script>
 <script src="js/assets/typeahead.js/typeahead.bundle.min.js"></script>
 <script src="js/assets/typeahead.js/typeahead.jquery.min.js"></script>
-<!-- <script src="js/konkurrentanalys/tingle/tingle.js"></script> -->
+<script src="js/konkurrentanalys/tingle/tingle.js"></script>
 <script src="js/konkurrentanalys/slider.js"></script>
 <!-- <script src="js/linedata.js"></script> -->
 <script src="js/kommunnamn.js"></script>
@@ -147,7 +136,7 @@
 <script src="js/konkurrentanalys/line_konkurrentanalys.js"></script>
 <script src="js/konkurrentanalys/app_konkurrentanalys.js"></script>
 <script src="js/konkurrentanalys/konkurrentanalys.js"></script>
-<!-- <script src="js/konkurrentanalys/tingle/tingleInit.js"></script> -->
+<script src="js/konkurrentanalys/tingle/tingleInit.js"></script>
 <script src="js/typeahead.js"></script>
 <script src="js/konkurrentanalys/search_box_handler.js"></script>
 
