@@ -1,0 +1,43 @@
+﻿Kommun	Kommunkod	Invånare
+Partile	1402	37541
+Öckerö	1407	12818
+Härryda	1401	37185
+Mölndal	1481	64841
+Kungälv	1482	43428
+Lerum	1441	40833
+Lilla Edet	1462	13727
+Ale	1440	29692
+Stenungsund	1415	25972
+Tjörn	1419	15675
+Partille	1402	37541
+Möndal	1481	64841
+Göteborg	1480	558638
+Borås	1490	110112
+Fagersta	1982	13456
+LT Dalarna	ting	#N/A
+Kramfors	2282	18669
+Lidingö	0186	46882
+Nacka	0182	99702
+Region Jönköping	ting	#N/A
+Solna	0184	78183
+Uddevalla	1485	55270
+Uppsala	0380	215762
+Stockholm	0180	939238
+Svedala kommun	1263	20837
+Skövde	1496	54316
+Lund	1281	119176
+Lomma	1262	23967
+Karlstad	1780	90475
+Haninge	0136	86213
+Botkyrka	0127	90992
+LillaEdet	1462	13727
+Falköping	1499	32876
+Västra götalandsregionen	ting	#N/A
+Strömstad, Tanum, Sotenäs, Lysekil, Munkedal, Vänersborg, Trollhättan	1488	57862
+Mariestad	1493	24217
+Svedala	1263	20837
+Stockholm Stad	0180	939238
+Gällivare	2523	17942
+Borås, Bollebyggd, Svenljunga, Tranemo, Ulricehamn	1490	110112
+Torsby 	1737	12075
+Strömstad, Tanum, Sotenäs, Lysekil, Munkedal, Vänersborg och Trollhättan	1488	57862

@@ -2,3 +2,10 @@
 Npm installed passport.
 ! Behöver få över mongo-datatable till git:en
 * Jobbar med att få över loggningen och d3 till admin-templatet
+
+2018-11-27
+TODOs
+1. Få in menigo-datan i nuvarande system på artikelnivå
+2. Få in menigo-datan på länsnivå på artikelnivå
+3. Fixa D3-funktionerna s.a. de uppdaterar datan istället för att rendera nytt
+4- Popup för att filtrera utefter leverantörsval
