@@ -1,7 +1,5 @@
 function lineGraph(graphData, visningsVal, lineTyp, lookupKod) {
 
-    // console.log(graphData);
-
     d3.select("#line").selectAll("*").remove();
     // lineTyp = 'kommun',lookupKod = '1480';
     // lineTyp = 'laen',lookupKod = '14';
@@ -24,7 +22,7 @@ function lineGraph(graphData, visningsVal, lineTyp, lookupKod) {
 
     // var lineArrData = [lineDataOne, lineDataTwo]
     var years = ['2015', '2016', '2017']
-    var className = ['red','blue','DarkOrange', 'purple', 'green']
+    var className = ['blue','red','DarkOrange', 'purple', 'green']
     var uniqueLevarts = findUniqueLevartnr(graphData);
 
     // console.log(graphData)
@@ -138,8 +136,8 @@ function createKommunLineObject(year, levart, kommunNummer){
         LevArtNr: levart,
         KronorPerCapita: 0,
         KronorTotal: 0,
-        MangdPerCapita: 0,
-        MangdTotal: 0,
+        MängdPerCapita: 0,
+        MängdTotal: 0,
         }
     return emptyObject
 }
@@ -151,8 +149,8 @@ function createLaenLineObject(year, levart, laenKod){
         LevArtNr: levart,
         KronorPerCapita: 0,
         KronorTotal: 0,
-        MangdPerCapita: 0,
-        MangdTotal: 0,
+        MängdPerCapita: 0,
+        MängdTotal: 0,
         }
     return emptyObject
 }

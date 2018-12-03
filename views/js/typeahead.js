@@ -6,7 +6,7 @@ function typeaheadInit(searchHandler){
   var bestPictures = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('Benämning'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
-    prefetch: '/js/preload/output.json',
+    prefetch: '/js/preload/output2.json',
   });
   
   searchHandler.typeahead(null, {

@@ -1,5 +1,5 @@
 ############################################################## 
-#! Räknar mängd och kroner per artikel och per kommun ########
+#? Räknar mängd och kroner per artikel och per kommun ########
 ##############################################################
 
 import pymongo
@@ -63,8 +63,8 @@ for artikel in artikelNummer:
                     
             
             if kommunNr in befolkningsAmount:
-                KronorPerCapita = cost/befolkningsAmount[kommunNr]   
-                AmountPerCapita = amount/befolkningsAmount[kommunNr]
+                KronorPerCapita = cost/befolkningsAmount[str(kommunNr)]   
+                AmountPerCapita = amount/befolkningsAmount[str(kommunNr)]
 
             else:                    
                 KronorPerCapita = 0   
@@ -77,11 +77,11 @@ for artikel in artikelNummer:
                 "Year": str(year),
                 "KronorTotal": cost,
                 "KronorPerCapita": KronorPerCapita,
-                "MängdTotal": amount,
-                "MängdPerCapita": AmountPerCapita,
+                "MangdTotal": amount,
+                "MangdPerCapita": AmountPerCapita,
                 "LevArtNr": artikel,
                 "Fabrikat" : foundArtNrRows["Fabrikat"],
                 "Benamning": foundArtNrRows["Benämning"]}
-                print(productValues)
+                # print(productValues)
                 #! OBS INSERT into mongo
-                # mycol.insert_one(productValues)
+                mycol.insert_one(productValues)

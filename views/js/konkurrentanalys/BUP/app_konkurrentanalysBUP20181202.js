@@ -122,12 +122,12 @@ function drawGraphs(data, laenData) {
 
         if (isKommun) {
           tooltipAmount = tooltipData[visningsVal] === undefined ? 0 : tooltipData[visningsVal].toLocaleString().replace(/,/g, "'");
-          tooltipProdukt = tooltipData['Benamning'] === undefined ? "" : tooltipData['Benamning'];          
+          tooltipProdukt = tooltipData['Benämning'] === undefined ? "" : tooltipData['Benämning'];          
           tooltipData.kommun === "" ? tooltipData.KommunNamn = tooltipKommun.KNNAMN : null;
         }
 
         if (isLaen) {
-          tooltipProdukt = tooltipData['Benamning'] === undefined ? "" : tooltipData['Benamning'];
+          tooltipProdukt = tooltipData['Benämning'] === undefined ? "" : tooltipData['Benämning'];
           tooltipAmount = tooltipData[visningsVal] === undefined ? 0 : tooltipData[visningsVal].toLocaleString().replace(/,/g, "'");
         }
 
