@@ -61,8 +61,6 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
           }
           kommun = { ...compare
           }
-        } else {
-          kommun = []
         }
       })
     }
@@ -75,29 +73,30 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
   var counter = 0;
   laenGeoData.forEach(d => {
     counter = counter + 1;
-    console.log(counter);
+    // console.log(counter);
     var laen = laenData.filter(row => row.LaenKod === d.properties.laenskod);
     // row.LaenKod === d.properties.laenskod?console.log('ja'):console.log(row.LaenKod,d.properties.laenskod)});
     
     // Om laen har värde
     if (laen.length !== 0) {
-      console.log(laen);
+      // console.log(laen);
       var compare = createTempObject()
       // Jämför värdena för att bestämma vilken som är störst
+      console.log(laen);
       laen.forEach(laenAlt => {
         if (+laenAlt.Year === year) {
+          // console.log(laenAlt,compare);
           if (laenAlt[visningsVal] > compare[visningsVal]) {
             compare = { ...laenAlt}
-            
           }
           laen = { ...compare
           }
-        } else {
-          laen = []
+          // console.log(laen);
         }
       })
+      console.log(laen);
     }
-    console.log(laen);
+    // console.log(laen);
     // Lägg in properties i geoData datan
     d.properties.data = laen;
   });
