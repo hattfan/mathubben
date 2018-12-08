@@ -53,9 +53,9 @@ modal.addFooterBtn('Avbryt', 'tingle-btn tingle-btn--danger', function () {
     modal.close();
 });
 
-// var btn = document.querySelector('.trigger-button');
-// btn.addEventListener('click', function (e) {
-//     console.log(this)
-//     document.querySelector("#artikel").dataset.key = this.dataset.key;
-//     modal.open(this);
-// })
+var btn = document.querySelector('.trigger-button');
+btn.addEventListener('click', function (e) {
+    console.log(this)
+    document.querySelector("#artikel").dataset.key = this.dataset.key;
+    modal.open(this);
+})

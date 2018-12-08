@@ -163,7 +163,6 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
     .attr("id", "state-borders")
     .attr("d", path);
 
-
   function clicked(d) {
     var x, y, k;
     d3.selectAll(".states").style("display", "inline");

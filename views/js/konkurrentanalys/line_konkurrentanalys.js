@@ -24,7 +24,7 @@ function lineGraph(graphData, visningsVal, lineTyp, lookupKod) {
 
     // var lineArrData = [lineDataOne, lineDataTwo]
     var years = ['2015', '2016', '2017']
-    var className = ['red','blue','DarkOrange', 'purple', 'green']
+    var className = ['blue','red','DarkOrange', 'purple', 'green']
     var uniqueLevarts = findUniqueLevartnr(graphData);
 
     // console.log(graphData)

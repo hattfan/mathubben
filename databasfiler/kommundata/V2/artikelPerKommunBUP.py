@@ -8,16 +8,15 @@ from befolkningsDataPerKommun import befolkningsAmount
 #!Definition of mongo
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient['mathubben']
-menigov3 = mydb['menigov3']
+menigov2 = mydb['menigov2']
 mycol = mydb["dataPerKommun"]
 
 #!database-findings
-dbdata = menigov3.find()
-artNrs = menigov3.distinct('Fabrartnr')
-years = menigov3.distinct('År')
-kommunnummer = menigov3.distinct('KommunNummer')
-artikelNummer = list(menigov3.distinct('Fabrartnr'))
-# artikelNummer = [210121]
+dbdata = menigov2.find()
+artNrs = menigov2.distinct('Fabrartnr')
+years = menigov2.distinct('År')
+kommunnummer = menigov2.distinct('KommunNummer')
+artikelNummer = list(menigov2.distinct('Fabrartnr'))
 
 foundKommuner = []
 #! function för att ta ut kommunnummer hittade i mongofind:en
@@ -29,42 +28,44 @@ for artikel in artikelNummer:
     print('Artikel nummer ', counter)
     # Loopa över åren för att ackumulera resultat    
     for year in years:
-        # Leta upp samtliga resultat i menigov3 för artikelnumret och året
-        dbFind = list(menigov3.find({"$and": [{'Fabrartnr': artikel}, {'År':year}]}))
-    # dbFind = list(menigov3.find({"$and": [{'Fabrartnr': artikel}, {'År':2017}]}))
-        c = 0
+        # Leta upp samtliga resultat i menigov2 för artikelnumret och året
+        dbFind = list(menigov2.find({"$and": [{'Fabrartnr': artikel}, {'År':year}]}))
         for foundArtNrRows in dbFind:
-            c = c+1
-            # print(year, c, foundArtNrRows['KommunNummer'])
-            # print(c, foundArtNrRows['KommunNummer'])
+
             # Lägg in funna kommunnummer i foundKommuner för att inte behöva loopa över samtliga kommunnnummer utan endast de som faktiskt har värden
             for kommunNr in kommunnummer:
                 if foundArtNrRows['KommunNummer'] == kommunNr:
                     foundKommuner.append(kommunNr)
 
-        # print(foundKommuner)
-        # Gör om set till list för att det ska bli som ett js-object och ha unika endast
+        # Gör om set till list för att det ska bli som ett js-object 
         myset = set(foundKommuner)
         mykommunlist = list(myset)
         mylistofprodukterandkommuner = []
 
-        # print(mykommunlist)
-        # print(foundKommuner)
         # Loopa över samtliga kommunnummer i de funna kommunnumrena och ackumulera för varje artikel        
         for kommunNr in mykommunlist:
             amount = 0.0
             cost = 0.0    
             productValues = {}
             for foundArtNrRows in dbFind:
-                # print(foundArtNrRows['KommunNummer'])
                 # Om funna artikelraden korresponderar till kommunnumret så ackumuleras resultatet för mängd och kronor
-                if foundArtNrRows['KommunNummer'] in kommunNr:
-                    amount = amount + float(foundArtNrRows['VolymAnb'])
-                    cost = cost + float(foundArtNrRows['BeloppAnb'])
+                # print(foundArtNrRows)
+                if foundArtNrRows['KommunNummer'] == kommunNr:
+                    if(isinstance(foundArtNrRows['VolymAnb'],int)):
+                        amount = amount + float(int(foundArtNrRows['VolymAnb']))
+                    elif(isinstance(foundArtNrRows['VolymAnb'],float)):
+                        amount = amount + float(foundArtNrRows['VolymAnb'])
 
+                    if(isinstance(foundArtNrRows['BeloppAnb'],int)):
+                        cost = cost + float(foundArtNrRows['BeloppAnb'])
+                    elif(isinstance(foundArtNrRows['BeloppAnb'],float)):
+                        cost = cost + float(foundArtNrRows['BeloppAnb'])
+                    
+            
             if kommunNr in befolkningsAmount:
                 KronorPerCapita = cost/befolkningsAmount[str(kommunNr)]   
                 AmountPerCapita = amount/befolkningsAmount[str(kommunNr)]
+
             else:                    
                 KronorPerCapita = 0   
                 AmountPerCapita = 0

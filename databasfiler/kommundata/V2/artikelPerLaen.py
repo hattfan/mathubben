@@ -1,94 +1,76 @@
 ############################################################## 
-#! Räknar mängd och kroner per artikel och per laen ########
+#? Räknar mängd och kroner per artikel och per kommun ########
 ##############################################################
 
 import pymongo
-from befolkningsDataPerLaen import befolkningsAmount
-from laenKoder import laensKod
+from befolkningsDataPerKommun import befolkningsAmount
 
-print()
 #!Definition of mongo
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient['mathubben']
-mycombineddb = mydb['menigov2']
+menigov3 = mydb['menigov3']
 mycol = mydb["dataPerLaen"]
 
 #!database-findings
-dbdata = mycombineddb.find()
-artNrs = mycombineddb.distinct('Fabrartnr')
-years = mycombineddb.distinct('År')
-kommunnummer = mycombineddb.distinct('KommunNummer')
-artikelNummer = list(mycombineddb.distinct('Fabrartnr'))
-# Skapar array av laenskoder
-laenKoder = befolkningsAmount.keys()
-
-# print(kommunnummer)
+dbdata = menigov3.find()
+artNrs = menigov3.distinct('Fabrartnr')
+years = menigov3.distinct('År')
+laenKoder = menigov3.distinct('LaenKod')
+artikelNummer = list(menigov3.distinct('Fabrartnr'))
+# artikelNummer = [210121]
 
 foundLaen = []
-#! function för att ta ut kommunnummer hittade i mongofind:en
+#! function för att ta ut LaenKod hittade i mongofind:en
 # TODO (VALFRI) att lägga in detta som function igen
 counter = 0
-
 # För varje artikel, kör loopen
 for artikel in artikelNummer:
     counter = counter + 1
     print('Artikel nummer ', counter)
-
-    # Loopa över åren för att ackumulera resultat
+    # Loopa över åren för att ackumulera resultat    
     for year in years:
-        # Leta upp samtliga resultat i mycombineddb för artikelnumret och året
-        dbFind = list(mycombineddb.find({"$and": [{'Fabrartnr': artikel}, {'År':year}]}))
-
+        # Leta upp samtliga resultat i menigov3 för artikelnumret och året
+        dbFind = list(menigov3.find({"$and": [{'Fabrartnr': artikel}, {'År':year}]}))
+    # dbFind = list(menigov3.find({"$and": [{'Fabrartnr': artikel}, {'År':2017}]}))
+        c = 0
         for foundArtNrRows in dbFind:
-            for laensKod in laenKoder:
+            c = c+1
+            # print(year, c, foundArtNrRows['LaenKod'])
+            # print(c, foundArtNrRows['LaenKod'])
+            # Lägg in funna LaenKod i foundLaen för att inte behöva loopa över samtliga kommunnnummer utan endast de som faktiskt har värden
+            for laenNr in laenKoder:
+                if foundArtNrRows['LaenKod'] == laenNr:
+                    foundLaen.append(laenNr)
 
-                # Lägg in funna kommunnummer i foundLaen för att inte behöva loopa över samtliga kommunnnummer utan endast de som faktiskt har värden
-                if str(foundArtNrRows['LaensKod']) == laensKod:
-                    foundLaen.append(laensKod)
-        
-        
-        # Gör om set till list för att det ska bli som ett object 
+        # Gör om set till list för att det ska bli som ett js-object och ha unika endast
         myset = set(foundLaen)
         mylaenlist = list(myset)
-        # print(mylaenlist)
-        
-        # Loopa över samtliga kommunnummer i de funna kommunnumrena och ackumulera för varje artikel
-        # for kommunNr in laensKod:
-            # print(kommunNr)
-        for laenKod in mylaenlist:
 
-            amount = 0
-            cost = 0    
+        # print(mylaenlist)
+        # print(foundLaen)
+        # Loopa över samtliga LaenKod i de funna kommunnumrena och ackumulera för varje artikel        
+        for laenNr in mylaenlist:
+            amount = 0.0
+            cost = 0.0    
             productValues = {}
             for foundArtNrRows in dbFind:
-                # print(foundArtNrRows)
+                # print(foundArtNrRows['LaenKod'])
                 # Om funna artikelraden korresponderar till kommunnumret så ackumuleras resultatet för mängd och kronor
+                if foundArtNrRows['LaenKod'] in laenNr:
+                    amount = amount + float(foundArtNrRows['VolymAnb'])
+                    cost = cost + float(foundArtNrRows['BeloppAnb'])
 
-                if str(foundArtNrRows['LaensKod']) == laenKod:
-                    if(isinstance(foundArtNrRows['VolymAnb'],int)):
-                        amount = amount + float(int(foundArtNrRows['VolymAnb']))
-                    elif(isinstance(foundArtNrRows['VolymAnb'],float)):
-                        amount = amount + float(foundArtNrRows['VolymAnb'])
-
-                    if(isinstance(foundArtNrRows['BeloppAnb'],int)):
-                        cost = cost + float(foundArtNrRows['BeloppAnb'])
-                    elif(isinstance(foundArtNrRows['BeloppAnb'],float)):
-                        cost = cost + float(foundArtNrRows['BeloppAnb'])
-                    
-
-            
-            if laenKod in befolkningsAmount:
-                KronorPerCapita = cost/befolkningsAmount[laenKod]   
-                AmountPerCapita = amount/befolkningsAmount[laenKod]
-
+            if laenNr in befolkningsAmount:
+                KronorPerCapita = cost/befolkningsAmount[str(laenNr)]   
+                AmountPerCapita = amount/befolkningsAmount[str(laenNr)]
             else:                    
                 KronorPerCapita = 0   
                 AmountPerCapita = 0
 
-            # Om kost har värde, alltså resultat har hittats för artikel och kommun, spara
+            # Om cost har värde, alltså resultat har hittats för artikel och kommun, spara
             if cost != 0:
                 productValues = {
-                "LaenKod": laenKod,
+                "LaenKod": laenNr,
                 "Year": str(year),
                 "KronorTotal": cost,
                 "KronorPerCapita": KronorPerCapita,

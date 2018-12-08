@@ -34,6 +34,14 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 
 	});
 
+	app.get('/artikellistning/:id', function(req, res){
+		db.collection('artiklar').find({'Benamning':{$regex: ".*" + req.params.id + ".*"}}).limit(10).toArray(function(err, result){
+			
+			if(err) throw err
+			res.json(result);
+		})		
+	})
+
 	app.get('/konkurrentanalysartiklarPerKommun/:id1/', function (req, res) {
 		var data = {
 			"artiklar": {
@@ -61,8 +69,8 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 	app.get('/konkurrentanalysartiklarPerKommun/:id1/:id2/', function (req, res) {
 		var data = {
 			"artiklar": {
-				"artikelOne": parseInt(req.params.id1),
-				"artikelTwo": parseInt(req.params.id2)
+				"artikelOne": (req.params.id1),
+				"artikelTwo": (req.params.id2)
 			}
 		};
 		console.log(data);
@@ -77,8 +85,8 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 	app.get('/konkurrentanalysartiklarPerLaen/:id1/:id2/', function (req, res) {
 		var data = {
 			"artiklar": {
-				"artikelOne": parseInt(req.params.id1),
-				"artikelTwo": parseInt(req.params.id2)
+				"artikelOne": (req.params.id1),
+				"artikelTwo": (req.params.id2)
 			}
 		};
 		console.log(data);
