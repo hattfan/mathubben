@@ -35,7 +35,24 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 	});
 
 	app.get('/artikellistning/:id', function(req, res){
-		db.collection('artiklar').find({'Benamning':{$regex: ".*" + req.params.id + ".*"}}).limit(10).toArray(function(err, result){
+		// db.collection('artiklar').find({'Benamning':{$regex: ".*" + req.params.id + ".*"}}).limit(10).toArray(function(err, result){
+		db.collection('artiklar').find({'Benamning':{$regex: req.params.id, $options: "im"}}).limit(10).toArray(function(err, result){
+			if(err) throw err
+			res.json(result);
+		})		
+	})
+
+	app.get('/artikelperfabrikat/:fabrikat', function(req, res){
+		// db.collection('artiklar').find({'Benamning':{$regex: ".*" + req.params.fabrikat + ".*"}}).limit(10).toArray(function(err, result){
+		// db.collection('artiklar').find({'Fabrikat':{$regex: req.params.fabrikat, $options: "im"}}).limit(10).toArray(function(err, result){
+		db.collection('artiklar').find({'Fabrikat':	req.params.fabrikat}).sort({'Benamning':1}).toArray(function(err, result){
+			if(err) throw err
+			res.json(result);
+		})		
+	})
+
+	app.get('/fabrikatlistning/:id', function(req, res){
+		db.collection('fabrikat').find({'Fabrikat':{$regex: req.params.id, $options: "im"}}).limit(10).toArray(function(err, result){
 			
 			if(err) throw err
 			res.json(result);
@@ -69,15 +86,13 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 	app.get('/konkurrentanalysartiklarPerKommun/:id1/:id2/', function (req, res) {
 		var data = {
 			"artiklar": {
-				"artikelOne": (req.params.id1),
-				"artikelTwo": (req.params.id2)
+				"artikelOne": req.params.id1,
+				"artikelTwo": req.params.id2
 			}
 		};
-		console.log(data);
 
 		db.collection('dataPerKommun').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo}]}).toArray(function(err, result){
 			if(err) throw err
-			console.log(result);
 			res.json(result);
 		})
 	});
@@ -85,14 +100,12 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 	app.get('/konkurrentanalysartiklarPerLaen/:id1/:id2/', function (req, res) {
 		var data = {
 			"artiklar": {
-				"artikelOne": (req.params.id1),
-				"artikelTwo": (req.params.id2)
+				"artikelOne": req.params.id1,
+				"artikelTwo": req.params.id2
 			}
 		};
-		console.log(data);
 		db.collection('dataPerLaen').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo}]}).toArray(function(err, result){
 			if(err) throw err
-			console.log(result);			
 			res.json(result);
 		})
 	});

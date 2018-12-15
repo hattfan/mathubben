@@ -21,11 +21,20 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
     laenClicked = false;
   active = d3.select(null);
 
-  const searchboxesWithValues = document.querySelectorAll('[data-id]');
+  // const searchboxesWithValues = document.querySelectorAll('[data-id]');
+  // const searchboxValues = [];
+  // searchboxesWithValues.forEach(searchboxWithValues => {
+  //   searchboxValues.push(searchboxWithValues.dataset.id);
+  // })
   const searchboxValues = [];
-  searchboxesWithValues.forEach(searchboxWithValues => {
-    searchboxValues.push(searchboxWithValues.dataset.id);
-  })
+  var triggerButtons = document.querySelectorAll('.trigger-button');
+  triggerButtons.forEach(triggerButton => {
+    if(triggerButton.value){
+        searchboxValues.push(triggerButton.value)
+    }
+})
+
+  
   var visningsVal = dataType + calculationType
   var map = d3.select('#map')
   
@@ -82,7 +91,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
       // console.log(laen);
       var compare = createTempObject()
       // Jämför värdena för att bestämma vilken som är störst
-      console.log(laen);
+      // console.log(laen);
       laen.forEach(laenAlt => {
         if (+laenAlt.Year === year) {
           // console.log(laenAlt,compare);
@@ -94,7 +103,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, cal
           // console.log(laen);
         }
       })
-      console.log(laen);
+      // console.log(laen);
     }
     // console.log(laen);
     // Lägg in properties i geoData datan
