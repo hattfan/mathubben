@@ -40,7 +40,18 @@
     </nav>
 
     <%- include partials/sidebar.ejs %>
-
+    <!-- TODO fixa liten toolbar -->
+    <!-- <div id="scrolled-produkt-search-toolbar">
+        <div>
+            <input type="radio" name="data-type" value="Mängd" id="radio-one"><label for="radio-one">Kilon</label>
+            <input type="radio" name="data-type" value="Kronor" checked><label for="radio-one">Kronor</label>
+        </div>
+        <div>
+            <input type="radio" name="calculation-type" value="Total" id="radio-two"  checked><label for="radio-two">Totalt</label>
+            <input type="radio" name="calculation-type" value="PerCapita"><label for="radio-two">PerCapita</label>
+        </div>
+        <div id="smallslider"></div>
+    </div> -->
     <div id="produkt-search-toolbar">
         <div class="nav-container">
             <div class="grid-produkt">
@@ -49,6 +60,11 @@
                     <div data-key="blue" class="trigger-button" style="border: 2px solid #ccc; padding: 10px;border-radius: 7px; cursor: pointer;color: dimgray">Lägg till Produkt</div>
                     <p class="search-color-blob" style="background-color: red"></p>
                     <div data-key="red" class="trigger-button" style="border: 2px solid #ccc; padding: 10px;border-radius: 7px; cursor: pointer;color: dimgray">Lägg till Produkt</div>
+                    <div class="addition-box">
+                        <div class="plus-icon">
+                            <p><i class="fa fa-plus-circle addition" aria-hidden="true"></i> Lägg till fler artiklar</p>
+                        </div>
+                    </div>
                 </div>
                 <!-- <div class="search-box-container">
                     <div class="product-search-container" id="searchBox-1">
@@ -59,11 +75,8 @@
                         <p class="search-color-blob" style="background-color: red"></p>
                         <input class="typeahead" type="text" placeholder="Sök efter artikel">
                     </div>
-                    <div class="addition-box">
-                        <div class="plus-icon">
-                            <p><i class="fa fa-plus-circle addition" aria-hidden="true"></i> Lägg till fler artiklar</p>
-                        </div>
-                    </div> -->
+                    -->
+                     
             </div>
         </div>
         <div class="grid-choice-bar">
@@ -78,7 +91,6 @@
                 <input type="radio" name="calculation-type" value="Total" id="radio-two" class="form-radio" checked><label for="radio-two">Totalt</label>
                 <input type="radio" name="calculation-type" value="PerCapita" class="form-radio"><label for="radio-two">PerCapita</label>
             </div>
-
         </div> 
     </div>
 
@@ -142,6 +154,7 @@
 <script src="js/konkurrentanalys/tingle/tingleInit.js"></script>
 <script src="js/typeahead.js"></script>
 <script src="js/konkurrentanalys/search_box_handler.js"></script>
+<script src="js/konkurrentanalys/toolbox_mirror.js"></script>
 
 
 <script>
