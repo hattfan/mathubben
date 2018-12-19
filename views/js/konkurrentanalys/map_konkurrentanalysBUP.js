@@ -1,42 +1,20 @@
-var borders = false, background = false;
-
-
-// function updateMapSize(){
-//   var width = document.querySelector('.map-container').offsetWidth-60;
-//   // var height = document.querySelector('.map-container').offsetHeight;
-//   var height = 600;
-
-//   var map =d3.select("#map");
-//   map
-//     .attr("width", width)
-//     .attr("height", height)
-// }
-
 function createMap() {
-  var map = d3.select('#map')
   var width = document.querySelector('.map-container').offsetWidth-60;
-  // var height = document.querySelector('.map-container').offsetHeight;
-  var height = 600;
+  var height = document.querySelector('.map-container').offsetHeight;
 
-  map
+  d3.select("#map")
     .attr("width", width)
     .attr("height", height)
-  console.log(width, height)
-  map.append("rect")
-    .attr("class", "background")
-    .attr("width", width)
-    .attr("height", height)
-  
-  var g = map.append("g")
-    .style("stroke-width", "1.5px");
+
 }
 
-function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, dataType, calculationType) {
-  // d3.select("#map").selectAll("*").remove();
-  // createMap();
-  console.log(sverigeData);
+function drawMap(geoData, laenMapData, kommunData, laenData, year, dataType, calculationType) {
+  d3.select("#map").selectAll("*").remove();
+
+  // console.log(kommunData);
+
   width = document.querySelector('.map-container').offsetWidth-60;
-  height = 600;
+  height = document.querySelector('.map-container').offsetHeight;
   // var width = 500,
   //   height = 700,
     var centered,
@@ -52,13 +30,19 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
   var triggerButtons = document.querySelectorAll('.trigger-button');
   triggerButtons.forEach(triggerButton => {
     if(triggerButton.value){
-      searchboxValues.push(triggerButton.value)
+        searchboxValues.push(triggerButton.value)
     }
-  })
+})
 
   
   var visningsVal = dataType + calculationType
   var map = d3.select('#map')
+  
+  map.append("rect")
+    .attr("class", "background")
+    .attr("width", width)
+    .attr("height", height)
+    .on("click", clicked);
 
   var laenGeoData = topojson.feature(laenMapData, laenMapData.objects.SWE_adm1).features;
 
@@ -71,12 +55,6 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
 
   var path = d3.geoPath()
     .projection(projection);
-
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-  // !Data- meck !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-
-  // !Kommundata !!!!!!!!!!!!!!!!!!!!!!
 
   //geoData för att matcha kommunData till varje kommun
   geoData.forEach(d => {
@@ -96,27 +74,38 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
       })
     }
     // Lägg in properties i geoData datan - här skall läggas in den som är störst
+    //TODO funkar ej ordentligt
+    // console.log(kommun)
     d.properties.data = kommun;
-  });
 
-  // !Laendata !!!!!!!!!!!!!!!!!!!!!!
+  });
+  var counter = 0;
   laenGeoData.forEach(d => {
+    counter = counter + 1;
+    // console.log(counter);
     var laen = laenData.filter(row => row.LaenKod === d.properties.laenskod);
+    // row.LaenKod === d.properties.laenskod?console.log('ja'):console.log(row.LaenKod,d.properties.laenskod)});
     
     // Om laen har värde
     if (laen.length !== 0) {
+      // console.log(laen);
       var compare = createTempObject()
       // Jämför värdena för att bestämma vilken som är störst
+      // console.log(laen);
       laen.forEach(laenAlt => {
         if (+laenAlt.Year === year) {
+          // console.log(laenAlt,compare);
           if (laenAlt[visningsVal] > compare[visningsVal]) {
             compare = { ...laenAlt}
           }
           laen = { ...compare
           }
+          // console.log(laen);
         }
       })
+      // console.log(laen);
     }
+    // console.log(laen);
     // Lägg in properties i geoData datan
     d.properties.data = laen;
   });
@@ -126,17 +115,11 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
     .domain(colorDomainAndRange.domain)
     .range(colorDomainAndRange.colors);
 
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-  // !Updates för grafiken !!!!!!!!!!!!!!!!!!
-  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+  var g = map.append("g")
+    .style("stroke-width", "1.5px");
 
-  var g = map.selectAll('g')
-  
   var update = g.selectAll(".kommun")
     .data(geoData);
-
-    // console.log(update.exit());
-    update.exit().remove()
 
   //Update för kommunnivå
   update
@@ -157,8 +140,8 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
     //   // kommun.classed("active", !isActive);
     // })
     .merge(update)
-    // .transition()
-    // .duration(750)
+    .transition()
+    .duration(750)
     .attr("fill", d => {
       var val = d.properties.data.LevArtNr;
       return val ? mapColorScale(val) : "#ccc";
@@ -166,11 +149,8 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
 
     //Update för laen - 
     // TODO ändra från state
-    var update = g.selectAll(".states")
+    var update = g.selectAll(".state")
       .data(laenGeoData);
-    
-    update.exit().remove()
-
     update
       .enter()
       .append("path")
@@ -178,41 +158,19 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
       .attr("d", path)
       .on("click", clicked)
       .merge(update)
-      // .transition()
-      // .duration(750)
+      .transition()
+      .duration(750)
       .attr("fill", d => {
         var val = d.properties.data.LevArtNr;
         return val ? mapColorScale(val) : "#ccc";
       });
-  
-  // !Färdigt grafiken !!!!!!!!!!!!!!!!!!!!!!
-  // var update = g;
-  // update.
-  // enter()
-  // .append("path")
-  //   .datum(topojson.mesh(laenMapData, laenMapData.objects.SWE_adm1, function (a, b) {
-  //     return a !== b;
-  //   }))
-  //   .attr("id", "state-borders")
-  //   .attr("d", path)
-  //   .merge(update);
 
-    
-  if(!borders){
-    d3.select('#map').selectAll('g').append("path")
-      .datum(topojson.mesh(laenMapData, laenMapData.objects.SWE_adm1, function (a, b) {
-        return a !== b;
-      }))
-      .attr("id", "state-borders")
-      .attr("d", path);
-      // borders = true;
-  } 
-  
-  if(!background){
-    d3.selectAll(".background")
-      .on("click", clicked);
-    background = true;
-  }
+  g.append("path")
+    .datum(topojson.mesh(laenMapData, laenMapData.objects.SWE_adm1, function (a, b) {
+      return a !== b;
+    }))
+    .attr("id", "state-borders")
+    .attr("d", path);
 
   function clicked(d) {
     var x, y, k;
@@ -246,9 +204,8 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         return d === centered;
       })
 
-    // g.transition()
-      // .duration(1000)
-      g
+    g.transition()
+      .duration(1000)
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y +
         ")")
       .style("stroke-width", 1.5 / k + "px");

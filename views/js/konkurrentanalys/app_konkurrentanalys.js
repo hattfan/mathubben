@@ -1,9 +1,11 @@
-var height = 300;
+// var height = 300;
 
-window.onresize = function (event) {
-  screenResize()
-};
-screenResize()
+// window.onresize = function (event) {
+//   screenResize()
+// };
+// screenResize()
+
+createMap()
 
 var target = document.getElementById('#map');
 var title = document.querySelector('#title');
@@ -12,7 +14,7 @@ var varugruppsBtn = document.getElementById("varugrupp");
 var barText = document.querySelector(".bartext")
 var barchartExists = document.querySelector("bar")
 
-function drawGraphs(data, laenData) {
+function drawGraphs(data, laenData, sverigeData) {
 
   d3.queue()
     .defer(d3.json, "../src/sverige.topojson")
@@ -36,7 +38,7 @@ function drawGraphs(data, laenData) {
       // updateTitle(currentDataType, currentCalculationType, currentYear)
 
       //! Function-calls
-      drawMap(geoData, laenMapData, data, laenData, currentYear, currentDataType, currentCalculationType);
+      drawMap(geoData, laenMapData, data, laenData, sverigeData, currentYear, currentDataType, currentCalculationType);
       
       var visningsVal = currentDataType + currentCalculationType
       
@@ -50,9 +52,9 @@ function drawGraphs(data, laenData) {
         console.log(startPos)  
         var endPos = ui.value;
           if (startPos != endPos) {
-            d3.select("#map").selectAll("*").remove();
-            d3.select("#line").selectAll("*").remove();
-            document.querySelector("#line-chart-name").innerText = 'Sverige'
+            // d3.select("#map").selectAll("*").remove();
+            // d3.select("#line").selectAll("*").remove();
+            // document.querySelector("#line-chart-name").innerText = 'Sverige'
             currentYear = endPos;
             drawMap(geoData, laenMapData, data, laenData, currentYear, currentDataType, currentCalculationType);
             // lineGraph(data, visningsVal)
@@ -66,8 +68,9 @@ function drawGraphs(data, laenData) {
         .on("change", () => {
           currentDataType = d3.event.target.value;
           visningsVal = currentDataType + currentCalculationType
-          d3.select("#map").selectAll("*").remove();
-          d3.select("#line").selectAll("*").remove();
+          console.log(visningsVal);
+          // d3.select("#map").selectAll("*").remove();
+          // d3.select("#line").selectAll("*").remove();
           document.querySelector("#line-chart-name").innerText = 'Sverige'
           drawMap(geoData, laenMapData, data, laenData, currentYear, currentDataType, currentCalculationType);
           // drawBar(data, kommun, visningsVal)
@@ -79,8 +82,9 @@ function drawGraphs(data, laenData) {
         .on("change", () => {
           currentCalculationType = d3.event.target.value;
           visningsVal = currentDataType + currentCalculationType
-          d3.select("#map").selectAll("*").remove();
-          d3.select("#line").selectAll("*").remove();
+          console.log(visningsVal);
+          // d3.select("#map").selectAll("*").remove();
+          // d3.select("#line").selectAll("*").remove();
           document.querySelector("#line-chart-name").innerText = 'Sverige'
           drawMap(geoData, laenMapData, data, laenData, currentYear, currentDataType, currentCalculationType);
           // drawBar(data, kommun, visningsVal)
@@ -98,7 +102,7 @@ function drawGraphs(data, laenData) {
         var isLaen = tgt.classed("states");
         var isBar = tgt.classed("bar");
 
-        var units = currentDataType === "Mängd" ? "kg" : "kronor";
+        var units = currentDataType === "Mangd" ? "kg" : "kronor";
         var calculation = currentCalculationType === "Total" ? "totalt" : "per capita"
 
         var tooltipData;
@@ -163,7 +167,7 @@ function screenResize() {
   // document.querySelector("#line")?d3.select(".line-container").append("svg").attr("id", "line"):null
 
     
-  createMap()
+  updateMapSize()
   // createLine()
   // createBar(barChartWidth, height)    
 

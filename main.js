@@ -59,6 +59,7 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 		})		
 	})
 
+	//! En artikel
 	app.get('/konkurrentanalysartiklarPerKommun/:id1/', function (req, res) {
 		var data = {
 			"artiklar": {
@@ -78,6 +79,18 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 			}
 		};
 		db.collection('dataPerLaen').find({$or: [{'LevArtNr':data.artiklar.artikelOne}]}).toArray(function(err, result){
+			if(err) throw err
+			res.json(result);
+		})
+	});
+
+	app.get('/konkurrentanalysartiklarSverige/:id1/', function (req, res) {
+		var data = {
+			"artiklar": {
+				"artikelOne": req.params.id1,
+			}
+		};
+		db.collection('dataSverige').find({$or: [{'LevArtNr':data.artiklar.artikelOne}]}).toArray(function(err, result){
 			if(err) throw err
 			res.json(result);
 		})
@@ -110,6 +123,19 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 		})
 	});
 
+	app.get('/konkurrentanalysartiklarSverige/:id1/:id2/', function (req, res) {
+		var data = {
+			"artiklar": {
+				"artikelOne": req.params.id1,
+				"artikelTwo": req.params.id2
+			}
+		};
+		db.collection('dataSverige').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo}]}).toArray(function(err, result){
+			if(err) throw err
+			res.json(result);
+		})
+	});
+
 	app.get('/konkurrentanalysartiklarPerKommun/:id1/:id2/:id3', function (req, res) {
 		var data = {
 			"artiklar": {
@@ -137,6 +163,22 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 			res.json(result);
 		})
 	});
+
+	app.get('/konkurrentanalysartiklarSverige/:id1/:id2/:id3', function (req, res) {
+		var data = {
+			"artiklar": {
+				"artikelOne": req.params.id1,
+				"artikelTwo": req.params.id2,
+				"artikelThree": req.params.id3
+			}
+		};
+		db.collection('dataSverige').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo},{'LevArtNr':data.artiklar.artikelThree}]}).toArray(function(err, result){
+			if(err) throw err
+			res.json(result);
+		})
+	});
+
+
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //! Fyra artiklar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -170,6 +212,22 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 			res.json(result);
 		})
 	});
+
+	app.get('/konkurrentanalysartiklarSverige/:id1/:id2/:id3/:id4', function (req, res) {
+		var data = {
+			"artiklar": {
+				"artikelOne": req.params.id1,
+				"artikelTwo": req.params.id2,
+				"artikelThree": req.params.id3,
+				"artikelFour": req.params.id4
+
+			}
+		};
+		db.collection('dataSverige').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo},{'LevArtNr':data.artiklar.artikelThree},{'LevArtNr':data.artiklar.artikelFour}]}).toArray(function(err, result){
+			if(err) throw err
+			res.json(result);
+		})
+	});
 //! END FYRA ARTIKLAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -192,7 +250,7 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 		})
 	});
 
-	app.get('/konkurrentanalysartiklarPerLaen/:id1/:id2/:id3/:id4', function (req, res) {
+	app.get('/konkurrentanalysartiklarPerLaen/:id1/:id2/:id3/:id4/:id5', function (req, res) {
 		var data = {
 			"artiklar": {
 				"artikelOne": req.params.id1,
@@ -207,6 +265,23 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 			res.json(result);
 		})
 	});
+
+	app.get('/konkurrentanalysartiklarPerLaen/:id1/:id2/:id3/:id4/:id5', function (req, res) {
+		var data = {
+			"artiklar": {
+				"artikelOne": req.params.id1,
+				"artikelTwo": req.params.id2,
+				"artikelThree": req.params.id3,
+				"artikelFour": req.params.id4,
+				"artikelFive": req.params.id5
+			}
+		};
+		db.collection('dataPerLaen').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo},{'LevArtNr':data.artiklar.artikelThree},{'LevArtNr':data.artiklar.artikelFour},{'LevArtNr':data.artiklar.artikelFive}]}).toArray(function(err, result){
+			if(err) throw err
+			res.json(result);
+		})
+	});
+
 //! END FEM ARTIKLAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	app.get('/varugrupptest/:grupp', function (req, res) {

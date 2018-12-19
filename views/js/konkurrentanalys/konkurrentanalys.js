@@ -4,7 +4,7 @@ function handleInputs() {
     
     triggerButtons.forEach(triggerButton => {
         if(triggerButton.value){
-            console.log(triggerButton.value);
+            // console.log(triggerButton.value);
             searchboxValues.push(triggerButton.value)
         }
     })
@@ -25,8 +25,11 @@ function handleInputs() {
                 var apiRequest2 = fetch(`/konkurrentanalysartiklarPerLaen/${searchboxValues[0]}`).then(function (response) {
                     return response.json()
                 });
-                Promise.all([apiRequest1, apiRequest2]).then(function (values) {
-                    drawGraphs(values[0], values[1])
+                var apiRequest3 = fetch(`/konkurrentanalysartiklarSverige/${searchboxValues[0]}`).then(function (response) {
+                    return response.json()
+                });
+                Promise.all([apiRequest1, apiRequest2, apiRequest3]).then(function (values) {
+                    drawGraphs(values[0], values[1], values[2])
                 });
             case 2:
                 var apiRequest1 = fetch(`/konkurrentanalysartiklarPerKommun/${searchboxValues[0]}/${searchboxValues[1]}`).then(function (response) {
@@ -35,9 +38,12 @@ function handleInputs() {
                 var apiRequest2 = fetch(`/konkurrentanalysartiklarPerLaen/${searchboxValues[0]}/${searchboxValues[1]}`).then(function (response) {
                     return response.json()
                 });
-                Promise.all([apiRequest1, apiRequest2]).then(function (values) {
-                    console.log(values);
-                    drawGraphs(values[0], values[1])
+                var apiRequest3 = fetch(`/konkurrentanalysartiklarSverige/${searchboxValues[0]}/${searchboxValues[1]}`).then(function (response) {
+                    return response.json()
+                });
+                Promise.all([apiRequest1, apiRequest2, apiRequest3]).then(function (values) {
+                    // console.log(values);
+                    drawGraphs(values[0], values[1], values[2])
                 });
 
                 break;
@@ -48,8 +54,11 @@ function handleInputs() {
                 var apiRequest2 = fetch(`/konkurrentanalysartiklarPerLaen/${searchboxValues[0]}/${searchboxValues[1]}/${searchboxValues[2]}`).then(function (response) {
                     return response.json()
                 });
-                Promise.all([apiRequest1, apiRequest2]).then(function (values) {
-                    drawGraphs(values[0], values[1])
+                var apiRequest3 = fetch(`/konkurrentanalysartiklarSverige/${searchboxValues[0]}/${searchboxValues[1]}/${searchboxValues[2]}`).then(function (response) {
+                    return response.json()
+                });
+                Promise.all([apiRequest1, apiRequest2, apiRequest3]).then(function (values) {
+                    drawGraphs(values[0], values[1], values[2])
                 });
                 break;
             case 4:
@@ -59,8 +68,11 @@ function handleInputs() {
                 var apiRequest2 = fetch(`/konkurrentanalysartiklarPerLaen/${searchboxValues[0]}/${searchboxValues[1]}/${searchboxValues[2]}/${searchboxValues[3]}`).then(function (response) {
                     return response.json()
                 });
-                Promise.all([apiRequest1, apiRequest2]).then(function (values) {
-                    drawGraphs(values[0], values[1])
+                var apiRequest3 = fetch(`/konkurrentanalysartiklarSverige/${searchboxValues[0]}/${searchboxValues[1]}/${searchboxValues[2]}/${searchboxValues[3]}`).then(function (response) {
+                    return response.json()
+                });
+                Promise.all([apiRequest1, apiRequest2, apiRequest3]).then(function (values) {
+                    drawGraphs(values[0], values[1], values[2])
                 });
                 break;
 
@@ -71,8 +83,11 @@ function handleInputs() {
                 var apiRequest2 = fetch(`/konkurrentanalysartiklarPerLaen/${searchboxValues[0]}/${searchboxValues[1]}/${searchboxValues[2]}/${searchboxValues[3]}/${searchboxValues[4]}`).then(function (response) {
                     return response.json()
                 });
-                Promise.all([apiRequest1, apiRequest2]).then(function (values) {
-                    drawGraphs(values[0], values[1])
+                var apiRequest3 = fetch(`/konkurrentanalysartiklarSverige/${searchboxValues[0]}/${searchboxValues[1]}/${searchboxValues[2]}/${searchboxValues[3]}/${searchboxValues[4]}`).then(function (response) {
+                    return response.json()
+                });
+                Promise.all([apiRequest1, apiRequest2, apiRequest3]).then(function (values) {
+                    drawGraphs(values[0], values[1], values[2])
                 });
                 break;
             

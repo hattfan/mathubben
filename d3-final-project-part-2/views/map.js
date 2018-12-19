@@ -11,8 +11,6 @@ function createMap(width, height) {
 }
 
 function drawMap(geoData, climateData, year, dataType) {
-  console.log(climateData);
-  console.log(geoData);
   var map = d3.select("#map");
 
   var projection = d3.geoMercator()
@@ -29,7 +27,6 @@ function drawMap(geoData, climateData, year, dataType) {
 
   geoData.forEach(d => {
     var countries = climateData.filter(row => row.countryCode === d.id);
-    console.log(countries)
     var name = '';
     if (countries.length > 0) name = countries[0].country;
     d.properties = countries.find(c => c.year === year) || { country: name };

@@ -484,12 +484,18 @@ label {
 .county-boundary:hover,
 .states:hover {
   fill: orange;
+  cursor: pointer;
 }
 
 .kommun {
   stroke: #fff;
   stroke-width: 0.5px;
   display: none;
+}
+
+.grayed {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
 }
 
 /*=====  End of Maptest  ======*/

@@ -2,7 +2,7 @@
 // 5. tooltip!
 
 d3.queue()
-  .defer(d3.json, "//unpkg.com/world-atlas@1.1.4/world/50m.json")
+  .defer(d3.json, "./data/50m.json")
   .defer(d3.csv, "./data/all_data.csv", function(row) {
     return {
       continent: row.Continent,

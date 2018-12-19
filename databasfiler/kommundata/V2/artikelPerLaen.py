@@ -3,20 +3,20 @@
 ##############################################################
 
 import pymongo
-from befolkningsDataPerKommun import befolkningsAmount
+from befolkningsDataPerLaen import befolkningsAmount
 
 #!Definition of mongo
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient['mathubben']
 menigov3 = mydb['menigov3']
-mycol = mydb["dataPerLaen"]
+mycol = mydb["dataPerLaen2"]
 
 #!database-findings
 dbdata = menigov3.find()
-artNrs = menigov3.distinct('Fabrartnr')
+artNrs = menigov3.distinct('FabLevArt')
 years = menigov3.distinct('År')
 laenKoder = menigov3.distinct('LaenKod')
-artikelNummer = list(menigov3.distinct('Fabrartnr'))
+artikelNummer = list(menigov3.distinct('FabLevArt'))
 # artikelNummer = [210121]
 
 foundLaen = []
@@ -30,8 +30,8 @@ for artikel in artikelNummer:
     # Loopa över åren för att ackumulera resultat    
     for year in years:
         # Leta upp samtliga resultat i menigov3 för artikelnumret och året
-        dbFind = list(menigov3.find({"$and": [{'Fabrartnr': artikel}, {'År':year}]}))
-    # dbFind = list(menigov3.find({"$and": [{'Fabrartnr': artikel}, {'År':2017}]}))
+        dbFind = list(menigov3.find({"$and": [{'FabLevArt': artikel}, {'År':year}]}))
+    # dbFind = list(menigov3.find({"$and": [{'FabLevArt': artikel}, {'År':2017}]}))
         c = 0
         for foundArtNrRows in dbFind:
             c = c+1
