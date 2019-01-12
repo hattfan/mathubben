@@ -22,6 +22,10 @@ app.use(function (req, res, next) {
 	next();
 });
 
+app.get('/', function(req, res) {
+	res.render('landing/index.ejs')
+})
+
 // MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathubben', (err, client) => {
 	
@@ -356,7 +360,7 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 
 	app.get('/dashboard', function (req, res) {
 
-		res.render('dashboard.ejs');
+		res.render('home.ejs');
 
 	});
 
@@ -403,6 +407,15 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 		})
 	})
 })
+
+
+app.get('/login', function (req, res) {
+	res.render('login.ejs');
+});
+
+app.get('/', function (req, res) {
+	res.render('landing/index.ejs');
+});
 
 var port = process.env.PORT || 3030;
 

@@ -44,10 +44,9 @@ function createMap() {
 }
 
 function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, dataType, calculationType, colors, visningsVal, clickChoice) {
-    console.log(clickChoice);
     width = document.querySelector('.map-container').offsetWidth - 60;
     height = 600;
-
+    
     const searchboxValues = [];
     var triggerButtons = document.querySelectorAll('.trigger-button');
     triggerButtons.forEach(triggerButton => {
@@ -55,9 +54,9 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
             searchboxValues.push(triggerButton.value)
         }
     })
-
+    
     var map = d3.select('#map')
-
+    
     var laenGeoData = topojson.feature(laenMapData, laenMapData.objects.SWE_adm1).features;
 
     var projection = d3.geoMercator()
@@ -97,6 +96,9 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         // Lägg in properties i geoData datan - här skall läggas in den som är störst
         d.properties.data = kommun;
     });
+
+    clickChoice === 'yearSlider' || clickChoice === 'dataType' || clickChoice === 'calculationType'?kommunUpdate():null
+
 
     // !Laendata !!!!!!!!!!!!!!!!!!!!!!
     laenGeoData.forEach(d => {
@@ -205,14 +207,16 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         background = true;
     }
 
-    function kommunUpdate(d){
-        if(d === undefined){
-            // var mapPosition = 'sverige';
-            // var lookupKod = '';
-            // drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, dataType, calculationType, colors)
-            return
+    function kommunUpdate(){
+        
+        // if(d === undefined) return
+        if(lookupKod.length > 2){
+            var laensKod = lookupKod.substring(0,2);
+        } else {
+            var laensKod = lookupKod;
         }
         
+
         d3.select("#kommun-map").selectAll("*").remove();
         var map = d3.select('#kommun-map')
         var width = document.querySelector('.kommun-container').offsetWidth;
@@ -223,12 +227,10 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
             .attr("height", height)
 
         var g = map.append("g")
-
         var activeLaen = geoData.filter(row => {
-            return row.properties.KNKOD.substring(0, 2) === d.properties.laenskod;
+            return row.properties.KNKOD.substring(0, 2) === laensKod;
         })
-
-        var projection = projectionCalculation(d.properties.laenskod)
+        var projection = projectionCalculation(laensKod)
 
         var kommunPath = d3.geoPath()
             .projection(projection);
@@ -500,7 +502,6 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
     }
 
     function createColorScale(seed) {
-        console.log(searchboxValues);
         if(seed){
             switch (searchboxValues.length) {
                 case 2:

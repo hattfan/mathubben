@@ -47,8 +47,6 @@ function initButtonChanges(){
                 });
 }
 function drawGraphs(data, laenData, sverigeData, colors) {
-    //TODO lägg in färger tillsammans med artnr här - från handleInputs
-    console.log(data, laenData, sverigeData, colors);
     d3.queue()
         .defer(d3.json, "../src/sverige.topojson")
         .defer(d3.json, "../src/sweden-counties.json")
@@ -60,7 +58,6 @@ function drawGraphs(data, laenData, sverigeData, colors) {
             //!Definierar inputs
             var visningsVal; 
             if (!initGraphCreated) {
-                console.log('Skapar initGraf');
                 var yearRange = d3.extent(data, d => +d.Year);
                 var currentYear = yearRange[1];
                 // $("#slider").slider("value", yearRange[1]),$("#small-slider").slider("value", yearRange[1]);

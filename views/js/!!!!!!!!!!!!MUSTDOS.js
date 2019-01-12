@@ -1,10 +1,10 @@
 //! 12/1
 //* TODO Få in databasen på mlab
 //* TODO Fixa spinners vid laddning
-// TODO Fixa så att kommun-grafen uppdateras vid ändringar 
-// TODO Uppdatera in på mathubben.herokuapp.com
-// TODO Ändra landningssidan
-// TODO Uppdatera landningssidan efter inlogg
+//* TODO Uppdatera in på mathubben.herokuapp.com
+//* TODO Fixa så att kommun-grafen uppdateras vid ändringar 
+//* TODO Ändra landningssidan
+//* TODO Uppdatera landningssidan efter inlogg
 // TODO Fixa Produktanalysen
 // TODO Gör så att man kan lägga in en ny produkt
 

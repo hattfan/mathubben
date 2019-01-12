@@ -67,7 +67,6 @@ function calculationTypeSmall(calculationType) {
 function mirrorSlider(startPos) {
     //!Stor slider
     $("#slider").on("slidestop", function (event, ui) {
-        console.log('Försöker');                    
         var endPos = ui.value;
         if (startPos != endPos) {
             currentYear = endPos;
@@ -77,7 +76,6 @@ function mirrorSlider(startPos) {
     });
 
     $("#small-slider").on("slidestop", function (event, ui) {
-        console.log('Försöker');                    
         var endPos = ui.value;
         if (startPos != endPos) {
             currentYear = endPos;
