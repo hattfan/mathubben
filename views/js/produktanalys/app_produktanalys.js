@@ -1,9 +1,11 @@
-var height = 300;
+// var height = 300;
 
-window.onresize = function (event) {
-  screenResize()
-};
-screenResize()
+// window.onresize = function (event) {
+//   screenResize()
+// };
+// screenResize()
+
+createMap()
 
 var target = document.getElementById('#map');
 var title = document.querySelector('#title');
@@ -12,8 +14,8 @@ var varugruppsBtn = document.getElementById("varugrupp");
 var barText = document.querySelector(".bartext")
 var barchartExists = document.querySelector("bar")
 
-function drawGraphs(data, laenData) {
-
+function drawGraphs(data, laenData, sverigeData, colors) {
+  //TODO lägg in färger tillsammans med artnr här - från handleInputs
   d3.queue()
     .defer(d3.json, "../src/sverige.topojson")
     .defer(d3.json, "../src/sweden-counties.json")
@@ -36,7 +38,7 @@ function drawGraphs(data, laenData) {
       // updateTitle(currentDataType, currentCalculationType, currentYear)
 
       //! Function-calls
-      drawMap(geoData, laenMapData, data, laenData, currentYear, currentDataType, currentCalculationType);
+      drawMap(geoData, laenMapData, data, laenData, sverigeData, currentYear, currentDataType, currentCalculationType, colors);
       
       var visningsVal = currentDataType + currentCalculationType
       
@@ -47,42 +49,45 @@ function drawGraphs(data, laenData) {
       
       //!Värden på års-slidern
       $("#slider").on("slidestop", function(event, ui) { 
-        console.log(startPos)  
         var endPos = ui.value;
           if (startPos != endPos) {
-            d3.select("#map").selectAll("*").remove();
-            d3.select("#line").selectAll("*").remove();
-            document.querySelector("#line-chart-name").innerText = 'Sverige'
+            console.log(mapPosition);
+            // d3.select("#map").selectAll("*").remove();
+            // d3.select("#line").selectAll("*").remove();
+            // document.querySelector("#line-chart-name").innerText = 'Sverige'
             currentYear = endPos;
-            drawMap(geoData, laenMapData, data, laenData, currentYear, currentDataType, currentCalculationType);
+            drawMap(geoData, laenMapData, data, laenData, sverigeData, currentYear, currentDataType, currentCalculationType, colors);
             // lineGraph(data, visningsVal)
-
+            
           }
           startPos = endPos;
-      });
-
-      //!När data-type ändras renderas kartor om
-      d3.selectAll('input[name="data-type"]')
+        });
+        
+        //!När data-type ändras renderas kartor om
+        d3.selectAll('input[name="data-type"]')
         .on("change", () => {
           currentDataType = d3.event.target.value;
           visningsVal = currentDataType + currentCalculationType
-          d3.select("#map").selectAll("*").remove();
-          d3.select("#line").selectAll("*").remove();
-          document.querySelector("#line-chart-name").innerText = 'Sverige'
-          drawMap(geoData, laenMapData, data, laenData, currentYear, currentDataType, currentCalculationType);
+          console.log(mapPosition);
+          // d3.select("#map").selectAll("*").remove();
+          // d3.select("#line").selectAll("*").remove();
+          // document.querySelector("#line-chart-name").innerText = 'Sverige'
+          drawMap(geoData, laenMapData, data, laenData, sverigeData, currentYear, currentDataType, currentCalculationType, colors);
+          // lineGraph(sverigeData, visningsVal, mapPosition, '', colors)
           // drawBar(data, kommun, visningsVal)
-
+          
         });
-
-      //!När calculation-type ändras renderas kartor om
-      d3.selectAll('input[name="calculation-type"]')
+        
+        //!När calculation-type ändras renderas kartor om
+        d3.selectAll('input[name="calculation-type"]')
         .on("change", () => {
           currentCalculationType = d3.event.target.value;
           visningsVal = currentDataType + currentCalculationType
-          d3.select("#map").selectAll("*").remove();
-          d3.select("#line").selectAll("*").remove();
-          document.querySelector("#line-chart-name").innerText = 'Sverige'
-          drawMap(geoData, laenMapData, data, laenData, currentYear, currentDataType, currentCalculationType);
+          console.log(mapPosition);
+          // d3.select("#map").selectAll("*").remove();
+          // d3.select("#line").selectAll("*").remove();
+          // document.querySelector("#line-chart-name").innerText = 'Sverige'
+          drawMap(geoData, laenMapData, data, laenData, sverigeData, currentYear, currentDataType, currentCalculationType, colors);
           // drawBar(data, kommun, visningsVal)
         });
 
@@ -98,7 +103,7 @@ function drawGraphs(data, laenData) {
         var isLaen = tgt.classed("states");
         var isBar = tgt.classed("bar");
 
-        var units = currentDataType === "Mängd" ? "kg" : "kronor";
+        var units = currentDataType === "Mangd" ? "kg" : "kronor";
         var calculation = currentCalculationType === "Total" ? "totalt" : "per capita"
 
         var tooltipData;
@@ -122,12 +127,12 @@ function drawGraphs(data, laenData) {
 
         if (isKommun) {
           tooltipAmount = tooltipData[visningsVal] === undefined ? 0 : tooltipData[visningsVal].toLocaleString().replace(/,/g, "'");
-          tooltipProdukt = tooltipData['Benämning'] === undefined ? "" : tooltipData['Benämning'];          
+          tooltipProdukt = tooltipData['Benamning'] === undefined ? "" : tooltipData['Benamning'];          
           tooltipData.kommun === "" ? tooltipData.KommunNamn = tooltipKommun.KNNAMN : null;
         }
 
         if (isLaen) {
-          tooltipProdukt = tooltipData['Benämning'] === undefined ? "" : tooltipData['Benämning'];
+          tooltipProdukt = tooltipData['Benamning'] === undefined ? "" : tooltipData['Benamning'];
           tooltipAmount = tooltipData[visningsVal] === undefined ? 0 : tooltipData[visningsVal].toLocaleString().replace(/,/g, "'");
         }
 
@@ -163,7 +168,7 @@ function screenResize() {
   // document.querySelector("#line")?d3.select(".line-container").append("svg").attr("id", "line"):null
 
     
-  createMap()
+  updateMapSize()
   // createLine()
   // createBar(barChartWidth, height)    
 

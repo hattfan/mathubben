@@ -13,7 +13,7 @@ myfuturecol = mydb['artiklar']
 
 data = list(mydata.aggregate( 
             [
-                {"$group": { "_id": { 'Fabrartnr': "$Fabrartnr", 'Benämning': "$Benämning", 'Fabrikat': "$Fabrikat" } } }
+                {"$group": { "_id": { 'FabLevArt': "$FabLevArt", 'Benämning': "$Benämning", 'Fabrikat': "$Fabrikat" } } }
             ]
         ))
 
@@ -21,7 +21,7 @@ data = list(mydata.aggregate(
 for row in data:
     # print(row['_id'])
     row =  row['_id']
-    myfuturecol.insert_one({'LevArtNr': str(row['Fabrartnr']), 'Benamning': row['Benämning'],'Fabrikat':row['Fabrikat']})
+    myfuturecol.insert_one({'LevArtNr': str(row['FabLevArt']), 'Benamning': row['Benämning'],'Fabrikat':row['Fabrikat']})
 #   counter += 1
 #   print(counter)
 

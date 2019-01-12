@@ -82,6 +82,6 @@ for artikel in artikelNummer:
                 "LevArtNr": artikel,
                 "Fabrikat" : foundArtNrRows["Fabrikat"],
                 "Benamning": foundArtNrRows["Benämning"]}
-                # print(productValues)
+                print(productValues)
                 #! OBS INSERT into mongo
-                mycol.insert_one(productValues)
+                # mycol.insert_one(productValues)

@@ -79,6 +79,20 @@ body {
 
 
 /*=============================================
+=            Produkt search small toolbar     =
+=============================================*/
+
+#scrolled-produkt-search-toolbar {
+  padding: 20px 10px;
+  display: flex;
+  height: 60px;
+  margin-top: 52px;
+  border-bottom: #2c3e50 1px solid;
+}
+
+/*=====  End of Navbar  ======*/
+
+/*=============================================
 =            Produkt search            =
 =============================================*/
 
@@ -100,6 +114,7 @@ body {
 
 .search-box-container {
   display: flex;
+  align-items: center
 }
 
 /* @media (max-width: 1500px){
@@ -122,13 +137,13 @@ body {
   background-color: rgb(247, 247, 247);
 }
 
-.search-box:hover {
+.search-box:hmarginover {
   transition: background-color 0.5s ease;
   background-color: rgb(247, 247, 247);
 }
 
 .addition-box {
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   align-items: center;
 }
@@ -467,14 +482,24 @@ label {
 }
 
 .county-boundary:hover,
-.states:hover {
-  fill: orange;
+.states:hover,
+.kommun:hover {
+  fill: maroon;
+  /* transform: scale(1.1); */
+  /* filter: brightness(150%); */
+  /* transform: scale() */
+  cursor: pointer;
 }
 
 .kommun {
   stroke: #fff;
   stroke-width: 0.5px;
   display: none;
+}
+
+.grayed {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
 }
 
 /*=====  End of Maptest  ======*/

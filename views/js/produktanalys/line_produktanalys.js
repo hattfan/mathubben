@@ -1,9 +1,4 @@
-function lineGraph(graphData, visningsVal, lineTyp, lookupKod) {
-
-    d3.select("#line").selectAll("*").remove();
-    // lineTyp = 'kommun',lookupKod = '1480';
-    // lineTyp = 'laen',lookupKod = '14';
-
+function createLine(){
     var margin = {
         top: 20,
         right: 70,
@@ -20,6 +15,27 @@ function lineGraph(graphData, visningsVal, lineTyp, lookupKod) {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+}
+
+function lineGraph(graphData, visningsVal, lineTyp, lookupKod, colors) {
+
+    d3.select("#line").selectAll("*").remove();
+    var margin = {
+        top: 20,
+        right: 70,
+        bottom: 100,
+        left: 50
+    },
+    
+    width = document.querySelector('.line-container').offsetWidth - margin.left - margin.right
+    height = document.querySelector('.line-container').offsetHeight - margin.top - margin.bottom;
+
+    var svg = d3.select("#line")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        
     // var lineArrData = [lineDataOne, lineDataTwo]
     var years = ['2015', '2016', '2017']
     var className = ['blue','red','DarkOrange', 'purple', 'green']
@@ -43,7 +59,7 @@ function lineGraph(graphData, visningsVal, lineTyp, lookupKod) {
         .ease(d3.easeBounceIn);
 
     var lineData = formatLineData(graphData, lineTyp, lookupKod, years, uniqueLevarts)
-    
+    console.log(lineData);
     if(lineData.extremeValuesData.length === 0){
         d3.select("#line").selectAll("*").remove();
         return
@@ -56,21 +72,6 @@ function lineGraph(graphData, visningsVal, lineTyp, lookupKod) {
     y.domain([0, d3.max(lineData.extremeValuesData, function (d) {
         return Math.max(d[visningsVal]);
     })]);
-    // debugger
-
-    for (let i = 0; i < lineData.formattedGraphData.length; i++) {
-        svg.append("path")
-        .data([lineData.formattedGraphData[i]])
-        .attr("class", `line ${className[i]}`)
-        .attr("d", valueline);
-        svg.selectAll(className)
-            .data(lineData.formattedGraphData[i])
-        .enter().append("circle") // Uses the enter().append() method
-        .attr("class", `dot${className[i]}`) // Assign a class for styling
-        .attr("cx", function(d) { return x(d.Year) })
-        .attr("cy", function(d) { return y(d[visningsVal]) })
-        .attr("r", 5);
-    }
 
     var xAxis = d3.axisBottom(x)
     .tickFormat(d3.format(".0f"))
@@ -83,10 +84,9 @@ function lineGraph(graphData, visningsVal, lineTyp, lookupKod) {
         .call(xAxis);
 
 
-// Add the Y Axis
+    // Add the Y Axis
     svg.append("g")
         .call(d3.axisLeft(y));
-
 
     // gridlines in x axis function
     function make_x_gridlines() {		
@@ -116,8 +116,21 @@ function lineGraph(graphData, visningsVal, lineTyp, lookupKod) {
             .tickSize(-width)
             .tickFormat("")
         )
+    //Add data for each of the lines
+    for (let i = 0; i < lineData.formattedGraphData.length; i++) {
+        svg.append("path")
+        .data([lineData.formattedGraphData[i]])
+        .attr("class", `line ${colors[lineData.formattedGraphData[i][0]['LevArtNr']]}`)
+        .attr("d", valueline);
+        svg.selectAll(className)
+            .data(lineData.formattedGraphData[i])
+        .enter().append("circle") // Uses the enter().append() method
+        .attr("class", `dot dot${colors[lineData.formattedGraphData[i][0]['LevArtNr']]}`) // Assign a class for styling
+        .attr("cx", function(d) { return x(d.Year) })
+        .attr("cy", function(d) { return y(d[visningsVal]) })
+        .attr("r", 5);
+    }
 }    
-
 
 function findUniqueLevartnr(linedata){
     var flags = [], output = [], l = linedata.length, i;
@@ -136,8 +149,8 @@ function createKommunLineObject(year, levart, kommunNummer){
         LevArtNr: levart,
         KronorPerCapita: 0,
         KronorTotal: 0,
-        MängdPerCapita: 0,
-        MängdTotal: 0,
+        MangdPerCapita: 0,
+        MangdTotal: 0,
         }
     return emptyObject
 }
@@ -149,31 +162,47 @@ function createLaenLineObject(year, levart, laenKod){
         LevArtNr: levart,
         KronorPerCapita: 0,
         KronorTotal: 0,
-        MängdPerCapita: 0,
-        MängdTotal: 0,
+        MangdPerCapita: 0,
+        MangdTotal: 0,
+        }
+    return emptyObject
+}
+
+function createSwedenLineObject(year, levart){
+    var emptyObject = {
+        Year: year,
+        LevArtNr: levart,
+        KronorPerCapita: 0,
+        KronorTotal: 0,
+        MangdPerCapita: 0,
+        MangdTotal: 0,
         }
     return emptyObject
 }
 
 function formatLineData(graphData, lineTyp, lookupKod, years, uniqueLevarts){
 
-    if(lineTyp === 'Sverige') {
+    if(lineTyp === 'sverige'){
         var formattedGraphData = [], extremeValuesData =[]
-        uniqueLevarts.forEach(levart => {
-            var levartData = []
-            years.forEach(year => {
-                var filtredRow = graphData.filter(row => row.LevArtNr === levart && row.LaenKod === lookupKod && row.Year === year)
-                if(filtredRow === undefined || filtredRow.length == 0){
-                    var emptyLine = createLaenLineObject(year,levart, lookupKod)
-                    levartData.push(emptyLine)
-                }else{
-                    levartData.push(filtredRow[0])
-                    extremeValuesData.push(filtredRow[0])
-                }
-            })
-            formattedGraphData.push(levartData)
-        }) 
-        return formattedGraphData; 
+            uniqueLevarts.forEach(levart => {
+                var levartData = []
+                years.forEach(year => {
+                    var filtredRow = graphData.filter(row => row.LevArtNr === levart  && row.Year === year)
+                    if(filtredRow === undefined || filtredRow.length == 0){
+                        var emptyLine = createSwedenLineObject(year,levart)
+                        levartData.push(emptyLine)
+                    }else{
+                        levartData.push(filtredRow[0])
+                        extremeValuesData.push(filtredRow[0])
+                    }
+                })
+                formattedGraphData.push(levartData)
+            }) 
+            var returnableObject = {
+                formattedGraphData: formattedGraphData,
+                extremeValuesData: extremeValuesData
+            }
+        return returnableObject; 
     }
     if(lineTyp === 'laen'){
         var formattedGraphData = [], extremeValuesData =[]

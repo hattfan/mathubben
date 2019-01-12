@@ -8,10 +8,10 @@ var modal = new tingle.modal({
     closeLabel: "Close",
     cssClass: ['custom-class-1', 'custom-class-2'],
     onOpen: function () {
-        console.log('modal open');
+        // console.log('modal open');
     },
     onClose: function () {
-        console.log('modal closed');
+        // console.log('modal closed');
         document.querySelector(".ok-btn").style.display = "none"
     },
     beforeClose: function () {
@@ -62,12 +62,14 @@ modal.addFooterBtn('Ok', 'tingle-btn tingle-btn--primary ok-btn', function () {
 
     // document.querySelector(".trigger-button").innerText = document.querySelector("#artikel").value
     // here goes some logic
+    // document.querySelector(`#product-small-name-${activationButton.dataset.key}`).innerText = (`${actualSelection['Benamning']}`)
+    // document.querySelector(`#product-small-fabrikat-${activationButton.dataset.key}`).innerText = (`${actualSelection['Fabrikat']}`)
+
     activationButton.innerHTML = `<strong>${actualSelection['Benamning']}</strong>
                                     <br> 
                                 <small>${actualSelection['Fabrikat']}</small>`;
     activationButton.value = actualSelection['LevArtNr'];
     document.querySelector("#artikel").value = ""
-    // console.log(actualSelection);
     resetModalSettings()
     handleInputs();
     modal.close();

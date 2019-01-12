@@ -22,7 +22,9 @@ app.use(function (req, res, next) {
 	next();
 });
 
-MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+// MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathubben', (err, client) => {
+	
 
 	var db = client.db('mathubben');
 
@@ -36,7 +38,7 @@ MongoClient.connect('mongodb://localhost:27017', (err, client) => {
 
 	app.get('/artikellistning/:id', function(req, res){
 		// db.collection('artiklar').find({'Benamning':{$regex: ".*" + req.params.id + ".*"}}).limit(10).toArray(function(err, result){
-		db.collection('artiklar').find({'Benamning':{$regex: req.params.id, $options: "im"}}).limit(10).toArray(function(err, result){
+		db.collection('artiklar').find({'Benamning':{$regex: req.params.id, $options: "im"}}).limit(10).sort({'KronorTotal':-1}).toArray(function(err, result){
 			if(err) throw err
 			res.json(result);
 		})		

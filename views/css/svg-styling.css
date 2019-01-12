@@ -1,6 +1,6 @@
 
 svg {
-  margin: 20px;
+  margin: 2px;
 }
 
 /* Tooltip styling */
@@ -13,6 +13,7 @@ svg {
   background-color: #ecf0f1;
   padding: 10px;
   border-radius: 6px;
+  z-index: 500;
 }
 
 .tooltip p {

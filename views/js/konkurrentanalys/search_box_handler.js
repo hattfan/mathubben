@@ -51,7 +51,7 @@ function addAnotherSearchBar() {
 }
 
 function addTriggerClickListeners(){
-    d3.select("#map").selectAll("*").remove();
+    // d3.select("#map").selectAll("*").remove();
     d3.select("#line").selectAll("*").remove();
     var btns = document.querySelectorAll('.trigger-button');
     btns.forEach(btn => 

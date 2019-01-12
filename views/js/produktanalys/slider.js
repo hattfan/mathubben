@@ -34,5 +34,4 @@
     var slidervalue = $( "#slider" ).slider( "option", "value" );
     console.log(slidervalue)
   })
-
 })
