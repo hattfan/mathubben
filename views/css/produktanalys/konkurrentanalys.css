@@ -1,6 +1,7 @@
 /*=============================================
 =            General            =
 =============================================*/
+
 * {
   font-family: 'Source Sans Pro', sans-serif;
 }
@@ -10,11 +11,7 @@ body {
   background: #ecf0f1;
 }
 
-
-
 /*=====  End of General  ======*/
-
-
 
 /*=============================================
 =            Navbar            =
@@ -23,7 +20,7 @@ body {
 .topbar {
   width: 100%;
   position: fixed;
-  z-index: 999;
+  z-index: 500;
   background-color: #2c3e50;
   opacity: 80%;
   min-height: 52px;
@@ -34,7 +31,6 @@ body {
   align-content: space-between;
   flex-wrap: nowrap;
 }
-
 
 .left-align {
   text-align: left;
@@ -54,6 +50,7 @@ body {
 }
 
 /* SideNAV */
+
 .w3-sidebar {
   -webkit-font-smoothing: antialiased;
   font-family: 'Muli', "Helvetica", Arial, sans-serif;
@@ -73,24 +70,221 @@ body {
   background-color: #394c5f
 }
 
-
 /*=====  End of Navbar  ======*/
-
-
 
 /*=============================================
 =            Produkt search small toolbar     =
 =============================================*/
 
-#scrolled-produkt-search-toolbar {
-  padding: 20px 10px;
+#small-toolbar {
   display: flex;
-  height: 60px;
-  margin-top: 52px;
-  border-bottom: #2c3e50 1px solid;
+  color: rgb(206, 206, 206);
 }
 
-/*=====  End of Navbar  ======*/
+#small-toolbar label {
+  color: rgb(206, 206, 206);
+}
+
+.form-radio-small {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  position: relative;
+  background-color: #fff;
+  color: #666;
+  top: 5px;
+  height: 20px;
+  width: 20px;
+  border: 0;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-right: 7px;
+  outline: none;
+  margin-top: 10px;
+}
+
+.form-radio-small:checked::before {
+  position: absolute;
+  font: 13px/1 'Open Sans', sans-serif;
+  left: 6px;
+  top: 3px;
+  content: '\02143';
+  transform: rotate(40deg);
+}
+
+.form-radio-small:hover {
+  /* background-color: #f7f7f7; */
+  background-color: #fff;
+}
+
+.form-radio-small:checked {
+  background-color: #fff;
+}
+
+.split-radio-buttons {
+  margin: 0 8px;
+  width: 1px;
+  /* background: rgb(206, 206, 206); */
+}
+
+/*----------  Small slider  ----------*/
+#small-slider label {
+  position: absolute;
+  width: 10px;
+  margin-left: -15px;
+  text-align: center;
+  margin-top: 13px;
+}
+
+#small-slider {
+  width: 110px;
+  margin: 12px 10px;
+}
+
+
+
+/*=============================================
+=            Spinner            =
+=============================================*/
+
+/* Tillagd spinner */
+.spinner {
+  /* position: absolute; */
+  /* left: 50%; */
+  /* top: 50%; */
+  display: none;
+  height:20px;
+  width:20px;
+  margin:0px auto;
+  -webkit-animation: rotation .6s infinite linear;
+  -moz-animation: rotation .6s infinite linear;
+  -o-animation: rotation .6s infinite linear;
+  animation: rotation .6s infinite linear;
+  border-left:6px solid rgba(0,174,239,.15);
+  border-right:6px solid rgba(0,174,239,.15);
+  border-bottom:6px solid rgba(0,174,239,.15);
+  border-top:6px solid rgba(0,174,239,.8);
+  border-radius:100%;
+}
+
+.text-spinner {
+  position: absolute;
+  display: none;
+  height:20px;
+  width:20px;
+  margin:0px auto;
+  -webkit-animation: rotation .6s infinite linear;
+  -moz-animation: rotation .6s infinite linear;
+  -o-animation: rotation .6s infinite linear;
+  animation: rotation .6s infinite linear;
+  border-left:6px solid rgba(0,174,239,.15);
+  border-right:6px solid rgba(0,174,239,.15);
+  border-bottom:6px solid rgba(0,174,239,.15);
+  border-top:6px solid rgba(0,174,239,.8);
+  border-radius:100%;
+}
+
+/*=====  End of Spinner  ======*/
+
+/*===========================================================
+=            Arrow/cross for product indication toolbar           =
+=============================================================*/
+#close-toolbar {
+  position: fixed;
+  z-index: 3;
+  width: 0; 
+  height: 0;
+  margin-top: 16px;
+}
+
+#arrow-right {
+  position: fixed;
+  z-index: 3;
+  width: 0; 
+  height: 0;
+  margin-top: 12px;
+  border-top: 16px solid transparent;
+  border-bottom: 16px solid transparent;
+  border-left: 16px solid #2c3e50;
+}
+
+#arrow-right:hover {
+  cursor: pointer;
+  margin-top: 8px;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 20px solid #2c3e50;
+}
+
+
+
+/*----------  Product boxes  ----------*/
+#small-product-indication-bar {
+  display: flex;
+  position: fixed;
+  margin-left: -100%;
+  z-index: 3;
+  /* background-color: white; */
+  /* width: 100%; */
+  /* opacity: 0.5; */
+}
+
+
+/*=============================================
+=            Transitions            =
+=============================================*/
+
+/* .fade-out {
+  -webkit-transition: 1s;
+  -moz-transition: 1s;
+  -ms-transition: 1s;
+  -o-transition: 1s;
+  transition: 1s;
+  display: none;
+} */
+.animate-in {
+  -webkit-transition: 1s;
+  -moz-transition: 1s;
+  -ms-transition: 1s;
+  -o-transition: 1s;
+  transition: 1s;
+  margin-left: 20px !important;
+}
+
+
+/*=====  End of Transitions  ======*/
+
+
+
+.small-product-containers{
+  display: flex;
+}
+
+.small-product-container {
+  display: flex;
+  margin: 5px;
+  background-color: #EEE;
+  border: 1px #ccc solid;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.small-box {
+  margin: auto 0;
+}
+
+.product-small {
+  font-size: 12;
+  margin: auto 0 auto 5;
+  color:
+}
+
+.product-small-name {
+  font-weight: bold;
+}
+
+/*=====  End Toolbars  ======*/
 
 /*=============================================
 =            Produkt search            =
@@ -111,7 +305,6 @@ body {
   box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.3);
 }
 
-
 .search-box-container {
   display: flex;
   align-items: center
@@ -127,10 +320,9 @@ body {
 @media (max-width: 500px) {
   .search-box-container {
     display: inline;
-    /* width: 100%; */
+    width: 100%;
   }
 }
-
 
 .search-box:hover>.produkt-search {
   transition: background-color 0.5s ease;
@@ -151,7 +343,6 @@ body {
 .search-box {
   width: 100%;
   min-width: 225px;
-
 }
 
 .search-color-blob {
@@ -183,8 +374,11 @@ body {
 
 #produkt-search-toolbar {
   background-color: white;
-  /* color: white; */
+  /* margin-top: 52px; */
   width: 100%;
+}
+
+.margin-toolbar {
   margin-top: 52px;
 }
 
@@ -197,11 +391,7 @@ select {
   color: black;
 }
 
-
-
-
 /*----------  Subsection comment block  ----------*/
-
 
 .suggestions {
   position: absolute;
@@ -224,13 +414,13 @@ select {
   margin: 0;
 }
 
-
 .suggestion-list-item:hover {
   color: black;
   background-color: rgb(247, 247, 247);
 }
 
 /* Selection dropdown */
+
 .selection-container {
   color: black;
   display: flex;
@@ -239,7 +429,6 @@ select {
   flex-wrap: wrap;
   flex-direction: row;
   box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.3);
-
 }
 
 .grid-choice-bar {
@@ -262,8 +451,6 @@ select {
 
 /*=====  End of Produkt search  ======*/
 
-
-
 /*=============================================
 =            Graph container            =
 =============================================*/
@@ -273,27 +460,51 @@ select {
 }
 
 /* Container */
+
 .chart-container {
   background-color: white;
-  margin: 1% 2.5%;
+  margin: 1%;
   border-radius: 5px;
   border: 2px rgb(223, 221, 221);
   box-shadow: 2px 2px #ccc, -2px 2px #ccc;
 }
 
-/*  */
-.map-container {
-  width: 50%;
+.topchart-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 66%;
   min-height: 600px;
-  margin-left: 2.5%;
-  margin-right: 1.25%;
+  margin: 1% 0% 0 0;
 }
 
-.line-container{
-  width: 45%;
-  height: 450px;
-  margin-left: 1.25%;  
-  margin-right: 2.5%;
+.topchart-container-individual {
+  background-color: white;
+  border-radius: 5px;
+  border: 2px rgb(223, 221, 221);
+  box-shadow: 2px 2px #ccc, -2px 2px #ccc;
+}
+
+.map-container {
+  width: 33%;
+  min-height: 600px;
+  margin-left: 1%;
+}
+
+.pie-container {
+  width: 49%;
+  height: 300px;
+}
+
+.line-container {
+  width: 99%;
+  height: 285px;
+}
+
+.kommun-container {
+  width: 49%;
+  height: 300px;
+  /* margin-left: 1.25%;   */
+  margin-right: 1.25%;
 }
 
 .charts-container {
@@ -321,12 +532,13 @@ select {
 }
 
 .toprow-title {
-  padding: 3px 10px;
+  padding: 0 10px;
   width: 100%;
   border-bottom: 1px #ccc solid;
 }
 
 /* Styling för grafområdet */
+
 .addition {
   margin-left: 10px;
   cursor: pointer;
@@ -338,9 +550,8 @@ select {
   justify-content: space-between;
 }
 
-
 /*=============================================
-=            Radio button            =
+=        Radio button large toolbar           =
 =============================================*/
 
 .form-radio {
@@ -384,7 +595,6 @@ label {
   cursor: pointer;
 }
 
-
 .radio-box {
   font: 300 12px/1.7 'Open Sans', sans-serif;
   color: #666;
@@ -394,10 +604,7 @@ label {
   box-shadow: #ccc 1px 1px;
 }
 
-
-
 /*----------  Slider  ----------*/
-
 
 #slider label {
   position: absolute;
@@ -408,6 +615,7 @@ label {
 }
 
 /* below is not necessary, just for style */
+
 #slider {
   width: 25%;
   margin: 2em;
@@ -440,7 +648,6 @@ label {
   padding: 10px;
 }
 
-
 .produkt-box {
   min-height: 100%;
   background-color: white;
@@ -449,11 +656,8 @@ label {
 
 /*=====  End of Radio button  ======*/
 
-
-
-
 /*=============================================
-=            Maptest            =
+=            SVG-styling            =
 =============================================*/
 
 .background {
@@ -481,14 +685,17 @@ label {
   display: none;
 }
 
-.county-boundary:hover,
-.states:hover,
-.kommun:hover {
+.county-boundary:hover, .states:hover, .kommun:hover, .kommun-map:hover {
   fill: maroon;
   /* transform: scale(1.1); */
   /* filter: brightness(150%); */
   /* transform: scale() */
   cursor: pointer;
+}
+
+.kommun-map {
+  stroke: #fff;
+  stroke-width: 1.5px;
 }
 
 .kommun {
@@ -498,7 +705,8 @@ label {
 }
 
 .grayed {
-  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  -webkit-filter: grayscale(100%);
+  /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
 }
 

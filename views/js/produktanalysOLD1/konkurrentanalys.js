@@ -1,5 +1,4 @@
-//! OM SEED VÄRDEN handleInputs(true);
-function handleInputs(seed) {
+function handleInputs() {
     const searchboxValues = [];
     var triggerButtons = document.querySelectorAll('.trigger-button');
     
@@ -10,27 +9,10 @@ function handleInputs(seed) {
         }
     })
     
-    if(seed){
-        var apiRequest1 = fetch(`/konkurrentanalysartiklarPerKommun/Arla Ko - 7180/MENIGO FOG - MENY545`).then(function (response) {
-            return response.json()
-        });
-        var apiRequest2 = fetch(`/konkurrentanalysartiklarPerLaen/Arla Ko - 7180/MENIGO FOG - MENY545`).then(function (response) {
-            return response.json()
-        });
-        var apiRequest3 = fetch(`/konkurrentanalysartiklarSverige/Arla Ko - 7180/MENIGO FOG - MENY545`).then(function (response) {
-            return response.json()
-        });
-        Promise.all([apiRequest1, apiRequest2, apiRequest3]).then(function (values) {
-            // console.log(values);
-            colors = assignLevartToColor(['Arla Ko - 7180','MENIGO FOG - MENY545'])
-            drawGraphs(values[0], values[1], values[2], colors)
-        });
-    }
+    
 
     if (triggerButtons.length === searchboxValues.length) {
         //assign colors here
-        document.querySelectorAll('.text-spinner').forEach(spinner => spinner.style.display = 'inline')
-        
         colors = assignLevartToColor(searchboxValues);
 
         switch (searchboxValues.length) {

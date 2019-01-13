@@ -50,7 +50,7 @@ modal.setContent(
             </div>
         </div>
         <hr>
-    </div>
+    <div>
     <button id="filter-btn" class="tingle-btn">Filtrera efter leverantör</button>
     `
 );
@@ -62,9 +62,6 @@ modal.addFooterBtn('Ok', 'tingle-btn tingle-btn--primary ok-btn', function () {
 
     // document.querySelector(".trigger-button").innerText = document.querySelector("#artikel").value
     // here goes some logic
-    // document.querySelector(`#product-small-name-${activationButton.dataset.key}`).innerText = (`${actualSelection['Benamning']}`)
-    // document.querySelector(`#product-small-fabrikat-${activationButton.dataset.key}`).innerText = (`${actualSelection['Fabrikat']}`)
-
     activationButton.innerHTML = `<strong>${actualSelection['Benamning']}</strong>
                                     <br> 
                                 <small>${actualSelection['Fabrikat']}</small>`;
@@ -108,7 +105,7 @@ document.querySelector('#filter-btn').addEventListener("click", function() {
 function filterButtonClick(){
     
     if(buttonFlag){
-        filterBox.style.display = "inline";
+        filterBox.style.display = "flex";
         standardBox.style.display = "none";
         filterButton.innerText = "Sök efter artikel";
         buttonFlag = !buttonFlag;

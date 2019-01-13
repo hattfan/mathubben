@@ -62,6 +62,9 @@ modal.addFooterBtn('Ok', 'tingle-btn tingle-btn--primary ok-btn', function () {
 
     // document.querySelector(".trigger-button").innerText = document.querySelector("#artikel").value
     // here goes some logic
+    // document.querySelector(`#product-small-name-${activationButton.dataset.key}`).innerText = (`${actualSelection['Benamning']}`)
+    // document.querySelector(`#product-small-fabrikat-${activationButton.dataset.key}`).innerText = (`${actualSelection['Fabrikat']}`)
+
     activationButton.innerHTML = `<strong>${actualSelection['Benamning']}</strong>
                                     <br> 
                                 <small>${actualSelection['Fabrikat']}</small>`;

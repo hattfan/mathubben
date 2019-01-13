@@ -1,15 +1,14 @@
 /* scaffolding */
+
 /* ----------- */
 
-
-.tt-menu,
-.gist {
+.tt-menu, .gist {
   text-align: left;
 }
 
 /* base styles */
-/* ----------- */
 
+/* ----------- */
 
 .table-of-contents li {
   display: inline-block;
@@ -22,11 +21,12 @@
   color: #999;
 }
 
-p + p {
+p+p {
   margin: 30px 0 0 0;
 }
 
 /* site theme */
+
 /* ---------- */
 
 .title {
@@ -49,9 +49,7 @@ p + p {
   margin: 50px 0;
 }
 
-.typeahead,
-.tt-query,
-.tt-hint {
+.typeahead, .tt-query, .tt-hint {
   min-width: 350px;
   max-width: 400px;
   /* height: 30px; */
@@ -61,9 +59,16 @@ p + p {
   /* border: none; */
   border: 2px solid #ccc;
   -webkit-border-radius: 8px;
-     -moz-border-radius: 8px;
-          border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
   outline: none;
+}
+
+@media(max-width: 540px) {
+  .typeahead, .tt-query, .tt-hint {
+    min-width: 300px;
+    max-width: 320px;
+  }
 }
 
 .typeahead {
@@ -76,8 +81,8 @@ p + p {
 
 .tt-query {
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 
 .tt-hint {
@@ -93,11 +98,18 @@ p + p {
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.2);
   -webkit-border-radius: 8px;
-     -moz-border-radius: 8px;
-          border-radius: 8px;
-  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+}
+
+@media(max-width: 540px) {
+  .tt-menu {
+    min-width: 300px;
+    max-width: 320px;
+  }
 }
 
 .tt-suggestion {
@@ -115,7 +127,6 @@ p + p {
 .tt-suggestion.tt-cursor {
   color: #fff;
   background-color: #0097cf;
-
 }
 
 .tt-suggestion p {
@@ -127,6 +138,7 @@ p + p {
 }
 
 /* example specific styles */
+
 /* ----------------------- */
 
 #custom-templates .empty-message {

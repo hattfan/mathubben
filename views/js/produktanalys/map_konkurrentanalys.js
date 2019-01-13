@@ -280,7 +280,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         }
         
         d3.select("#kommun-map").selectAll("*").remove();
-        document.querySelector("#line-chart-name").innerText = document.querySelector("#kommun-chart-name").innerText = document.querySelector("#pie-chart-name").innerText = d.properties.NAME_1;
+        document.querySelector("#line-chart-name").innerText = document.querySelector("#pie-chart-name").innerText = d.properties.NAME_1;
         lookupKod = d.properties.laenskod;
         mapPosition = 'laen';
         lineFunc(mapPosition);
@@ -484,7 +484,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
     }
 
     function kommunClick(d) {
-        document.querySelector("#line-chart-name").innerText = document.querySelector("#kommun-chart-name").innerText = document.querySelector("#pie-chart-name").innerText = d.properties.KNNAMN;
+        document.querySelector("#line-chart-name").innerText = document.querySelector("#pie-chart-name").innerText = d.properties.KNNAMN;
         mapPosition = 'kommun';
         lookupKod = d.properties.KNKOD;
         lineFunc(mapPosition)
