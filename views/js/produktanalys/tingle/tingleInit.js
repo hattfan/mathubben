@@ -50,7 +50,7 @@ modal.setContent(
             </div>
         </div>
         <hr>
-    <div>
+    </div>
     <button id="filter-btn" class="tingle-btn">Filtrera efter leverantör</button>
     `
 );
@@ -108,7 +108,7 @@ document.querySelector('#filter-btn').addEventListener("click", function() {
 function filterButtonClick(){
     
     if(buttonFlag){
-        filterBox.style.display = "flex";
+        filterBox.style.display = "inline";
         standardBox.style.display = "none";
         filterButton.innerText = "Sök efter artikel";
         buttonFlag = !buttonFlag;

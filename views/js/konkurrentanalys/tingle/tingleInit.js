@@ -32,13 +32,17 @@ modal.setContent(
         <div class="sök-box" id="standard-box">
             <label for="produkt">Sök efter artikel</label>
             <br>
-            <input id="artikel" class="typeahead" type="text" placeholder="Sök efter artikel">
+            <div id="scrollable-dropdown-menu">
+                <input id="artikel" class="typeahead" type="text" placeholder="Sök efter artikel">
+            </div>
         </div>
         <div class="filter-container">
             <div class="sök-box" id="filter-box">
                 <label for="filter-box">Filtrera efter leverantör</label>
                 <br>
+            <div id="scrollable-dropdown-menu">
                 <input id="leverantör" class="typeahead" type="text" placeholder="Leverantör">
+            </div>
             </div>
             <div class="spinner"></div>
             <div id="produkt-select">

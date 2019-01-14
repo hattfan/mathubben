@@ -74,7 +74,6 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 
     // !Kommundata !!!!!!!!!!!!!!!!!!!!!!
-
     //geoData för att matcha kommunData till varje kommun
     geoData.forEach(d => {
         var kommun = kommunData.filter(row => row.KommunNummer === d.properties.KNKOD);
@@ -123,10 +122,15 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         d.properties.data = laen;
     });
 
-    var colorDomainAndRange = createColorScale(seedValues)
-    var mapColorScale = d3.scaleOrdinal()
-        .domain(colorDomainAndRange.domain)
-        .range(colorDomainAndRange.colors);
+    // var colorDomainAndRange = createColorScale(seedValues)
+    // var mapColorScale = d3.scaleOrdinal()
+    //     .domain(colorDomainAndRange.domain)
+    //     .range(colorDomainAndRange.colors);
+    var colors = ["#7caeff", "#ff0400"];
+    var domain = [0, d3.max(laenData, d => d[visningsVal])];
+    var mapColorScale = d3.scaleLinear()
+      .domain(domain)
+      .range(colors);
 
     lineFunc(mapPosition)
 
@@ -235,10 +239,10 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         var kommunPath = d3.geoPath()
             .projection(projection);
 
-        var colorDomainAndRange = createColorScale(seedValues)
-        var mapColorScale = d3.scaleOrdinal()
-            .domain(colorDomainAndRange.domain)
-            .range(colorDomainAndRange.colors);
+        // var colorDomainAndRange = createColorScale(seedValues)
+        // var mapColorScale = d3.scaleOrdinal()
+        //     .domain(colorDomainAndRange.domain)
+        //     .range(colorDomainAndRange.colors);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
         // !Updates för kommun-map !!!!!!!!!!!!!!!!
@@ -280,7 +284,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         }
         
         d3.select("#kommun-map").selectAll("*").remove();
-        document.querySelector("#line-chart-name").innerText = document.querySelector("#pie-chart-name").innerText = d.properties.NAME_1;
+        document.querySelector("#line-chart-name").innerText = document.querySelector("#kommun-chart-name").innerText = document.querySelector("#pie-chart-name").innerText = d.properties.NAME_1;
         lookupKod = d.properties.laenskod;
         mapPosition = 'laen';
         lineFunc(mapPosition);
@@ -305,10 +309,15 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         var kommunPath = d3.geoPath()
             .projection(projection);
 
-        var colorDomainAndRange = createColorScale(seedValues)
-        var mapColorScale = d3.scaleOrdinal()
-            .domain(colorDomainAndRange.domain)
-            .range(colorDomainAndRange.colors);
+        // var colorDomainAndRange = createColorScale(seedValues)
+        // var mapColorScale = d3.scaleOrdinal()
+        //     .domain(colorDomainAndRange.domain)
+        //     .range(colorDomainAndRange.colors);
+        var colors = ["#7caeff", "#ff0400"];
+        var domain = [0, d3.max(kommunData, d => d[visningsVal])];
+        var mapColorScale = d3.scaleLinear()
+            .domain(domain)
+            .range(colors);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
         // !Updates för kommun-map !!!!!!!!!!!!!!!!
@@ -484,7 +493,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
     }
 
     function kommunClick(d) {
-        document.querySelector("#line-chart-name").innerText = document.querySelector("#pie-chart-name").innerText = d.properties.KNNAMN;
+        document.querySelector("#line-chart-name").innerText = document.querySelector("#kommun-chart-name").innerText = document.querySelector("#pie-chart-name").innerText = d.properties.KNNAMN;
         mapPosition = 'kommun';
         lookupKod = d.properties.KNKOD;
         lineFunc(mapPosition)
@@ -530,7 +539,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         var domainValues = {};
         switch (searchboxValues.length) {
             case 2:
-                domainValues.colors = ["#0000FF", "#FF0000"];
+                domainValues.colors = ["#0000FF", " #FF0000"];
                 domainValues.domain = [searchboxValues[0], searchboxValues[1]];
                 break;
             case 3:

@@ -13,7 +13,7 @@
 document.querySelector("#small-product-indication-bar").style.marginLeft = -document.querySelector("#small-product-indication-bar").offsetWidth
 
 window.addEventListener("scroll", function () {
-    if (window.scrollY > 158) {
+    if (window.scrollY > 158 && window.innerWidth > 500) {
         // document.querySelector('#produkt-search-toolbar').classList.remove('margin-toolbar')
         document.querySelector('#small-toolbar').style.display = 'flex'
     } else {

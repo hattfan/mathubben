@@ -7,10 +7,10 @@
 //* TODO Uppdatera landningssidan efter inlogg
 // TODO Fixa Produktanalysen
 // TODO Gör så att man kan lägga in en ny produkt
+//* TODO Responsiviteten
 
 
 //Övrigt
 // TODO Fixa namnen på det som undersöks i en banner under liten toolbar - funkar OK
-// TODO Responsiviteten
 // TODO Kolla i internet explorer
 ////# TODO Samtliga knappar skall funka och uppdatera de andra knapparna

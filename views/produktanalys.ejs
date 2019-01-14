@@ -34,78 +34,134 @@
         <div class="module-type">
             <h4><i class="ti-pin"></i> Produktanalys</h4>
         </div>
+
+        <!-- Small toolbar -->
+        <div id="small-toolbar" style="display:none">
+            <div class="split-radio-buttons"></div>
+            <div>
+                <input type="radio" name="data-type-small" value="Mangd" class="form-radio-small" id="radio-one"><label
+                    for="radio-one">Kilon</label>
+                <input type="radio" name="data-type-small" value="Kronor" class="form-radio-small" checked><label for="radio-one">Kronor</label>
+            </div>
+            <div class="split-radio-buttons"></div>
+            <div>
+                <input type="radio" name="calculation-type-small" value="Total" id="radio-two" class="form-radio-small"
+                    checked><label for="radio-two">Totalt</label>
+                <input type="radio" name="calculation-type-small" value="PerCapita" class="form-radio-small"><label for="radio-two">PerCapita</label>
+            </div>
+            <div class="split-radio-buttons"></div>
+            <div id="small-slider"></div>
+            <div class="split-radio-buttons" id="slider-block"></div>
+        </div>
+        <!-- END Small TOOLBAR -->
+
         <!-- <div class="user-logged-in">
             <i class="ti-pulse"></i>
         </div> -->
     </nav>
+    <!--TODO Alternativ för liten toolbar -->
+    <!-- <div id="close-toolbar" style="display:none">
+        <svg height="20" width="20" >
+            <line x1="0" y1="0" x2="20" y2="20" style="stroke:#2c3e50; stroke-width:5" />
+            <line x1="20" y1="0" x2="0" y2="20" style="stroke:#2c3e50; stroke-width:5" />
+        </svg>
+    </div>
+    <div id="arrow-right"></div> -->
+    <div id="small-product-indication-bar">
+        <div class="small-product-containers">
+            <div class="small-product-container">
+                <div class="small-box">
+                    <p class="search-color-blob" style="background-color: blue"></p>
+                </div>
+                <div class="product-small">
+                    <span class="product-small-name" id="product-small-name-blue">Skogsbär</span>
+                    <br>
+                    <span class="product-small-fabrikat" id="product-small-fabrikat-blue">Yoggi</span>
+                </div>
+            </div>
+            <div class="small-product-container">
+                <div class="small-box">
+                    <p class="search-color-blob" style="background-color: red"></p>
+                </div>
+                <div class="product-small">
+                    <span class="product-small-name" id="product-small-name-red">Jordgubb</span>
+                    <br>
+                    <span class="product-small-fabrikat" id="product-small-fabrikat-red">Yoggi</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <%- include partials/sidebar.ejs %>
-    <!-- TODO fixa liten toolbar -->
-    <!-- <div id="scrolled-produkt-search-toolbar">
-        <div>
-            <input type="radio" name="data-type" value="Mängd" id="radio-one"><label for="radio-one">Kilon</label>
-            <input type="radio" name="data-type" value="Kronor" checked><label for="radio-one">Kronor</label>
-        </div>
-        <div>
-            <input type="radio" name="calculation-type" value="Total" id="radio-two"  checked><label for="radio-two">Totalt</label>
-            <input type="radio" name="calculation-type" value="PerCapita"><label for="radio-two">PerCapita</label>
-        </div>
-        <div id="smallslider"></div>
-    </div> -->
-    <div id="produkt-search-toolbar">
+    <div id="produkt-search-toolbar" class="margin-toolbar">
         <div class="nav-container">
+            <!-- Stor TOOLBAR -->
             <div class="grid-produkt">
                 <div class="search-box-container">
-                    <!-- <p class="search-color-blob" style="background-color: blue"></p> -->
-                    <div data-key="blue" class="trigger-button" style="border: 2px solid #ccc; padding: 10px;border-radius: 7px; cursor: pointer;color: dimgray">Lägg till Produkt</div>
+                    <div data-key="blue" class="trigger-button" style="border: 2px solid #ccc; padding: 10px;border-radius: 7px; cursor: pointer;color: dimgray">Lägg
+                        till Produkt</div>
                 </div>
-                <!-- <div class="search-box-container">
-                    <div class="product-search-container" id="searchBox-1">
-                        <p class="search-color-blob" style="background-color: blue"></p>
-                        <input class="typeahead" type="text" placeholder="Sök efter artikel">
-                    </div>
-                    <div class="product-search-container" id="searchBox-2">
-                        <p class="search-color-blob" style="background-color: red"></p>
-                        <input class="typeahead" type="text" placeholder="Sök efter artikel">
-                    </div>
-                    -->
             </div>
+            <!-- END Stor TOOLBAR  -->
         </div>
         <div class="grid-choice-bar">
             <div id="slider"></div>
             <div class="data-type radio-box">
-                    <div class="headline" style="text-align:center">Data-typ</div>
-                    <input type="radio" name="data-type" value="Mangd" id="radio-one" class="form-radio"><label for="radio-one">Kilon</label>
-                    <input type="radio" name="data-type" value="Kronor" class="form-radio" checked><label for="radio-one">Kronor</label>
-                </div>
+                <div class="headline" style="text-align:center">Data-typ</div>
+                <input type="radio" name="data-type" value="Mangd" id="radio-one" class="form-radio"><label for="radio-one">Kilon</label>
+                <input type="radio" name="data-type" value="Kronor" class="form-radio" checked><label for="radio-one">Kronor</label>
+            </div>
             <div class="calculation-type radio-box">
-                    <div class="headline"  style="text-align:center">Räknesätt</div>              
-                <input type="radio" name="calculation-type" value="Total" id="radio-two" class="form-radio" checked><label for="radio-two">Totalt</label>
+                <div class="headline" style="text-align:center">Räknesätt</div>
+                <input type="radio" name="calculation-type" value="Total" id="radio-two" class="form-radio" checked><label
+                    for="radio-two">Totalt</label>
                 <input type="radio" name="calculation-type" value="PerCapita" class="form-radio"><label for="radio-two">PerCapita</label>
             </div>
-        </div> 
+        </div>
     </div>
-
 
     <section class="main-container">
         <div class="charts-container">
             <div class="chart-container map-container">
                 <div class="toprow">
                     <div class="toprow-title">
-                        <h4>Geografisk jämförelse över artiklar</h4>
+                        <h4>Geografisk jämförelse över artiklar <span class="text-spinner"></span></h4>
+                        
                     </div>
                 </div>
                 <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="map">
                 </svg>
             </div>
-            <div class="chart-container line-container">
+            <div class="topchart-container">
+                <div class="topchart-container-individual kommun-container">
                     <div class="toprow">
-                            <div class="toprow-title">
-                                <h4>Översikt över <strong><span id="line-chart-name">Sverige</span></strong></h4>
-                            </div>
+                        <div class="toprow-title">
+                            <h4>Kommun/län-översikt <strong><span id="kommun-chart-name"></span></strong><span class="text-spinner"></span></h4>
                         </div>
-                <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="line">
-                </svg>
+                    </div>
+                    <div class="svg-container-kommun">
+                        <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="kommun-map">
+                        </svg>
+                    </div>
+                </div>
+                <div class="topchart-container-individual pie-container">
+                    <div class="toprow">
+                        <div class="toprow-title">
+                            <h4>Översikt över <strong><span id="pie-chart-name">Sverige</span></strong><span class="text-spinner"></span></h4>
+                        </div>
+                    </div>
+                    <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="pie">
+                    </svg>
+                </div>
+                <div class="topchart-container-individual line-container">
+                    <div class="toprow">
+                        <div class="toprow-title">
+                            <h4>Översikt över <strong><span id="line-chart-name">Sverige</span></strong><span class="text-spinner"></span></h4>
+                        </div>
+                    </div>
+                    <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="line">
+                    </svg>
+                </div>
             </div>
         </div>
         <!-- <div class="chart-container bar-container">
@@ -141,13 +197,14 @@
 <script src="js/kommunnamn.js"></script>
 <script src="js/produktanalys/map_produktanalys.js"></script>
 <script src="js/produktanalys/line_produktanalys.js"></script>
+<script src="js/produktanalys/pie_produktanalys.js"></script>
+<script src="js/produktanalys/toolbox_mirror.js"></script>
 <script src="js/produktanalys/app_produktanalys.js"></script>
-<script src="js/produktanalys/konkurrentanalys.js"></script>
+<script src="js/produktanalys/produktanalys.js"></script>
 <script src="js/produktanalys/tingle/tingleInit.js"></script>
 <script src="js/typeahead.js"></script>
-<!-- <script src="js/produktanalys/search_box_handler.js"></script> -->
-<script src="js/produktanalys/toolbox_mirror.js"></script>
-
+<script src="js/produktanalys/search_box_handler.js"></script>
+<script src="js/produktanalys/small_toolbar_handler.js"></script>
 
 <script>
     function w3_open() {

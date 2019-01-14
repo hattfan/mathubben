@@ -205,8 +205,9 @@
 
   .tingle-modal-box__content {
     overflow-y: scroll;
-    height: 500px;
+    height: 70%;
   }
+  
 
   .tingle-modal--noClose {
     top: 0;

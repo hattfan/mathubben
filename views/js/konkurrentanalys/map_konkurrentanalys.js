@@ -46,7 +46,7 @@ function createMap() {
 function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, dataType, calculationType, colors, visningsVal, clickChoice) {
     width = document.querySelector('.map-container').offsetWidth - 60;
     height = 600;
-    
+
     const searchboxValues = [];
     var triggerButtons = document.querySelectorAll('.trigger-button');
     triggerButtons.forEach(triggerButton => {
