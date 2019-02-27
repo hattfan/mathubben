@@ -3,66 +3,57 @@ var express = require("express"),
 	passport = require("passport"),
 	bodyParser = require("body-parser"),
 	MongoClient = require('mongodb').MongoClient;
-app.use(bodyParser.urlencoded({extended: false}));
+	// require("./schedueler/schedueler");
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(__dirname + '/views'));
 
 // Add headers
 app.use(function (req, res, next) {
-
 	res.setHeader('Access-Control-Allow-Origin', '*');
-
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
 	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
 	res.setHeader('Access-Control-Allow-Credentials', true);
-
 	// Pass to next layer of middleware
 	next();
 });
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
 	res.render('landing/index.ejs')
 })
 
-// MongoClient.connect('mongodb://localhost:27017', (err, client) => {
+// MongoClient.connect('mongodb://localhost:27017', {poolSize: 100}, (err, client) => {
 MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathubben', (err, client) => {
-	
-
 	var db = client.db('mathubben');
 
 	if (err) throw err;
 
 	app.get('/', function (req, res) {
-
 		res.render('login.ejs');
-
 	});
 
-	app.get('/artikellistning/:id', function(req, res){
+	app.get('/artikellistning/:id', function (req, res) {
 		// db.collection('artiklar').find({'Benamning':{$regex: ".*" + req.params.id + ".*"}}).limit(10).toArray(function(err, result){
-		db.collection('artiklar').find({'Benamning':{$regex: req.params.id, $options: "im"}}).limit(10).sort({'KronorTotal':-1}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('artiklar').find({ 'Benamning': { $regex: req.params.id, $options: "im" } }).limit(10).sort({ 'KronorTotal': -1 }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
-		})		
+		})
 	})
 
-	app.get('/artikelperfabrikat/:fabrikat', function(req, res){
+	app.get('/artikelperfabrikat/:fabrikat', function (req, res) {
 		// db.collection('artiklar').find({'Benamning':{$regex: ".*" + req.params.fabrikat + ".*"}}).limit(10).toArray(function(err, result){
 		// db.collection('artiklar').find({'Fabrikat':{$regex: req.params.fabrikat, $options: "im"}}).limit(10).toArray(function(err, result){
-		db.collection('artiklar').find({'Fabrikat':	req.params.fabrikat}).sort({'Benamning':1}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('artiklar').find({ 'Fabrikat': req.params.fabrikat }).sort({ 'Benamning': 1 }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
-		})		
+		})
 	})
 
-	app.get('/fabrikatlistning/:id', function(req, res){
-		db.collection('fabrikat').find({'Fabrikat':{$regex: req.params.id, $options: "im"}}).limit(10).toArray(function(err, result){
-			
-			if(err) throw err
+	app.get('/fabrikatlistning/:id', function (req, res) {
+		db.collection('fabrikat').find({ 'Fabrikat': { $regex: req.params.id, $options: "im" } }).limit(10).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
-		})		
+		})
 	})
 
 	//! En artikel
@@ -72,8 +63,8 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 				"artikelOne": req.params.id1,
 			}
 		};
-		db.collection('dataPerKommun').find({$or: [{'LevArtNr':data.artiklar.artikelOne}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataPerKommun').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
@@ -84,8 +75,8 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 				"artikelOne": req.params.id1,
 			}
 		};
-		db.collection('dataPerLaen').find({$or: [{'LevArtNr':data.artiklar.artikelOne}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataPerLaen').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
@@ -96,8 +87,8 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 				"artikelOne": req.params.id1,
 			}
 		};
-		db.collection('dataSverige').find({$or: [{'LevArtNr':data.artiklar.artikelOne}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataSverige').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
@@ -110,8 +101,8 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 			}
 		};
 
-		db.collection('dataPerKommun').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataPerKommun').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }, { 'LevArtNr': data.artiklar.artikelTwo }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
@@ -123,8 +114,8 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 				"artikelTwo": req.params.id2
 			}
 		};
-		db.collection('dataPerLaen').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataPerLaen').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }, { 'LevArtNr': data.artiklar.artikelTwo }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
@@ -136,8 +127,8 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 				"artikelTwo": req.params.id2
 			}
 		};
-		db.collection('dataSverige').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataSverige').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }, { 'LevArtNr': data.artiklar.artikelTwo }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
@@ -150,8 +141,8 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 				"artikelThree": req.params.id3
 			}
 		};
-		db.collection('dataPerKommun').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo},{'LevArtNr':data.artiklar.artikelThree}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataPerKommun').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }, { 'LevArtNr': data.artiklar.artikelTwo }, { 'LevArtNr': data.artiklar.artikelThree }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
@@ -164,8 +155,8 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 				"artikelThree": req.params.id3
 			}
 		};
-		db.collection('dataPerLaen').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo},{'LevArtNr':data.artiklar.artikelThree}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataPerLaen').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }, { 'LevArtNr': data.artiklar.artikelTwo }, { 'LevArtNr': data.artiklar.artikelThree }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
@@ -178,16 +169,16 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 				"artikelThree": req.params.id3
 			}
 		};
-		db.collection('dataSverige').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo},{'LevArtNr':data.artiklar.artikelThree}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataSverige').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }, { 'LevArtNr': data.artiklar.artikelTwo }, { 'LevArtNr': data.artiklar.artikelThree }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
 
 
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//! Fyra artiklar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//! Fyra artiklar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	app.get('/konkurrentanalysartiklar/:id1/:id2/:id3/:id4', function (req, res) {
 		var data = {
 			"artiklar": {
@@ -197,8 +188,8 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 				"artikelFour": req.params.id4
 			}
 		};
-		db.collection('dataPerKommun').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo},{'LevArtNr':data.artiklar.artikelThree},{'LevArtNr':data.artiklar.artikelFour}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataPerKommun').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }, { 'LevArtNr': data.artiklar.artikelTwo }, { 'LevArtNr': data.artiklar.artikelThree }, { 'LevArtNr': data.artiklar.artikelFour }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
@@ -213,8 +204,8 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 
 			}
 		};
-		db.collection('dataPerLaen').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo},{'LevArtNr':data.artiklar.artikelThree},{'LevArtNr':data.artiklar.artikelFour}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataPerLaen').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }, { 'LevArtNr': data.artiklar.artikelTwo }, { 'LevArtNr': data.artiklar.artikelThree }, { 'LevArtNr': data.artiklar.artikelFour }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
@@ -229,16 +220,16 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 
 			}
 		};
-		db.collection('dataSverige').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo},{'LevArtNr':data.artiklar.artikelThree},{'LevArtNr':data.artiklar.artikelFour}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataSverige').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }, { 'LevArtNr': data.artiklar.artikelTwo }, { 'LevArtNr': data.artiklar.artikelThree }, { 'LevArtNr': data.artiklar.artikelFour }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
-//! END FYRA ARTIKLAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//! END FYRA ARTIKLAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//! Fem artiklar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//! Fem artiklar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	app.get('/konkurrentanalysartiklar/:id1/:id2/:id3/:id4/:id5', function (req, res) {
 		var data = {
@@ -250,8 +241,8 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 				"artikelFive": req.params.id5
 			}
 		};
-		db.collection('dataPerKommun').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo},{'LevArtNr':data.artiklar.artikelThree},{'LevArtNr':data.artiklar.artikelFour},{'LevArtNr':data.artiklar.artikelFive}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataPerKommun').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }, { 'LevArtNr': data.artiklar.artikelTwo }, { 'LevArtNr': data.artiklar.artikelThree }, { 'LevArtNr': data.artiklar.artikelFour }, { 'LevArtNr': data.artiklar.artikelFive }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
@@ -266,8 +257,8 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 				"artikelFive": req.params.id5
 			}
 		};
-		db.collection('dataPerLaen').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo},{'LevArtNr':data.artiklar.artikelThree},{'LevArtNr':data.artiklar.artikelFour},{'LevArtNr':data.artiklar.artikelFive}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataPerLaen').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }, { 'LevArtNr': data.artiklar.artikelTwo }, { 'LevArtNr': data.artiklar.artikelThree }, { 'LevArtNr': data.artiklar.artikelFour }, { 'LevArtNr': data.artiklar.artikelFive }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
@@ -282,13 +273,13 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 				"artikelFive": req.params.id5
 			}
 		};
-		db.collection('dataPerLaen').find({$or: [{'LevArtNr':data.artiklar.artikelOne},{'LevArtNr':data.artiklar.artikelTwo},{'LevArtNr':data.artiklar.artikelThree},{'LevArtNr':data.artiklar.artikelFour},{'LevArtNr':data.artiklar.artikelFive}]}).toArray(function(err, result){
-			if(err) throw err
+		db.collection('dataPerLaen').find({ $or: [{ 'LevArtNr': data.artiklar.artikelOne }, { 'LevArtNr': data.artiklar.artikelTwo }, { 'LevArtNr': data.artiklar.artikelThree }, { 'LevArtNr': data.artiklar.artikelFour }, { 'LevArtNr': data.artiklar.artikelFive }] }).toArray(function (err, result) {
+			if (err) throw err
 			res.json(result);
 		})
 	});
 
-//! END FEM ARTIKLAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//! END FEM ARTIKLAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	app.get('/varugrupptest/:grupp', function (req, res) {
 		db.collection("varugrupper").find({

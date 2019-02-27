@@ -13,7 +13,8 @@ var underTitle = document.querySelector('#underTitle')
 var varugruppsBtn = document.getElementById("varugrupp");
 var barText = document.querySelector(".bartext");
 var barchartExists = document.querySelector("bar");
-var initGraphCreated = false;
+var initGraphsCreated = false;
+var currentCalculationType, currentDataType, currentYear, visningsVal, geoData, laenMapData;
 
 initButtonChanges();
 
@@ -47,6 +48,7 @@ function initButtonChanges(){
                 });
 }
 function drawGraphs(data, laenData, sverigeData, colors) {
+    if(initGraphsCreated) drawMap(geoData, laenMapData, data, laenData, sverigeData, currentYear, currentDataType, currentCalculationType, colors, visningsVal, 'initGraph');
     d3.queue()
         .defer(d3.json, "../src/sverige.topojson")
         .defer(d3.json, "../src/sweden-counties.json")
@@ -56,18 +58,18 @@ function drawGraphs(data, laenData, sverigeData, colors) {
             if (error) throw error;
             document.querySelectorAll('.text-spinner').forEach(spinner => spinner.style.display = 'none')
             //!Definierar inputs
-            var visningsVal; 
-            if (!initGraphCreated) {
+            // console.log('initGraphsCreated' + ' - ' + initGraphsCreated);
+            if (!initGraphsCreated) {
                 var yearRange = d3.extent(data, d => +d.Year);
-                var currentYear = yearRange[1];
+                currentYear = yearRange[1];
                 // $("#slider").slider("value", yearRange[1]),$("#small-slider").slider("value", yearRange[1]);
-                var currentDataType = d3.select('input[name="data-type"]:checked')
+                currentDataType = d3.select('input[name="data-type"]:checked')
                     .attr("value");
-                var currentCalculationType = d3.select('input[name="calculation-type"]:checked')
+                currentCalculationType = d3.select('input[name="calculation-type"]:checked')
                     .attr("value");
                 visningsVal = currentDataType + currentCalculationType;                
                 var geoData = topojson.feature(kommunMapData, kommunMapData.objects.sverige).features;
-                initGraphCreated = true;
+                initGraphsCreated = true;
             }
             //! Function-calls
             var startPos = $("#slider").slider("value");

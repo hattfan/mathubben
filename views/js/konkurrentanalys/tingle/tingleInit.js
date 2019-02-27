@@ -73,8 +73,9 @@ modal.addFooterBtn('Ok', 'tingle-btn tingle-btn--primary ok-btn', function () {
                                     <br> 
                                 <small>${actualSelection['Fabrikat']}</small>`;
     activationButton.value = actualSelection['LevArtNr'];
-    document.querySelector("#artikel").value = ""
-    resetModalSettings()
+    document.querySelector("#artikel").value = "";
+    resetModalSettings();
+    // reDrawGraphs();
     handleInputs();
     modal.close();
 });
@@ -82,8 +83,8 @@ modal.addFooterBtn('Ok', 'tingle-btn tingle-btn--primary ok-btn', function () {
 // add another button
 modal.addFooterBtn('Avbryt', 'tingle-btn tingle-btn--danger', function () {
     // here goes some logic
-    document.querySelector("#artikel").value = ""
-    resetModalSettings()
+    document.querySelector("#artikel").value = "";
+    resetModalSettings();
     modal.close();
 });
 
@@ -135,4 +136,13 @@ function selectionHandler(){
     actualSelection.Benamning = selectedOption.options[selectedOption.selectedIndex].text
     actualSelection.LevArtNr = selectedOption.options[selectedOption.selectedIndex].value
     document.querySelector(".ok-btn").style.display !== "inline" ? document.querySelector(".ok-btn").style.display = "inline" : null;
+}
+
+function reDrawGraphs(){
+    if(initGraphCreated){
+        d3.select("#line").selectAll("*").remove();
+        d3.select("#map").selectAll("*").remove();
+        d3.select("#pie").selectAll("*").remove();
+        d3.select("#kommun-map").selectAll("*").remove();
+    }
 }

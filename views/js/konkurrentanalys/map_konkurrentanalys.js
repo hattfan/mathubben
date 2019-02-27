@@ -5,6 +5,8 @@ var borders = false,
     kommunMapExists = false,
     seedValues = false;
 
+var counter = 0;
+
 // function updateMapSize(){
 //   var width = document.querySelector('.map-container').offsetWidth-60;
 //   // var height = document.querySelector('.map-container').offsetHeight;
@@ -56,7 +58,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
     })
     
     var map = d3.select('#map')
-    
+    debugger;
     var laenGeoData = topojson.feature(laenMapData, laenMapData.objects.SWE_adm1).features;
 
     var projection = d3.geoMercator()
@@ -74,7 +76,9 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 
     // !Kommundata !!!!!!!!!!!!!!!!!!!!!!
-
+    console.log("triggered" + counter);
+    counter =+1;
+    console.log(geoData);
     //geoData för att matcha kommunData till varje kommun
     geoData.forEach(d => {
         var kommun = kommunData.filter(row => row.KommunNummer === d.properties.KNKOD);
@@ -96,6 +100,8 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         // Lägg in properties i geoData datan - här skall läggas in den som är störst
         d.properties.data = kommun;
     });
+
+    // console.log(geoData);
 
     clickChoice === 'yearSlider' || clickChoice === 'dataType' || clickChoice === 'calculationType'?kommunUpdate():null
 

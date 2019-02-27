@@ -1,4 +1,4 @@
-var borders = false, 
+var borders = false,
     background = false,
     mapPosition = 'sverige',
     lookupKod = '',
@@ -54,9 +54,9 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
             searchboxValues.push(triggerButton.value)
         }
     })
-    
+
     var map = d3.select('#map')
-    
+
     var laenGeoData = topojson.feature(laenMapData, laenMapData.objects.SWE_adm1).features;
 
     var projection = d3.geoMercator()
@@ -74,7 +74,6 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 
     // !Kommundata !!!!!!!!!!!!!!!!!!!!!!
-    console.log(geoData);
     //geoData för att matcha kommunData till varje kommun
     geoData.forEach(d => {
         var kommun = kommunData.filter(row => row.KommunNummer === d.properties.KNKOD);
@@ -97,7 +96,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         d.properties.data = kommun;
     });
 
-    clickChoice === 'yearSlider' || clickChoice === 'dataType' || clickChoice === 'calculationType'?kommunUpdate():null
+    clickChoice === 'yearSlider' || clickChoice === 'dataType' || clickChoice === 'calculationType' ? kommunUpdate() : null
 
 
     // !Laendata !!!!!!!!!!!!!!!!!!!!!!
@@ -123,10 +122,16 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         d.properties.data = laen;
     });
 
-    var colorDomainAndRange = createColorScale(seedValues)
-    var mapColorScale = d3.scaleOrdinal()
-        .domain(colorDomainAndRange.domain)
-        .range(colorDomainAndRange.colors);
+    // var colorDomainAndRange = createColorScale(seedValues);
+    // var mapColorScale = d3.scaleOrdinal()
+    //     .domain(colorDomainAndRange.domain)
+    //     .range(colorDomainAndRange.colors);
+
+    var colors = ["#7caeff", "#ff0400"];
+    var domain = [0, d3.max(laenData, d => d[visningsVal])];
+    var mapColorScale = d3.scaleLinear()
+        .domain(domain)
+        .range(colors);
 
     lineFunc(mapPosition)
 
@@ -135,27 +140,6 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 
     var g = map.selectAll('g')
-
-    var update = g.selectAll(".kommun")
-        .data(geoData);
-
-    // console.log(update.exit());
-    update.exit().remove()
-
-    //Update för kommunnivå
-    update
-        .enter()
-        .append("path")
-        .classed("kommun", true)
-        .attr("d", path)
-        .on("click", kommunClick)
-        .merge(update)
-        // .transition()
-        // .duration(750)
-        .attr("fill", d => {
-            var val = d.properties.data.LevArtNr;
-            return val ? mapColorScale(val) : "#ccc";
-        });
 
     //Update för laen - 
     // TODO ändra från state
@@ -174,22 +158,12 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         // .transition()
         // .duration(750)
         .attr("fill", d => {
-            var val = d.properties.data.LevArtNr;
+            var val = d.properties.data[visningsVal];
+            // if(d.properties.data.length >0) debugger;
             return val ? mapColorScale(val) : "#ccc";
         });
 
     // !Färdigt grafiken !!!!!!!!!!!!!!!!!!!!!!
-    // var update = g;
-    // update.
-    // enter()
-    // .append("path")
-    //   .datum(topojson.mesh(laenMapData, laenMapData.objects.SWE_adm1, function (a, b) {
-    //     return a !== b;
-    //   }))
-    //   .attr("id", "state-borders")
-    //   .attr("d", path)
-    //   .merge(update);
-
 
     if (!borders) {
         d3.select('#map').selectAll('g').append("path")
@@ -207,15 +181,15 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         background = true;
     }
 
-    function kommunUpdate(){
-        
+    function kommunUpdate() {
+
         // if(d === undefined) return
-        if(lookupKod.length > 2){
-            var laensKod = lookupKod.substring(0,2);
+        if (lookupKod.length > 2) {
+            var laensKod = lookupKod.substring(0, 2);
         } else {
             var laensKod = lookupKod;
         }
-        
+
 
         d3.select("#kommun-map").selectAll("*").remove();
         var map = d3.select('#kommun-map')
@@ -235,10 +209,11 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         var kommunPath = d3.geoPath()
             .projection(projection);
 
-        var colorDomainAndRange = createColorScale(seedValues)
-        var mapColorScale = d3.scaleOrdinal()
-            .domain(colorDomainAndRange.domain)
-            .range(colorDomainAndRange.colors);
+        var colors = ["#7caeff", "#ff0400"];
+        var domain = [0, d3.max(laenData, d => d[visningsVal])];
+        var mapColorScale = d3.scaleLinear()
+            .domain(domain)
+            .range(colors);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
         // !Updates för kommun-map !!!!!!!!!!!!!!!!
@@ -264,27 +239,27 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
             // .transition()
             // .duration(750)
             .attr("fill", d => {
-                var val = d.properties.data.LevArtNr;
+                var val = d.properties.data[visningsVal];
                 return val ? mapColorScale(val) : "#ccc";
             });
-        
+
         // kommunMapExists = true;
     }
 
     function clicked(d) {
-        if(d === undefined){
+        if (d === undefined) {
             // var mapPosition = 'sverige';
             // var lookupKod = '';
             // drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, dataType, calculationType, colors)
             return
         }
-        
+
         d3.select("#kommun-map").selectAll("*").remove();
         document.querySelector("#line-chart-name").innerText = document.querySelector("#kommun-chart-name").innerText = document.querySelector("#pie-chart-name").innerText = d.properties.NAME_1;
         lookupKod = d.properties.laenskod;
         mapPosition = 'laen';
         lineFunc(mapPosition);
-        
+
         var map = d3.select('#kommun-map')
         var width = document.querySelector('.kommun-container').offsetWidth;
         // var height = document.querySelector('.map-container').offsetHeight;
@@ -305,10 +280,12 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         var kommunPath = d3.geoPath()
             .projection(projection);
 
-        var colorDomainAndRange = createColorScale(seedValues)
-        var mapColorScale = d3.scaleOrdinal()
-            .domain(colorDomainAndRange.domain)
-            .range(colorDomainAndRange.colors);
+
+        var colors = ["#7caeff", "#ff0400"];
+        var domain = [0, d3.max(laenData, d => d[visningsVal])];
+        var mapColorScale = d3.scaleLinear()
+            .domain(domain)
+            .range(colors);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
         // !Updates för kommun-map !!!!!!!!!!!!!!!!
@@ -334,10 +311,10 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
             // .transition()
             // .duration(750)
             .attr("fill", d => {
-                var val = d.properties.data.LevArtNr;
+                var val = d.properties.data[visningsVal];
                 return val ? mapColorScale(val) : "#ccc";
             });
-        
+
         kommunMapExists = true;
     }
 
@@ -499,57 +476,6 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
             'MangdTotal': 0,
         };
         return temp
-    }
-
-    function createColorScale(seed) {
-        if(seed){
-            switch (searchboxValues.length) {
-                case 2:
-                    domainValues.colors = ["#0000FF", "#FF0000"];
-                    domainValues.domain = ['MENIGO FOG - MENY545', 'Felix FriFrån - 8859'];
-                    break;
-                case 3:
-                    domainValues.colors = ["#0000FF", "#FF0000", "#FF8C00"];
-                    domainValues.domain = [searchboxValues[0], searchboxValues[1], searchboxValues[2]];
-                    break;
-                case 4:
-                    domainValues.colors = ["#0000FF", "#FF0000", "#FF8C00", "#800080"];
-                    domainValues.domain = [searchboxValues[0], searchboxValues[1], searchboxValues[2], searchboxValues[3]];
-                    break;
-                case 5:
-                    domainValues.colors = ["#0000FF", "#FF0000", "#FF8C00", "#800080", "#008000"];
-                    domainValues.domain = [searchboxValues[0], searchboxValues[1], searchboxValues[2], searchboxValues[3], searchboxValues[4]];
-                    break;
-                default:
-                    break;
-            }
-            // console.log(domainValues)
-            return domainValues;
-        }
-        //blue red darkorange purple green
-        var domainValues = {};
-        switch (searchboxValues.length) {
-            case 2:
-                domainValues.colors = ["#0000FF", "#FF0000"];
-                domainValues.domain = [searchboxValues[0], searchboxValues[1]];
-                break;
-            case 3:
-                domainValues.colors = ["#0000FF", "#FF0000", "#FF8C00"];
-                domainValues.domain = [searchboxValues[0], searchboxValues[1], searchboxValues[2]];
-                break;
-            case 4:
-                domainValues.colors = ["#0000FF", "#FF0000", "#FF8C00", "#800080"];
-                domainValues.domain = [searchboxValues[0], searchboxValues[1], searchboxValues[2], searchboxValues[3]];
-                break;
-            case 5:
-                domainValues.colors = ["#0000FF", "#FF0000", "#FF8C00", "#800080", "#008000"];
-                domainValues.domain = [searchboxValues[0], searchboxValues[1], searchboxValues[2], searchboxValues[3], searchboxValues[4]];
-                break;
-            default:
-                break;
-        }
-        // console.log(domainValues)
-        return domainValues;
     }
 
     function lineFunc(grapType) {

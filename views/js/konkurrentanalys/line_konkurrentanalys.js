@@ -3,7 +3,7 @@ function createLine(){
         top: 20,
         right: 70,
         bottom: 100,
-        left: 50
+        left: 80
     },
     
     width = document.querySelector('.line-container').offsetWidth - margin.left - margin.right
@@ -24,7 +24,7 @@ function lineGraph(graphData, visningsVal, lineTyp, lookupKod, colors, currentYe
         top: 20,
         right: 30,
         bottom: 100,
-        left: 50
+        left: 60
     },
     
     width = document.querySelector('.line-container').offsetWidth - margin.left - margin.right

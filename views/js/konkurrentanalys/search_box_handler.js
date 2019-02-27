@@ -2,7 +2,6 @@ document.querySelector('.addition-box').addEventListener('click', addAnotherSear
 
 function addAnotherSearchBar() {
     searchBoxCounter = document.querySelectorAll('.trigger-button')
-    console.log(searchBoxCounter.length);
 
     // const addSearchBox2 = `<div class="product-search-container" id="searchBox-2">
     //                             <p class="search-color-blob" style="background-color: red"></p>

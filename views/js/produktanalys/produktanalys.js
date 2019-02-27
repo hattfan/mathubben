@@ -47,6 +47,7 @@ function handleInputs(seed) {
                 Promise.all([apiRequest1, apiRequest2, apiRequest3]).then(function (values) {
                     drawGraphs(values[0], values[1], values[2], colors)
                 });
+                break;
             case 2:
                 var apiRequest1 = fetch(`/konkurrentanalysartiklarPerKommun/${searchboxValues[0]}/${searchboxValues[1]}`).then(function (response) {
                     return response.json()

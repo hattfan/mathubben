@@ -10,23 +10,6 @@ function handleInputs(seed) {
         }
     })
     
-    if(seed){
-        var apiRequest1 = fetch(`/konkurrentanalysartiklarPerKommun/Arla Ko - 7180/MENIGO FOG - MENY545`).then(function (response) {
-            return response.json()
-        });
-        var apiRequest2 = fetch(`/konkurrentanalysartiklarPerLaen/Arla Ko - 7180/MENIGO FOG - MENY545`).then(function (response) {
-            return response.json()
-        });
-        var apiRequest3 = fetch(`/konkurrentanalysartiklarSverige/Arla Ko - 7180/MENIGO FOG - MENY545`).then(function (response) {
-            return response.json()
-        });
-        Promise.all([apiRequest1, apiRequest2, apiRequest3]).then(function (values) {
-            // console.log(values);
-            colors = assignLevartToColor(['Arla Ko - 7180','MENIGO FOG - MENY545'])
-            drawGraphs(values[0], values[1], values[2], colors)
-        });
-    }
-
     if (triggerButtons.length === searchboxValues.length) {
         //assign colors here
         document.querySelectorAll('.text-spinner').forEach(spinner => spinner.style.display = 'inline')
@@ -58,7 +41,6 @@ function handleInputs(seed) {
                     return response.json()
                 });
                 Promise.all([apiRequest1, apiRequest2, apiRequest3]).then(function (values) {
-                    // console.log(values);
                     drawGraphs(values[0], values[1], values[2], colors)
                 });
 
