@@ -461,7 +461,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
     }
 
     function kommunClick(d) {
-        document.querySelector("#line-chart-name").innerText = document.querySelector("#kommun-chart-name").innerText = document.querySelector("#pie-chart-name").innerText = d.properties.KNNAMN;
+        document.querySelector("#line-chart-name").innerText = d.properties.KNNAMN;
         mapPosition = 'kommun';
         lookupKod = d.properties.KNKOD;
         lineFunc(mapPosition)
@@ -480,9 +480,9 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
 
     function lineFunc(grapType) {
         if (grapType === 'sverige') {
-            lineGraph(sverigeData, visningsVal, mapPosition, lookupKod, colors, year, mapColorScale)
+            lineGraph(sverigeData, visningsVal, mapPosition, lookupKod, colors, year, mapColorScale, laenMapData)
         } else if (grapType === 'laen') {
-            lineGraph(laenData, visningsVal, mapPosition, lookupKod, colors, year, mapColorScale)
+            lineGraph(laenData, visningsVal, mapPosition, lookupKod, colors, year, mapColorScale, kommunData)
         } else if (grapType === 'kommun') {
             lineGraph(kommunData, visningsVal, mapPosition, lookupKod, colors, year, mapColorScale)
         }

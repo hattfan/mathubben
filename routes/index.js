@@ -1,28 +1,13 @@
-const express    = require("express"),
-      router     = express.Router();
+const express = require("express"),
+	router = express.Router();
+
+router.get('/login', function (req, res) {
+	res.render('login.ejs');
+});
 
 router.get('/', function (req, res) {
-	res.render('login');
+	res.render('landing/index.ejs');
 });
 
-router.get('/konkurrentanalys', function (req, res) {
-	res.render('konkurrentanalys');
-});
-
-router.get('/produktanalys', function (req, res) {
-	res.render('produktanalys');
-});
-
-router.get('/sortfil', function (req, res) {
-	res.render('sortfil')
-});
-
-
-
-router.get('/dashboard', function (req, res) {
-
-	res.render('dashboard.ejs');
-
-});
 
 module.exports = router;

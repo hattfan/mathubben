@@ -162,7 +162,7 @@ function drawGraphs(data, laenData, sverigeData, colors) {
                 var tooltipSort = '';
                 if (isKommun) tooltipData = tgt.data()[0].properties.data, tooltipNamn = tgt.data()[0].properties.KNNAMN, tooltipSort = "Kommun";
                 if (isLaen) tooltipData = tgt.data()[0].properties.data, tooltipNamn = tgt.data()[0].properties.NAME_1, tooltipSort = "Län";
-                if (isArc) tooltipArc = tgt.data()[0].data;
+                if (isArc) tooltipArc = tgt.data()[0].data, tooltipNamn = kommunnamn[tgt.data()[0].data.KommunNummer];
 
                 tooltip
                     .style("opacity", +(isKommun || isArc || isLaen))
@@ -184,6 +184,7 @@ function drawGraphs(data, laenData, sverigeData, colors) {
                 if (tooltipArc) {
                     tooltip
                         .html(`
+                            <p>${tooltipNamn}</p>
                             <p>Produkt: ${tooltipArc.Benamning}</p>
                             <p>Procent: ${getPercentage(tgt.data()[0])}</p>
                             <p>År: ${currentYear}</p>

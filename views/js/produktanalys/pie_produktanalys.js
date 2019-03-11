@@ -9,10 +9,9 @@ function createPie() {
     pie.append("g")
         .attr("transform", "translate(" + width / 2 + ", " + (height / 2) + ")")
         .classed("chart", true);
-
 }
 
-function drawPie(graphData, visningsVal, lineTyp, lookupKod, colors, currentYear, mapColorScale) {
+function drawPie(graphData, visningsVal, lineTyp, lookupKod, colors, currentYear, mapColorScale, pieData) {
     var pie = d3.select("#pie");
     var arcs = d3.pie()
         .value(d => d[visningsVal]);
@@ -21,9 +20,18 @@ function drawPie(graphData, visningsVal, lineTyp, lookupKod, colors, currentYear
         .outerRadius(+pie.attr("height") / 2 - 50)
         .innerRadius(0);
 
-    var yearData = graphData.formattedGraphData.flat().filter(row => {
-            return row.Year === currentYear.toString()
+    if(!pieData){
+        return;
+    }
+    var yearData = pieData.flat().filter(row => {
+            return row.Year === currentYear.toString() &&row.KommunNummer.substring(0,2) === lookupKod
     })
+
+    var colors = ["#7caeff", "#ff0400"];
+    var domain = [0, d3.max(yearData, d => d[visningsVal])];
+    var mapColorScale = d3.scaleLinear()
+        .domain(domain)
+        .range(colors);
 
     var update = pie
         .select(".chart")
@@ -33,7 +41,6 @@ function drawPie(graphData, visningsVal, lineTyp, lookupKod, colors, currentYear
     update
         .exit()
         .remove();
-
     update
         .enter()
         .append("path")
@@ -42,8 +49,7 @@ function drawPie(graphData, visningsVal, lineTyp, lookupKod, colors, currentYear
         .attr("stroke-width", "0.25px")
     .merge(update)
         .attr("fill", d => {
-            var val = d.data.LevArtNr;
-            return val ? mapColorScale(val) : "#ccc";
+            return mapColorScale(d.value);
         })
         .attr("d", path);
 }  

@@ -115,6 +115,8 @@ function lineGraph(graphData, visningsVal, lineTyp, lookupKod, colors, currentYe
             .tickSize(-width)
             .tickFormat("")
         )
+
+    debugger;   
     //Add data for each of the lines
     for (let i = 0; i < lineData.formattedGraphData.length; i++) {
         svg.append("path")

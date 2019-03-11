@@ -1,5 +1,11 @@
 //! OM SEED VÄRDEN handleInputs(true);
 function handleInputs(seed) {
+    if(initGraphsCreated){
+        d3.select("#map").selectAll("*").remove();
+        document.querySelector("#map-square").innerHTML = `<svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="map"></svg>`
+        createMap();
+        borders = false;
+    }
     const searchboxValues = [];
     var triggerButtons = document.querySelectorAll('.trigger-button');
     

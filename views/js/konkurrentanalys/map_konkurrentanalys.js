@@ -1,4 +1,4 @@
-var borders = false, 
+var borders = false,
     background = false,
     mapPosition = 'sverige',
     lookupKod = '',
@@ -9,7 +9,6 @@ var counter = 0;
 
 // function updateMapSize(){
 //   var width = document.querySelector('.map-container').offsetWidth-60;
-//   // var height = document.querySelector('.map-container').offsetHeight;
 //   var height = 600;
 
 //   var map =d3.select("#map");
@@ -46,6 +45,8 @@ function createMap() {
 }
 
 function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, dataType, calculationType, colors, visningsVal, clickChoice) {
+    console.log(sverigeData, laenData, kommunData);
+
     width = document.querySelector('.map-container').offsetWidth - 60;
     height = 600;
 
@@ -56,9 +57,9 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
             searchboxValues.push(triggerButton.value)
         }
     })
-    
+
     var map = d3.select('#map')
-    debugger;
+    // debugger;
     var laenGeoData = topojson.feature(laenMapData, laenMapData.objects.SWE_adm1).features;
 
     var projection = d3.geoMercator()
@@ -76,9 +77,6 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 
     // !Kommundata !!!!!!!!!!!!!!!!!!!!!!
-    console.log("triggered" + counter);
-    counter =+1;
-    console.log(geoData);
     //geoData för att matcha kommunData till varje kommun
     geoData.forEach(d => {
         var kommun = kommunData.filter(row => row.KommunNummer === d.properties.KNKOD);
@@ -103,7 +101,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
 
     // console.log(geoData);
 
-    clickChoice === 'yearSlider' || clickChoice === 'dataType' || clickChoice === 'calculationType'?kommunUpdate():null
+    clickChoice === 'yearSlider' || clickChoice === 'dataType' || clickChoice === 'calculationType' ? kommunUpdate() : null
 
 
     // !Laendata !!!!!!!!!!!!!!!!!!!!!!
@@ -142,31 +140,32 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
 
     var g = map.selectAll('g')
 
-    var update = g.selectAll(".kommun")
-        .data(geoData);
+    // var update = g.selectAll(".kommun")
+    //     .data(geoData);
 
-    // console.log(update.exit());
-    update.exit().remove()
+    // // console.log(update.exit());
+    // update.exit().remove()
 
-    //Update för kommunnivå
-    update
-        .enter()
-        .append("path")
-        .classed("kommun", true)
-        .attr("d", path)
-        .on("click", kommunClick)
-        .merge(update)
-        // .transition()
-        // .duration(750)
-        .attr("fill", d => {
-            var val = d.properties.data.LevArtNr;
-            return val ? mapColorScale(val) : "#ccc";
-        });
+    // //Update för kommunnivå
+    // update
+    //     .enter()
+    //     .append("path")
+    //     .classed("kommun", true)
+    //     .attr("d", path)
+    //     .on("click", kommunClick)
+    //     .merge(update)
+    //     // .transition()
+    //     // .duration(750)
+    //     .attr("fill", d => {
+    //         var val = d.properties.data.LevArtNr;
+    //         return val ? mapColorScale(val) : "#ccc";
+    //     });
 
     //Update för laen - 
     // TODO ändra från state
     var update = g.selectAll(".states")
         .data(laenGeoData);
+    debugger;
 
     update.exit().remove()
 
@@ -213,15 +212,14 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         background = true;
     }
 
-    function kommunUpdate(){
-        
+    function kommunUpdate() {
+
         // if(d === undefined) return
-        if(lookupKod.length > 2){
-            var laensKod = lookupKod.substring(0,2);
+        if (lookupKod.length > 2) {
+            var laensKod = lookupKod.substring(0, 2);
         } else {
             var laensKod = lookupKod;
         }
-        
 
         d3.select("#kommun-map").selectAll("*").remove();
         var map = d3.select('#kommun-map')
@@ -273,24 +271,55 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
                 var val = d.properties.data.LevArtNr;
                 return val ? mapColorScale(val) : "#ccc";
             });
-        
+
         // kommunMapExists = true;
     }
 
+
+    function lineFunc(graphType) {
+        debugger
+        if (graphType === 'sverige') {
+            lineGraph(sverigeData, visningsVal, mapPosition, lookupKod, colors, year, mapColorScale)
+        } else if (graphType === 'laen') {
+            lineGraph(laenData, visningsVal, mapPosition, lookupKod, colors, year, mapColorScale)
+        } else if (graphType === 'kommun') {
+            lineGraph(kommunData, visningsVal, mapPosition, lookupKod, colors, year, mapColorScale)
+        }
+    }
+
+
+    function kommunClick(d) {
+        debugger
+        document.querySelector("#line-chart-name").innerText = document.querySelector("#kommun-chart-name").innerText = document.querySelector("#pie-chart-name").innerText = d.properties.KNNAMN;
+        mapPosition = 'kommun';
+        lookupKod = d.properties.KNKOD;
+        lineFunc(mapPosition)
+    }
+
+    function createTempObject() {
+        var temp = {
+            'KronorPerCapita': 0,
+            'KronorTotal': 0,
+            'MangdPerCapita': 0,
+            'MangdTotal': 0,
+        };
+        return temp
+    }
+
     function clicked(d) {
-        if(d === undefined){
+        if (d === undefined) {
             // var mapPosition = 'sverige';
             // var lookupKod = '';
             // drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, dataType, calculationType, colors)
             return
         }
-        
+
         d3.select("#kommun-map").selectAll("*").remove();
         document.querySelector("#line-chart-name").innerText = document.querySelector("#kommun-chart-name").innerText = document.querySelector("#pie-chart-name").innerText = d.properties.NAME_1;
         lookupKod = d.properties.laenskod;
         mapPosition = 'laen';
         lineFunc(mapPosition);
-        
+
         var map = d3.select('#kommun-map')
         var width = document.querySelector('.kommun-container').offsetWidth;
         // var height = document.querySelector('.map-container').offsetHeight;
@@ -329,7 +358,6 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
 
         update.remove()
 
-        //Update för kommunnivå
         update
             .enter()
             .append("path")
@@ -343,172 +371,12 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
                 var val = d.properties.data.LevArtNr;
                 return val ? mapColorScale(val) : "#ccc";
             });
-        
+
         kommunMapExists = true;
     }
 
-    function projectionCalculation(selectedLaen) {
-        switch (selectedLaen) {
-
-            case '01':
-                var scale = 4950, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-1130 - scale / 20, scale + scale / 1.75 - 1230])
-                break;
-            case '03':
-                var scale = 5200, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-1100 - scale / 20, scale + scale / 1.75 - 1200])
-                break;
-            case '04':
-                var scale = 5800, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-1200 - scale / 20, scale + scale / 1.75 - 1550])
-                break;
-            case '05':
-                var scale = 5000, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-920 - scale / 20, scale + scale / 1.75 - 1440])
-                break;
-            // x mer minus - vänster
-            // y mer minus - uppåt
-            case '06':
-                var scale = 5000, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-800 - scale / 20, scale + scale / 1.75 - 1570])
-                break;
-            case '07':
-                var scale = 6000, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-1020 - scale / 20, scale + scale / 1.75 - 2050])
-                break;
-
-            case '08':
-                var scale = 3500, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-600 - scale / 20, scale + scale / 1.75 - 1100])
-                break;
-
-            case '09':
-                var scale = 5000, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-1150 - scale / 20, scale + scale / 1.75 - 1580])
-                break;
-
-            case '10':
-                var scale = 8000, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-1520 - scale / 20, scale + scale / 1.75 - 2900])
-                break;
-            case '12':
-                var scale = 6000, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-930 - scale / 20, scale + scale / 1.75 - 2210])
-                break;
-            case '13':
-                var scale = 5500, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-760 - scale / 20, scale + scale / 1.75 - 1830])
-                break;
-            case '14':
-                var scale = 3000, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-320 - scale / 20, scale + scale / 1.75 - 830])
-                break;
-
-            case '17':
-                var scale = 2800, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-300 - scale / 20, scale + scale / 1.75 - 600])
-                break;
-
-            case '18':
-                var scale = 4800, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-825 - scale / 20, scale + scale / 1.75 - 1200])
-                break;
-
-            case '19':
-                var scale = 5800, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-1150 - scale / 20, scale + scale / 1.75 - 1400])
-                break;
-            case '20':
-                var scale = 2650, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-325 - scale / 20, scale + scale / 1.75 - 450])
-                break;
-            case '21':
-                var scale = 2700, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-400 - scale / 20, scale + scale / 1.75 - 450])
-                break;
-            case '22':
-                var scale = 2500, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-400 - scale / 20, scale + scale / 1.75 - 250])
-                break;
-            case '23':
-                var scale = 1700, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-150 - scale / 20, scale + scale / 1.75 - 100])
-                break;
-            case '24':
-                var scale = 1700, translateCalc = 2100;
-                var projection = d3.geoMercator()
-                    .scale(scale)
-                    .translate([-200 - scale / 15, scale + scale / 1.75])
-                break;
-            case '25':
-                var projection = d3.geoMercator()
-                    .scale(1200)
-                    .translate([-200, 2030])
-                break;
-            default:
-                break;
-        }
-        return projection
-    }
-
-    function kommunClick(d) {
-        document.querySelector("#line-chart-name").innerText = document.querySelector("#kommun-chart-name").innerText = document.querySelector("#pie-chart-name").innerText = d.properties.KNNAMN;
-        mapPosition = 'kommun';
-        lookupKod = d.properties.KNKOD;
-        lineFunc(mapPosition)
-
-    }
-
-    function createTempObject() {
-        var temp = {
-            'KronorPerCapita': 0,
-            'KronorTotal': 0,
-            'MangdPerCapita': 0,
-            'MangdTotal': 0,
-        };
-        return temp
-    }
-
     function createColorScale(seed) {
-        if(seed){
+        if (seed) {
             switch (searchboxValues.length) {
                 case 2:
                     domainValues.colors = ["#0000FF", "#FF0000"];
@@ -557,15 +425,4 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
         // console.log(domainValues)
         return domainValues;
     }
-
-    function lineFunc(grapType) {
-        if (grapType === 'sverige') {
-            lineGraph(sverigeData, visningsVal, mapPosition, lookupKod, colors, year, mapColorScale)
-        } else if (grapType === 'laen') {
-            lineGraph(laenData, visningsVal, mapPosition, lookupKod, colors, year, mapColorScale)
-        } else if (grapType === 'kommun') {
-            lineGraph(kommunData, visningsVal, mapPosition, lookupKod, colors, year, mapColorScale)
-        }
-    }
-
 };

@@ -17,8 +17,7 @@ function createLine(){
 
 }
 
-function lineGraph(graphData, visningsVal, lineTyp, lookupKod, colors, currentYear, mapColorScale) {
-
+function lineGraph(graphData, visningsVal, lineTyp, lookupKod, colors, currentYear, mapColorScale, pieData) {
     d3.select("#line").selectAll("*").remove();
     var margin = {
         top: 20,
@@ -57,7 +56,9 @@ function lineGraph(graphData, visningsVal, lineTyp, lookupKod, colors, currentYe
 
     var lineData = formatLineData(graphData, lineTyp, lookupKod, years, uniqueLevarts)
     
-    drawPie(lineData, visningsVal, lineTyp, lookupKod, colors, currentYear, mapColorScale)
+    if(mapPosition !== "sverige"){
+        drawPie(lineData, visningsVal, lineTyp, lookupKod, colors, currentYear, mapColorScale, pieData)
+    }
 
     if(lineData.extremeValuesData.length === 0){
         d3.select("#line").selectAll("*").remove();
@@ -115,16 +116,17 @@ function lineGraph(graphData, visningsVal, lineTyp, lookupKod, colors, currentYe
             .tickSize(-width)
             .tickFormat("")
         )
+
     //Add data for each of the lines
     for (let i = 0; i < lineData.formattedGraphData.length; i++) {
         svg.append("path")
         .data([lineData.formattedGraphData[i]])
-        .attr("class", `line ${colors[lineData.formattedGraphData[i][0]['LevArtNr']]}`)
+        .attr("class", `line ${className[0]}`)
         .attr("d", valueline);
         svg.selectAll(className)
             .data(lineData.formattedGraphData[i])
         .enter().append("circle") // Uses the enter().append() method
-        .attr("class", `dot dot${colors[lineData.formattedGraphData[i][0]['LevArtNr']]}`) // Assign a class for styling
+        .attr("class", `dot dot${className[0]}`) // Assign a class for styling
         .attr("cx", function(d) { return x(d.Year) })
         .attr("cy", function(d) { return y(d[visningsVal]) })
         .attr("r", 5);

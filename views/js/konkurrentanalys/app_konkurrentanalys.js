@@ -1,5 +1,3 @@
-// var height = 300;
-
 // window.onresize = function (event) {
 //   screenResize()
 // };
@@ -14,7 +12,7 @@ var varugruppsBtn = document.getElementById("varugrupp");
 var barText = document.querySelector(".bartext");
 var barchartExists = document.querySelector("bar");
 var initGraphsCreated = false;
-var currentCalculationType, currentDataType, currentYear, visningsVal, geoData, laenMapData;
+var currentCalculationType, currentDataType, currentYear, visningsVal;
 
 initButtonChanges();
 
@@ -48,7 +46,7 @@ function initButtonChanges(){
                 });
 }
 function drawGraphs(data, laenData, sverigeData, colors) {
-    if(initGraphsCreated) drawMap(geoData, laenMapData, data, laenData, sverigeData, currentYear, currentDataType, currentCalculationType, colors, visningsVal, 'initGraph');
+    // if(initGraphsCreated) drawMap(geoData, laenMapData, data, laenData, sverigeData, currentYear, currentDataType, currentCalculationType, colors, visningsVal, 'initGraph');
     d3.queue()
         .defer(d3.json, "../src/sverige.topojson")
         .defer(d3.json, "../src/sweden-counties.json")
@@ -68,9 +66,9 @@ function drawGraphs(data, laenData, sverigeData, colors) {
                 currentCalculationType = d3.select('input[name="calculation-type"]:checked')
                     .attr("value");
                 visningsVal = currentDataType + currentCalculationType;                
-                var geoData = topojson.feature(kommunMapData, kommunMapData.objects.sverige).features;
                 initGraphsCreated = true;
             }
+            var geoData = topojson.feature(kommunMapData, kommunMapData.objects.sverige).features;
             //! Function-calls
             var startPos = $("#slider").slider("value");
             mirrorSlider(startPos);
