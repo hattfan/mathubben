@@ -41,8 +41,16 @@ modal.setContent(
             <label for="produkt">Sök efter artikel</label>
             <br>
             <div id="scrollable-dropdown-menu">
-                <input id="artikel" class="typeahead" type="text" placeholder="Sök efter artikel">
+                <input id="artikel" class="typeahead" type="text" placeholder="Sök efter artikel"><br>
+                <small> <strong>Exempelvis</strong><br>
+                Banan EKO<br>
+                Mellanmjölk 1,5% KRAV<br>
+                Gouda 30% skiv EKO<br>
+                Köttbullar nöt 12g KRAV<br>
+                Banan Rättvise EKO<br>
+                </small>
             </div>
+
         </div>
         
         <div class="filter-container">
