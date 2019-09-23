@@ -23,3 +23,6 @@ mongoimport.exe --db mathubben --collection menigov3 --type tsv  --file "C:\Prog
 
 
 mongoexport.exe --db mathubben --collection artiklar --type json --out "C:\Programmering\databas-filer\output.json" --fields LevArtNr,Benamning,Fabrikat
+
+
+mongoimport.exe --db dabasV2 --collection statistik --type tsv  --file "C:\Programmering\dabas V2\Statistik\LantmännenInkGtin.txt" --fields Grossist,GTIN,Benämning,Levartnr,Antalfsgenheter,Antalkglit,Fsg

@@ -23,15 +23,15 @@ window.addEventListener("scroll", function () {
 })
 
 // TODO Animera ut pilen
-// $("#arrow-right").click(function () {
-//     $("#arrow-right").fadeOut("fast", function () {
-//         $("#close-toolbar").fadeIn("slow", function () {
-//             // Animation complete.
-//         });
-//     });
-// });
+$("#arrow-right").click(function () {
+    $("#arrow-right").fadeOut("fast", function () {
+        $("#close-toolbar").fadeIn("slow", function () {
+            // Animation complete.
+        });
+    });
+});
 
-// document.querySelector('#arrow-right').addEventListener('click', function () {
-//     // debugger;
-//     document.querySelector('#small-product-indication-bar').classList.add('animate-in');
-// })
+document.querySelector('#arrow-right').addEventListener('click', function () {
+    // debugger;
+    document.querySelector('#small-product-indication-bar').classList.add('animate-in');
+})

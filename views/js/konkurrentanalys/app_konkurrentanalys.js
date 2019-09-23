@@ -153,6 +153,7 @@ function drawGraphs(data, laenData, sverigeData, colors) {
                 var isLaen = tgt.classed("states");
                 var isBar = tgt.classed("bar");
                 var isArc = tgt.classed("arc");
+                var isLine = tgt.classed("line");
 
                 var units = currentDataType === "Mangd" ? "kg" : "kronor";
                 var calculation = currentCalculationType === "Total" ? "totalt" : "per capita"
@@ -163,6 +164,7 @@ function drawGraphs(data, laenData, sverigeData, colors) {
                 if (isKommun) tooltipData = tgt.data()[0].properties.data, tooltipNamn = tgt.data()[0].properties.KNNAMN, tooltipSort = "Kommun";
                 if (isLaen) tooltipData = tgt.data()[0].properties.data, tooltipNamn = tgt.data()[0].properties.NAME_1, tooltipSort = "Län";
                 if (isArc) tooltipArc = tgt.data()[0].data;
+                if (isLine) debugger;
 
                 tooltip
                     .style("opacity", +(isKommun || isArc || isLaen))

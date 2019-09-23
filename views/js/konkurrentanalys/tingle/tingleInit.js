@@ -22,6 +22,14 @@ var modal = new tingle.modal({
     }
 });
 
+{/* <div style="display:flex">
+            <p class="buttonSelection" style="cursor: pointer; color: white; padding: 10px; border-radius: 5px; background: blue; margin:3px" data-key="MENIGO FOG - MENY545">Banan EKO</p>
+            <p class="buttonSelection" style="cursor: pointer; color: white; padding: 10px; border-radius: 5px; background: blue; margin:3px" data-key="Arla Ko - 7180">Mellanmjölk 1,5% KRAV</p>
+            <p class="buttonSelection" style="cursor: pointer; color: white; padding: 10px; border-radius: 5px; background: blue; margin:3px" data-key="Brakes - 900112">Gouda 30% skiv EKO</p>
+            <p class="buttonSelection" style="cursor: pointer; color: white; padding: 10px; border-radius: 5px; background: blue; margin:3px" data-key="Felix FriFrån - 8859">Köttbullar nöt 12g KRAV</p>
+            <p class="buttonSelection" style="cursor: pointer; color: white; padding: 10px; border-radius: 5px; background: blue; margin:3px" data-key="MENIGO FOG - 729459">Banan Rättvise EKO</p>
+        </div> */}
+
 // set content
 modal.setContent(
     `
@@ -36,6 +44,7 @@ modal.setContent(
                 <input id="artikel" class="typeahead" type="text" placeholder="Sök efter artikel">
             </div>
         </div>
+        
         <div class="filter-container">
             <div class="sök-box" id="filter-box">
                 <label for="filter-box">Filtrera efter leverantör</label>
@@ -138,6 +147,12 @@ function selectionHandler(){
     document.querySelector(".ok-btn").style.display !== "inline" ? document.querySelector(".ok-btn").style.display = "inline" : null;
 }
 
+function buttonSelectionHandler(){
+    actualSelection.Benamning = this.textContent;
+    actualSelection.LevArtNr = this.dataset.key;
+    document.querySelector(".ok-btn").style.display !== "inline" ? document.querySelector(".ok-btn").style.display = "inline" : null;
+}
+
 function reDrawGraphs(){
     if(initGraphCreated){
         d3.select("#line").selectAll("*").remove();
@@ -146,3 +161,7 @@ function reDrawGraphs(){
         d3.select("#kommun-map").selectAll("*").remove();
     }
 }
+
+document.querySelectorAll(".buttonSelection").forEach(button => {
+    button.addEventListener("click", buttonSelectionHandler)
+})

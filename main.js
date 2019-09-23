@@ -20,10 +20,22 @@ app.use(function (req, res, next) {
 	next();
 });
 
+
+
 // MongoClient.connect('mongodb://localhost:27017', { poolSize: 100 }, (err, client) => {
 MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathubben', (err, client) => {
 	var db = client.db('mathubben');
 
+	var todayHour = new Date().getHours();
+	var todayDay = new Date().getDay();
+	if ((todayHour >= 7 && todayHour <= 20) && (todayDay < 5)) {
+			var http = require("http");
+			setInterval(function() {
+				db.collection('dataSverige').find({'LevArtNr': 1532}).toArray(function (err, result) {
+					console.log("Ah ah ah ah staying alive")
+				})
+			}, 1800000); // every 30 minutes
+	} 
 	if (err) throw err;
 
 	app.use("/konkurrentanalys", konkurrentanalysRoute);
@@ -176,7 +188,7 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 
 
 	//! Fyra artiklar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	app.get('/konkurrentanalysartiklar/:id1/:id2/:id3/:id4', function (req, res) {
+	app.get('/konkurrentanalysartiklarPerKommun/:id1/:id2/:id3/:id4', function (req, res) {
 		var data = {
 			"artiklar": {
 				"artikelOne": req.params.id1,
@@ -224,7 +236,7 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 	});
 
 	//! Fem artiklar !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	app.get('/konkurrentanalysartiklar/:id1/:id2/:id3/:id4/:id5', function (req, res) {
+	app.get('/konkurrentanalysartiklarPerKommun/:id1/:id2/:id3/:id4/:id5', function (req, res) {
 		var data = {
 			"artiklar": {
 				"artikelOne": req.params.id1,
@@ -291,7 +303,7 @@ MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathu
 	});
 });
 
-var port = process.env.PORT || 3030;
+var port = process.env.PORT || 3032;
 
 app.listen(port, process.env.IP, function () {
 	var appConsoleMsg = 'Hemsidan startad: ';
