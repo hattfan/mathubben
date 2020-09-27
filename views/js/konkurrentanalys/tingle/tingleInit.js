@@ -42,12 +42,12 @@ modal.setContent(
             <br>
             <div id="scrollable-dropdown-menu">
                 <input id="artikel" class="typeahead" type="text" placeholder="Sök efter artikel"><br>
-                <small> <strong>Exempelvis</strong><br>
-                Banan EKO<br>
-                Mellanmjölk 1,5% KRAV<br>
-                Gouda 30% skiv EKO<br>
+                <small> <strong>Artiklar i demo-versionen</strong><br>
+                Nötfärs 10% SE KRAV<br>
                 Köttbullar nöt 12g KRAV<br>
-                Banan Rättvise EKO<br>
+                Nötfärs 10% vackad<br>
+                Torskfile bfr MSC<br>
+                Kycklinglårfile<br>
                 </small>
             </div>
 

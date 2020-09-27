@@ -22,8 +22,7 @@ app.use(function (req, res, next) {
 
 
 
-// MongoClient.connect('mongodb://localhost:27017', { poolSize: 100 }, (err, client) => {
-MongoClient.connect('mongodb://normal_user:normal1@ds235732.mlab.com:35732/mathubben', (err, client) => {
+MongoClient.connect('mongodb://ola:Neroxrox5(@ds055905.mlab.com:55905/mathubben', { poolSize: 100 }, (err, client) => {
 	var db = client.db('mathubben');
 
 	var todayHour = new Date().getHours();
