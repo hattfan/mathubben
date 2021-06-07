@@ -1,5 +1,6 @@
 //! OM SEED VÄRDEN handleInputs(true);
 function handleInputs(seed) {
+    debugger;
     if(initGraphsCreated){
         d3.select("#map").selectAll("*").remove();
         document.querySelector("#map-square").innerHTML = `<svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="map"></svg>`
@@ -24,6 +25,7 @@ function handleInputs(seed) {
 
         switch (searchboxValues.length) {
             case 1:
+                debugger;
                 var apiRequest1 = fetch(`/konkurrentanalysartiklarPerKommun/${searchboxValues[0]}`).then(function (response) {
                     return response.json()
                 });

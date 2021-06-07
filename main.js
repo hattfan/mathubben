@@ -22,7 +22,7 @@ app.use(function (req, res, next) {
 
 
 
-MongoClient.connect('mongodb://ola:Neroxrox5(@ds055905.mlab.com:55905/mathubben', { poolSize: 100 }, (err, client) => {
+MongoClient.connect('mongodb+srv://ola:0YJdxSc4TFWAiwPz@mathubben.foiot.mongodb.net/mathubben?retryWrites=true&w=majority', { poolSize: 100 }, (err, client) => {
 	var db = client.db('mathubben');
 
 	var todayHour = new Date().getHours();
@@ -39,6 +39,9 @@ MongoClient.connect('mongodb://ola:Neroxrox5(@ds055905.mlab.com:55905/mathubben'
 
 	app.use("/konkurrentanalys", konkurrentanalysRoute);
 	app.use("/", indexRoute);
+	app.get("/alive", function (req, res) {
+		res.send('stayin alive')
+	})
 
 	app.get('/artikellistning/:id', function (req, res) {
 		// db.collection('artiklar').find({'Benamning':{$regex: ".*" + req.params.id + ".*"}}).limit(10).toArray(function(err, result){

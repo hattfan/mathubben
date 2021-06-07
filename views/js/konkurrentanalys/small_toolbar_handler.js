@@ -31,7 +31,7 @@ $("#arrow-right").click(function () {
     });
 });
 
-document.querySelector('#arrow-right').addEventListener('click', function () {
-    // debugger;
-    document.querySelector('#small-product-indication-bar').classList.add('animate-in');
-})
+// document.querySelector('#arrow-right').addEventListener('click', function () {
+//     // debugger;
+//     document.querySelector('#small-product-indication-bar').classList.add('animate-in');
+// })

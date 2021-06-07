@@ -22,7 +22,7 @@ function drawPie(graphData, visningsVal, lineTyp, lookupKod, colors, currentYear
         .innerRadius(0);
 
     var yearData = graphData.formattedGraphData.flat().filter(row => {
-            return row.Year === currentYear.toString()
+            return row.Year.toString() === currentYear.toString()
     })
 
     var update = pie

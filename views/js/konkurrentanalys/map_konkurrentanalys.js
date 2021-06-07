@@ -79,7 +79,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
     // !Kommundata !!!!!!!!!!!!!!!!!!!!!!
     //geoData för att matcha kommunData till varje kommun
     geoData.forEach(d => {
-        var kommun = kommunData.filter(row => row.KommunNummer === d.properties.KNKOD);
+        var kommun = kommunData.filter(row => row.KommunNummer.toString() === d.properties.KNKOD);
         // Om kommun har värde
         if (kommun.length !== 0) {
             var compare = createTempObject()
@@ -106,8 +106,7 @@ function drawMap(geoData, laenMapData, kommunData, laenData, sverigeData, year, 
 
     // !Laendata !!!!!!!!!!!!!!!!!!!!!!
     laenGeoData.forEach(d => {
-        var laen = laenData.filter(row => row.LaenKod === d.properties.laenskod);
-
+        var laen = laenData.filter(row => row.LaenKod.toString() === d.properties.laenskod);
         // Om laen har värde
         if (laen.length !== 0) {
             var compare = createTempObject()

@@ -188,7 +188,7 @@ function formatLineData(graphData, lineTyp, lookupKod, years, uniqueLevarts){
             uniqueLevarts.forEach(levart => {
                 var levartData = []
                 years.forEach(year => {
-                    var filtredRow = graphData.filter(row => row.LevArtNr === levart  && row.Year === year)
+                    var filtredRow = graphData.filter(row => row.LevArtNr === levart  && row.Year.toString() === year)
                     if(filtredRow === undefined || filtredRow.length == 0){
                         var emptyLine = createSwedenLineObject(year,levart)
                         levartData.push(emptyLine)
@@ -210,7 +210,7 @@ function formatLineData(graphData, lineTyp, lookupKod, years, uniqueLevarts){
             uniqueLevarts.forEach(levart => {
                 var levartData = []
                 years.forEach(year => {
-                    var filtredRow = graphData.filter(row => row.LevArtNr === levart && row.LaenKod === lookupKod && row.Year === year)
+                    var filtredRow = graphData.filter(row => row.LevArtNr === levart && row.LaenKod.toString() === lookupKod && row.Year.toString() === year)
                     if(filtredRow === undefined || filtredRow.length == 0){
                         var emptyLine = createLaenLineObject(year,levart, lookupKod)
                         levartData.push(emptyLine)
@@ -232,7 +232,7 @@ function formatLineData(graphData, lineTyp, lookupKod, years, uniqueLevarts){
         uniqueLevarts.forEach(levart => {
             var levartData = []
             years.forEach(year => {
-                var filtredRow = graphData.filter(row => row.LevArtNr === levart && row.KommunNummer === lookupKod && row.Year === year)
+                var filtredRow = graphData.filter(row => row.LevArtNr === levart && row.KommunNummer.toString() === lookupKod && row.Year.toString() === year)
                 if(filtredRow === undefined || filtredRow.length == 0){
                     var emptyLine = createKommunLineObject(year,levart, lookupKod)
                     levartData.push(emptyLine)
