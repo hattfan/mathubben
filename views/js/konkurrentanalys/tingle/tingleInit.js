@@ -43,11 +43,11 @@ modal.setContent(
             <div id="scrollable-dropdown-menu">
                 <input id="artikel" class="typeahead" type="text" placeholder="Sök efter artikel"><br>
                 <small> <strong>Artiklar i demo-versionen</strong><br>
-                Nötfärs 10% SE KRAV<br>
-                Köttbullar nöt 12g KRAV<br>
-                Nötfärs 10% vackad<br>
-                Torskfile bfr MSC<br>
-                Kycklinglårfile<br>
+                Köttbullar<br>
+                Vegobullar<br>
+                Blomkål<br>
+                Ärtor<br>
+                Falukorv<br>
                 </small>
             </div>
 
