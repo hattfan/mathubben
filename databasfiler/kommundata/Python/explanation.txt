@@ -1,5 +1,0 @@
-För att skapa en hållbar situation för att ladda in data.
-
-1. Ladda in data genom mongoimport
-2. (Python) Kör script för att få datan på artikelnivå per kommun
-3. (Python) Kör script för att få datan på artikelnivå per län

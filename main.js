@@ -4,6 +4,7 @@ var express 			= require("express"),
 		bodyParser 		= require("body-parser"),
 		MongoClient 	= require('mongodb').MongoClient;
 
+require('dotenv').config()
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/views'));
 
@@ -22,7 +23,7 @@ app.use(function (req, res, next) {
 
 
 
-MongoClient.connect('mongodb+srv://ola:0YJdxSc4TFWAiwPz@mathubben.foiot.mongodb.net/mathubben?retryWrites=true&w=majority', { poolSize: 100 }, (err, client) => {
+MongoClient.connect(process.env.MONGODB_URI, { poolSize: 100 }, (err, client) => {
 	var db = client.db('mathubben');
 
 	var todayHour = new Date().getHours();
