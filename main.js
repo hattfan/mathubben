@@ -23,7 +23,8 @@ app.use(function (req, res, next) {
 
 
 
-MongoClient.connect(process.env.MONGODB_URI, { poolSize: 100 }, (err, client) => {
+// MongoClient.connect(process.env.MONGODB_URI, { poolSize: 100 }, (err, client) => {
+MongoClient.connect("mongodb+srv://ola:anddwxI2hiyJgxBm@mathubben.foiot.mongodb.net/?retryWrites=true&w=majority&appName=mathubben", { poolSize: 100 }, (err, client) => {
 	var db = client.db('mathubben');
 
 	var todayHour = new Date().getHours();
